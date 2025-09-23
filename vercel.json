@@ -1,6 +1,8 @@
 {
   "version": 2,
   "name": "fc-descansa-website",
+  "buildCommand": "echo 'Static site - no build needed'",
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/(.*)",

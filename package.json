@@ -7,7 +7,8 @@
     "start": "npx serve -s . -l 3000",
     "build": "echo 'Static site - no build needed'",
     "dev": "npx serve -s . -l 3000",
-    "preview": "npx serve -s . -l 4173"
+    "preview": "npx serve -s . -l 4173",
+    "vercel-build": "echo 'Static site - no build needed'"
   },
   "keywords": [
     "futbol",
