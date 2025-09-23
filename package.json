@@ -1,0 +1,33 @@
+{
+  "name": "fc-descansa-website",
+  "version": "1.0.0",
+  "description": "Sitio web oficial del equipo de fútbol FC DESCANSA",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -l 3000",
+    "build": "echo 'Static site - no build needed'",
+    "dev": "npx serve -s . -l 3000",
+    "preview": "npx serve -s . -l 4173"
+  },
+  "keywords": [
+    "futbol",
+    "soccer",
+    "equipo",
+    "fc-descansa",
+    "deportes",
+    "website"
+  ],
+  "author": "FC DESCANSA",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/fc-descansa-website.git"
+  },
+  "homepage": "https://fc-descansa-website.vercel.app",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

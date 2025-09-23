@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FC DESCANSA - Sitio Oficial</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <img src="https://via.placeholder.com/60x60/1e40af/ffffff?text=FC" alt="FC DESCANSA Logo" class="logo">
+                <span class="team-name">FC DESCANSA</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Inicio</a></li>
+                <li><a href="#stats" class="nav-link">Estadísticas</a></li>
+                <li><a href="#media" class="nav-link">Multimedia</a></li>
+                <li><a href="#squad" class="nav-link">Plantilla</a></li>
+                <li><a href="#login" class="nav-link" id="loginLink">Iniciar Sesión</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">FC DESCANSA</h1>
+                        <p class="hero-subtitle">¡Somos más que un equipo, somos una familia!</p>
+                    </div>
+                </div>
+
+                <!-- Next Match -->
+                <div class="next-match">
+                    <h2>Próximo Partido</h2>
+                    <div class="match-card">
+                        <div class="match-teams">
+                            <div class="team">
+                                <img src="https://via.placeholder.com/80x80/1e40af/ffffff?text=FC" alt="FC DESCANSA">
+                                <span>FC DESCANSA</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <img src="https://via.placeholder.com/80x80/dc2626/ffffff?text=RV" alt="Rival">
+                                <span id="rivalName">Club Rival</span>
+                            </div>
+                        </div>
+                        <div class="match-info">
+                            <p><i class="fas fa-calendar"></i> <span id="matchDate">Domingo 15 de Enero</span></p>
+                            <p><i class="fas fa-clock"></i> <span id="matchTime">15:00</span></p>
+                            <p><i class="fas fa-map-marker-alt"></i> <span id="matchVenue">Cancha Municipal</span></p>
+                        </div>
+                        <div class="countdown">
+                            <h3>Tiempo Restante:</h3>
+                            <div class="countdown-timer" id="countdown">
+                                <div class="time-unit">
+                                    <span id="days">00</span>
+                                    <label>Días</label>
+                                </div>
+                                <div class="time-unit">
+                                    <span id="hours">00</span>
+                                    <label>Horas</label>
+                                </div>
+                                <div class="time-unit">
+                                    <span id="minutes">00</span>
+                                    <label>Minutos</label>
+                                </div>
+                                <div class="time-unit">
+                                    <span id="seconds">00</span>
+                                    <label>Segundos</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Latest News -->
+                <div class="latest-news">
+                    <h2>Últimas Noticias</h2>
+                    <div class="news-grid">
+                        <article class="news-card">
+                            <div class="news-image">
+                                <img src="https://via.placeholder.com/300x200/1e40af/ffffff?text=Entrenamiento" alt="Noticia 1">
+                            </div>
+                            <div class="news-content">
+                                <h3>Entrenamiento Intensivo</h3>
+                                <p>El equipo se prepara intensamente para el próximo partido con sesiones dobles de entrenamiento.</p>
+                                <span class="news-date">10 de Enero, 2024</span>
+                            </div>
+                        </article>
+                        <article class="news-card">
+                            <div class="news-image">
+                                <img src="https://via.placeholder.com/300x200/059669/ffffff?text=Nueva%20Contratación" alt="Noticia 2">
+                            </div>
+                            <div class="news-content">
+                                <h3>Nueva Contratación</h3>
+                                <p>FC DESCANSA anuncia la llegada de un nuevo delantero para reforzar el ataque.</p>
+                                <span class="news-date">8 de Enero, 2024</span>
+                            </div>
+                        </article>
+                        <article class="news-card">
+                            <div class="news-image">
+                                <img src="https://via.placeholder.com/300x200/dc2626/ffffff?text=Victoria" alt="Noticia 3">
+                            </div>
+                            <div class="news-content">
+                                <h3>Victoria en Casa</h3>
+                                <p>El equipo logra una importante victoria 3-1 en el último partido disputado.</p>
+                                <span class="news-date">5 de Enero, 2024</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section id="stats" class="section">
+            <div class="container">
+                <h2>Estadísticas y Resultados</h2>
+                
+                <!-- Team Stats -->
+                <div class="stats-section">
+                    <h3>Estadísticas del Equipo</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-trophy"></i>
+                            <h4>Partidos Jugados</h4>
+                            <span class="stat-number" id="gamesPlayed">15</span>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-futbol"></i>
+                            <h4>Goles a Favor</h4>
+                            <span class="stat-number" id="goalsFor">32</span>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Goles en Contra</h4>
+                            <span class="stat-number" id="goalsAgainst">18</span>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-medal"></i>
+                            <h4>Victorias</h4>
+                            <span class="stat-number" id="wins">10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Results -->
+                <div class="results-section">
+                    <h3>Resultados Recientes</h3>
+                    <div class="results-table">
+                        <div class="result-row header">
+                            <span>Fecha</span>
+                            <span>Rival</span>
+                            <span>Resultado</span>
+                            <span>Competencia</span>
+                        </div>
+                        <div class="result-row">
+                            <span>05/01/2024</span>
+                            <span>Club Deportivo</span>
+                            <span class="result">3-1</span>
+                            <span>Liga Local</span>
+                        </div>
+                        <div class="result-row">
+                            <span>22/12/2023</span>
+                            <span>Atletico FC</span>
+                            <span class="result">2-2</span>
+                            <span>Liga Local</span>
+                        </div>
+                        <div class="result-row">
+                            <span>15/12/2023</span>
+                            <span>Real Madrid FC</span>
+                            <span class="result">1-0</span>
+                            <span>Liga Local</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- International Results -->
+                <div class="international-results">
+                    <h3>Resultados Internacionales</h3>
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="champions">Champions League</button>
+                        <button class="tab-button" data-tab="liga-mx">Liga MX</button>
+                    </div>
+                    <div class="tab-content active" id="champions">
+                        <div class="international-match">
+                            <div class="teams">
+                                <span>Manchester City</span>
+                                <span class="score">2-1</span>
+                                <span>Real Madrid</span>
+                            </div>
+                            <div class="match-time">Ayer 20:00</div>
+                        </div>
+                        <div class="international-match">
+                            <div class="teams">
+                                <span>Barcelona</span>
+                                <span class="score">3-0</span>
+                                <span>PSG</span>
+                            </div>
+                            <div class="match-time">Hoy 15:00</div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="liga-mx">
+                        <div class="international-match">
+                            <div class="teams">
+                                <span>América</span>
+                                <span class="score">1-0</span>
+                                <span>Chivas</span>
+                            </div>
+                            <div class="match-time">Ayer 19:00</div>
+                        </div>
+                        <div class="international-match">
+                            <div class="teams">
+                                <span>Cruz Azul</span>
+                                <span class="score">2-1</span>
+                                <span>Tigres</span>
+                            </div>
+                            <div class="match-time">Hoy 17:00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Media Section -->
+        <section id="media" class="section">
+            <div class="container">
+                <h2>Multimedia</h2>
+                <div class="media-tabs">
+                    <button class="media-tab active" data-media="photos">Fotos</button>
+                    <button class="media-tab" data-media="videos">Videos</button>
+                </div>
+                
+                <div class="media-content active" id="photos">
+                    <div class="gallery">
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/1e40af/ffffff?text=Partido+1" alt="Foto 1">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/059669/ffffff?text=Entrenamiento" alt="Foto 2">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/dc2626/ffffff?text=Celebración" alt="Foto 3">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/7c3aed/ffffff?text=Equipo" alt="Foto 4">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/f59e0b/ffffff?text=Gol" alt="Foto 5">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                        <div class="gallery-item">
+                            <img src="https://via.placeholder.com/300x200/ef4444/ffffff?text=Victoria" alt="Foto 6">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="media-content" id="videos">
+                    <div class="video-gallery">
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <img src="https://via.placeholder.com/400x225/1e40af/ffffff?text=Video+1" alt="Video 1">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <h4>Resumen del Partido</h4>
+                            <p>Goles y mejores jugadas del último partido</p>
+                        </div>
+                        <div class="video-item">
+                            <div class="video-thumbnail">
+                                <img src="https://via.placeholder.com/400x225/059669/ffffff?text=Video+2" alt="Video 2">
+                                <div class="play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <h4>Entrenamientos</h4>
+                            <p>Sesión de entrenamiento del equipo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Squad Section -->
+        <section id="squad" class="section">
+            <div class="container">
+                <h2>Plantilla de Jugadores</h2>
+                
+                <!-- Starting XI -->
+                <div class="starting-xi">
+                    <h3>11 Titular</h3>
+                    <div class="field">
+                        <div class="field-background">
+                            <div class="field-lines"></div>
+                        </div>
+                        <div class="players-field" id="playersField">
+                            <!-- Players will be positioned here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Squad by Position -->
+                <div class="squad-positions">
+                    <div class="position-group">
+                        <h3><i class="fas fa-hands"></i> Porteros</h3>
+                        <div class="players-grid" id="goalkeepers">
+                            <!-- Goalkeepers will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="position-group">
+                        <h3><i class="fas fa-shield-alt"></i> Defensas</h3>
+                        <div class="players-grid" id="defenders">
+                            <!-- Defenders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="position-group">
+                        <h3><i class="fas fa-running"></i> Centrocampistas</h3>
+                        <div class="players-grid" id="midfielders">
+                            <!-- Midfielders will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="position-group">
+                        <h3><i class="fas fa-futbol"></i> Delanteros</h3>
+                        <div class="players-grid" id="forwards">
+                            <!-- Forwards will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <div class="position-group">
+                        <h3><i class="fas fa-user-tie"></i> Cuerpo Técnico</h3>
+                        <div class="players-grid" id="staff">
+                            <!-- Staff will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Player Button -->
+                <div class="register-section">
+                    <button class="btn btn-primary" id="registerPlayerBtn">Registrar Nuevo Jugador</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login/Register Section -->
+        <section id="login" class="section">
+            <div class="container">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-auth="login">Iniciar Sesión</button>
+                        <button class="auth-tab" data-auth="register">Registro</button>
+                        <button class="auth-tab" data-auth="forgot">Recuperar Contraseña</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div class="auth-content active" id="loginForm">
+                        <form class="auth-form" id="loginFormElement">
+                            <div class="form-group">
+                                <label for="loginEmail">Correo Electrónico</label>
+                                <input type="email" id="loginEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPassword">Contraseña</label>
+                                <input type="password" id="loginPassword" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                        </form>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div class="auth-content" id="registerForm">
+                        <form class="auth-form" id="registerFormElement">
+                            <div class="form-group">
+                                <label for="fullName">Nombre Completo *</label>
+                                <input type="text" id="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="nickname">Apodo (Opcional)</label>
+                                <input type="text" id="nickname">
+                            </div>
+                            <div class="form-group">
+                                <label for="jerseyNumber">Número de Camiseta *</label>
+                                <input type="number" id="jerseyNumber" min="1" max="99" required>
+                                <small id="jerseyStatus"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="position">Posición *</label>
+                                <select id="position" required>
+                                    <option value="">Seleccionar posición</option>
+                                    <option value="Portero">Portero</option>
+                                    <option value="Defensa">Defensa</option>
+                                    <option value="Centrocampista">Centrocampista</option>
+                                    <option value="Delantero">Delantero</option>
+                                    <option value="Director Técnico">Director Técnico</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Correo Electrónico *</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsapp">Número de WhatsApp *</label>
+                                <input type="tel" id="whatsapp" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Contraseña *</label>
+                                <input type="password" id="password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="photo">Foto del Jugador</label>
+                                <input type="file" id="photo" accept="image/*">
+                                <button type="button" class="btn btn-secondary" id="takePhotoBtn">Tomar Foto</button>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Registrarse</button>
+                        </form>
+                    </div>
+
+                    <!-- Forgot Password Form -->
+                    <div class="auth-content" id="forgotForm">
+                        <form class="auth-form" id="forgotFormElement">
+                            <div class="form-group">
+                                <label for="forgotEmail">Correo Electrónico</label>
+                                <input type="email" id="forgotEmail" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Enviar Código de Recuperación</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Photo -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <video id="video" autoplay></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div class="modal-buttons">
+                <button id="captureBtn" class="btn btn-primary">Capturar</button>
+                <button id="cancelCaptureBtn" class="btn btn-secondary">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Modal -->
+    <div class="modal" id="playerModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="playerDetails">
+                <!-- Player details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>FC DESCANSA</h3>
+                    <p>Somos más que un equipo, somos una familia unida por la pasión del fútbol.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#home">Inicio</a></li>
+                        <li><a href="#stats">Estadísticas</a></li>
+                        <li><a href="#squad">Plantilla</a></li>
+                        <li><a href="#media">Multimedia</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <p><i class="fas fa-envelope"></i> info@fcdescansa.com</p>
+                    <p><i class="fas fa-phone"></i> +52 123 456 7890</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FC DESCANSA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="database.js"></script>
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
