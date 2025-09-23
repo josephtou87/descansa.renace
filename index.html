@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
@@ -49,12 +50,12 @@
                     <div class="match-card">
                         <div class="match-teams">
                             <div class="team">
-                                <img src="https://via.placeholder.com/80x80/1e40af/ffffff?text=FC" alt="FC DESCANSA">
+                                <img src="assets/images/teams/fc-descansa.png" alt="FC DESCANSA" onerror="this.src='https://via.placeholder.com/80x80/1e40af/ffffff?text=FC'">
                                 <span>FC DESCANSA</span>
                             </div>
                             <div class="vs">VS</div>
                             <div class="team">
-                                <img src="https://via.placeholder.com/80x80/dc2626/ffffff?text=RV" alt="Rival">
+                                <img src="assets/images/teams/club-rival.png" alt="Club Rival" id="rivalLogo" onerror="this.src='https://via.placeholder.com/80x80/dc2626/ffffff?text=RV'">
                                 <span id="rivalName">Club Rival</span>
                             </div>
                         </div>
@@ -490,10 +491,31 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
+                <div class="footer-content">
                 <div class="footer-section">
                     <h3>FC DESCANSA</h3>
                     <p>Somos más que un equipo, somos una familia unida por la pasión del fútbol.</p>
+                    <div class="social-media">
+                        <h4>Síguenos</h4>
+                        <div class="social-links">
+                            <a href="https://facebook.com/fcdescansa" target="_blank" class="social-link facebook">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>Facebook</span>
+                            </a>
+                            <a href="https://instagram.com/fcdescansa" target="_blank" class="social-link instagram">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </a>
+                            <a href="https://tiktok.com/@fcdescansa" target="_blank" class="social-link tiktok">
+                                <i class="fab fa-tiktok"></i>
+                                <span>TikTok</span>
+                            </a>
+                            <a href="https://youtube.com/@fcdescansa" target="_blank" class="social-link youtube">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="footer-section">
                     <h4>Enlaces Rápidos</h4>
@@ -508,6 +530,7 @@
                     <h4>Contacto</h4>
                     <p><i class="fas fa-envelope"></i> info@fcdescansa.com</p>
                     <p><i class="fas fa-phone"></i> +52 123 456 7890</p>
+                    <p><i class="fab fa-whatsapp"></i> +52 123 456 7890</p>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -518,6 +541,7 @@
 
     <script src="database.js"></script>
     <script src="api.js"></script>
+    <script src="social-config.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

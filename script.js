@@ -518,6 +518,26 @@ function updateMatchInfo() {
     document.getElementById('matchTime').textContent = nextMatch.time;
     document.getElementById('matchVenue').textContent = nextMatch.venue;
     document.getElementById('rivalName').textContent = nextMatch.opponent;
+    
+    // Update rival team logo
+    updateTeamLogo(nextMatch.opponent);
+}
+
+// Update team logo based on opponent name
+function updateTeamLogo(opponentName) {
+    const logoElement = document.getElementById('rivalLogo');
+    if (!logoElement) return;
+    
+    // Create logo filename from opponent name
+    const logoFilename = opponentName.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+    
+    const logoPath = `assets/images/teams/${logoFilename}.png`;
+    
+    // Update logo source
+    logoElement.src = logoPath;
+    logoElement.alt = opponentName;
 }
 
 // Load squad
@@ -552,9 +572,17 @@ function createPlayerCard(player) {
     card.className = 'player-card';
     card.onclick = () => showPlayerModal(player);
     
+    // Create player photo path
+    const photoFilename = player.fullName.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+    const photoPath = `assets/images/players/${photoFilename}.jpg`;
+    
     card.innerHTML = `
-        <img src="${player.photo || 'https://via.placeholder.com/80x80/1e40af/ffffff?text=' + (player.fullName.charAt(0))}" 
-             alt="${player.fullName}" class="player-photo">
+        <img src="${player.photo || photoPath}" 
+             alt="${player.fullName}" 
+             class="player-photo"
+             onerror="this.src='https://via.placeholder.com/80x80/1e40af/ffffff?text=${player.fullName.charAt(0)}'">
         <div class="player-name">${player.fullName}</div>
         ${player.nickname ? `<div class="player-nickname">"${player.nickname}"</div>` : ''}
         <div class="player-number">${player.jerseyNumber}</div>
