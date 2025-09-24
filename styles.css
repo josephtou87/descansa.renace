@@ -1,6 +1,25 @@
 /* Import Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800;900&display=swap');
 
+/* CSS Variables for Themes */
+:root {
+    --primary-bg: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+    --secondary-bg: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00d4ff 100%);
+    --text-color: #e8f4fd;
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --border-color: rgba(0, 212, 255, 0.3);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] {
+    --primary-bg: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 25%, #cce7ff 50%, #99d6ff 75%, #66c2ff 100%);
+    --secondary-bg: linear-gradient(135deg, #4a90e2 0%, #357abd 50%, #2e5c8a 100%);
+    --text-color: #2c3e50;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --border-color: rgba(74, 144, 226, 0.3);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -11,11 +30,12 @@
 body {
     font-family: 'Exo 2', 'Orbitron', sans-serif;
     line-height: 1.6;
-    color: #e8f4fd;
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+    color: var(--text-color);
+    background: var(--primary-bg);
     background-size: 400% 400%;
     animation: backgroundShift 15s ease infinite;
     min-height: 100vh;
+    transition: all 0.3s ease;
 }
 
 @keyframes backgroundShift {
@@ -41,7 +61,58 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    min-height: 80px;
+    min-height: 90px;
+}
+
+/* Header Controls */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.language-selector,
+.theme-selector {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.language-btn,
+.theme-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.language-btn:hover,
+.theme-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.1);
+}
+
+.language-btn.active,
+.theme-btn.active {
+    background: linear-gradient(45deg, #00d4ff, #667eea);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+}
+
+.flag {
+    font-size: 1.2rem;
+}
+
+.theme-btn i {
+    color: white;
+    font-size: 1rem;
 }
 
 @keyframes headerGradient {
@@ -1670,14 +1741,33 @@ main {
 .fifa-card {
     position: relative;
     width: 100%;
-    height: 650px;
+    height: 700px;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     border-radius: 20px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     transform-style: preserve-3d;
     transition: transform 0.3s ease;
     border: 3px solid #00d4ff;
+}
+
+.fifa-card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.fifa-card::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.fifa-card::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #00d4ff, #667eea);
+    border-radius: 4px;
+}
+
+.fifa-card::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #667eea, #00d4ff);
 }
 
 .fifa-card:hover {
@@ -1773,12 +1863,12 @@ main {
 }
 
 .fifa-player-photo {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     border: 3px solid #00d4ff;
     object-fit: cover;
-    margin: 0 auto 0.5rem auto;
+    margin: 0 auto 0.8rem auto;
     display: block;
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }

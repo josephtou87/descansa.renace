@@ -187,23 +187,23 @@ function showFIFACard(player) {
             <!-- Season Stats -->
             <div class="fifa-season-stats">
                 <div class="season-stat">
-                    <div class="season-stat-label">Games</div>
+                    <div class="season-stat-label" data-translate="games">${translations[currentLanguage].games}</div>
                     <div class="season-stat-value">${gamesPlayed}</div>
                 </div>
                 <div class="season-stat">
-                    <div class="season-stat-label">Goals</div>
+                    <div class="season-stat-label" data-translate="goals">${translations[currentLanguage].goals}</div>
                     <div class="season-stat-value">${goals}</div>
                 </div>
                 <div class="season-stat">
-                    <div class="season-stat-label">Assists</div>
+                    <div class="season-stat-label" data-translate="assists">${translations[currentLanguage].assists}</div>
                     <div class="season-stat-value">${assists}</div>
                 </div>
                 <div class="season-stat">
-                    <div class="season-stat-label">Yellow</div>
+                    <div class="season-stat-label" data-translate="yellow">${translations[currentLanguage].yellow}</div>
                     <div class="season-stat-value">${yellowCards}</div>
                 </div>
                 <div class="season-stat">
-                    <div class="season-stat-label">Red</div>
+                    <div class="season-stat-label" data-translate="red">${translations[currentLanguage].red}</div>
                     <div class="season-stat-value">${redCards}</div>
                 </div>
             </div>
@@ -271,24 +271,24 @@ function calculateOverallRating(stats) {
 function initializeFieldFormation() {
     const field = document.getElementById('playersField');
     
-    // Formation 5-3-2 as shown in the image
+    // Formation 5-3-2 as shown in the image - Correct positions
     const formation = {
-        goalkeeper: { position: '50% 88%' },
+        goalkeeper: { position: '50% 90%' },
         defenders: [
-            { position: '12% 75%' }, // LB
-            { position: '30% 75%' }, // CB
+            { position: '10% 75%' }, // LB
+            { position: '25% 75%' }, // CB
             { position: '50% 75%' }, // CB
-            { position: '70% 75%' }, // CB
-            { position: '88% 75%' }  // RB
+            { position: '75% 75%' }, // CB
+            { position: '90% 75%' }  // RB
         ],
         midfielders: [
-            { position: '25% 50%' }, // LM
+            { position: '20% 50%' }, // LM
             { position: '50% 50%' }, // CM
-            { position: '75% 50%' }  // RM
+            { position: '80% 50%' }  // RM
         ],
         forwards: [
-            { position: '35% 25%' }, // ST
-            { position: '65% 25%' }  // ST (Captain)
+            { position: '35% 20%' }, // ST
+            { position: '65% 20%' }  // ST (Captain)
         ]
     };
     
@@ -521,6 +521,112 @@ function createSubstitutePlayer(player) {
     return substituteDiv;
 }
 
+// Language and Theme Functions
+function initializeLanguageSelector() {
+    const languageBtns = document.querySelectorAll('.language-btn');
+    
+    languageBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            languageBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Get selected language
+            const lang = btn.getAttribute('data-lang');
+            currentLanguage = lang;
+            
+            // Save preference
+            localStorage.setItem('language', lang);
+            
+            // Translate page
+            translatePage(lang);
+        });
+    });
+}
+
+function initializeThemeSelector() {
+    const themeBtns = document.querySelectorAll('.theme-btn');
+    
+    themeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all buttons
+            themeBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked button
+            btn.classList.add('active');
+            
+            // Get selected theme
+            const theme = btn.getAttribute('data-theme');
+            currentTheme = theme;
+            
+            // Save preference
+            localStorage.setItem('theme', theme);
+            
+            // Apply theme
+            applyTheme(theme);
+        });
+    });
+}
+
+function applySavedPreferences() {
+    // Apply saved language
+    const savedLang = localStorage.getItem('language') || 'es';
+    currentLanguage = savedLang;
+    
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    currentTheme = savedTheme;
+    
+    // Update UI
+    document.querySelector(`[data-lang="${savedLang}"]`).classList.add('active');
+    document.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
+    
+    // Apply translations and theme
+    translatePage(savedLang);
+    applyTheme(savedTheme);
+}
+
+function translatePage(lang) {
+    const elements = document.querySelectorAll('[data-translate]');
+    
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+    
+    // Update FIFA cards if they're open
+    updateFIFACardsLanguage(lang);
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    
+    // Update header background
+    const header = document.querySelector('.header');
+    if (theme === 'light') {
+        header.style.background = 'linear-gradient(135deg, #4a90e2 0%, #357abd 50%, #2e5c8a 100%)';
+    } else {
+        header.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #00d4ff 100%)';
+    }
+}
+
+function updateFIFACardsLanguage(lang) {
+    // Update any open FIFA cards with new language
+    const modal = document.getElementById('playerCardModal');
+    if (modal && modal.style.display === 'block') {
+        // Re-translate the currently displayed card
+        const seasonStats = modal.querySelectorAll('.season-stat-label');
+        seasonStats.forEach((stat, index) => {
+            const keys = ['games', 'goals', 'assists', 'yellow', 'red'];
+            if (keys[index] && translations[lang] && translations[lang][keys[index]]) {
+                stat.textContent = translations[lang][keys[index]];
+            }
+        });
+    }
+}
+
 // Create field player element
 function createFieldPlayer(player, position, isStartingXI = false) {
     const [x, y] = position.split(' ');
@@ -552,6 +658,103 @@ function createFieldPlayer(player, position, isStartingXI = false) {
     return playerDiv;
 }
 
+// Translation system
+const translations = {
+    es: {
+        // Navigation
+        'home': 'Inicio',
+        'stats': 'Estadísticas',
+        'media': 'Multimedia',
+        'squad': 'Plantilla',
+        'login': 'Iniciar Sesión',
+        
+        // Sections
+        'substitutes': 'SUPLENTES',
+        'manager': 'DIRECTOR TÉCNICO',
+        'coach-name': 'Nombre del Entrenador',
+        'starting-xi': '11 Titular',
+        'formation': 'Formación : 5-3-2',
+        
+        // Player stats
+        'games': 'Partidos',
+        'goals': 'Goles',
+        'assists': 'Asistencias',
+        'yellow': 'Amarillas',
+        'red': 'Rojas',
+        
+        // FIFA Stats
+        'pace': 'Velocidad',
+        'shooting': 'Disparo',
+        'passing': 'Pase',
+        'dribbling': 'Regate',
+        'defense': 'Defensa',
+        'physical': 'Físico'
+    },
+    en: {
+        // Navigation
+        'home': 'Home',
+        'stats': 'Statistics',
+        'media': 'Multimedia',
+        'squad': 'Squad',
+        'login': 'Login',
+        
+        // Sections
+        'substitutes': 'SUBSTITUTES',
+        'manager': 'MANAGER',
+        'coach-name': 'Coach Name',
+        'starting-xi': 'Starting XI',
+        'formation': 'Formation : 5-3-2',
+        
+        // Player stats
+        'games': 'Games',
+        'goals': 'Goals',
+        'assists': 'Assists',
+        'yellow': 'Yellow',
+        'red': 'Red',
+        
+        // FIFA Stats
+        'pace': 'Pace',
+        'shooting': 'Shooting',
+        'passing': 'Passing',
+        'dribbling': 'Dribbling',
+        'defense': 'Defense',
+        'physical': 'Physical'
+    },
+    zh: {
+        // Navigation
+        'home': '首页',
+        'stats': '统计',
+        'media': '多媒体',
+        'squad': '阵容',
+        'login': '登录',
+        
+        // Sections
+        'substitutes': '替补',
+        'manager': '教练',
+        'coach-name': '教练姓名',
+        'starting-xi': '首发十一人',
+        'formation': '阵型 : 5-3-2',
+        
+        // Player stats
+        'games': '比赛',
+        'goals': '进球',
+        'assists': '助攻',
+        'yellow': '黄牌',
+        'red': '红牌',
+        
+        // FIFA Stats
+        'pace': '速度',
+        'shooting': '射门',
+        'passing': '传球',
+        'dribbling': '盘带',
+        'defense': '防守',
+        'physical': '身体'
+    }
+};
+
+let currentLanguage = 'es';
+let currentTheme = 'dark';
+
 // Initialize application
 function initializeApp() {
     // Initialize database
@@ -560,6 +763,13 @@ function initializeApp() {
     // Load saved data
     loadPlayers();
     loadNextMatch();
+    
+    // Initialize language and theme
+    initializeLanguageSelector();
+    initializeThemeSelector();
+    
+    // Apply saved preferences
+    applySavedPreferences();
     
     // Check if user is logged in
     const savedUser = localStorage.getItem('currentUser');

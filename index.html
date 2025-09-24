@@ -25,11 +25,11 @@
                 <span class="team-name">FC DESCANSA</span>
             </div>
             <ul class="nav-menu">
-                <li><a href="#home" class="nav-link active">Inicio</a></li>
-                <li><a href="#stats" class="nav-link">Estadísticas</a></li>
-                <li><a href="#media" class="nav-link">Multimedia</a></li>
-                <li><a href="#squad" class="nav-link">Plantilla</a></li>
-                <li><a href="#login" class="nav-link" id="loginLink">Iniciar Sesión</a></li>
+                <li><a href="#home" class="nav-link active" data-translate="home">Inicio</a></li>
+                <li><a href="#stats" class="nav-link" data-translate="stats">Estadísticas</a></li>
+                <li><a href="#media" class="nav-link" data-translate="media">Multimedia</a></li>
+                <li><a href="#squad" class="nav-link" data-translate="squad">Plantilla</a></li>
+                <li><a href="#login" class="nav-link" id="loginLink" data-translate="login">Iniciar Sesión</a></li>
                 <li class="nav-social-mobile">
                     <div class="social-mobile">
                         <a href="https://facebook.com/fcdescansa" target="_blank" class="social-icon facebook" title="Facebook">
@@ -47,19 +47,42 @@
                     </div>
                 </li>
             </ul>
-            <div class="social-header">
-                <a href="https://facebook.com/fcdescansa" target="_blank" class="social-icon facebook" title="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://instagram.com/fcdescansa" target="_blank" class="social-icon instagram" title="Instagram">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://tiktok.com/@fcdescansa" target="_blank" class="social-icon tiktok" title="TikTok">
-                    <i class="fab fa-tiktok"></i>
-                </a>
-                <a href="https://youtube.com/@fcdescansa" target="_blank" class="social-icon youtube" title="YouTube">
-                    <i class="fab fa-youtube"></i>
-                </a>
+            <div class="header-controls">
+                <div class="language-selector">
+                    <button class="language-btn active" data-lang="es" title="Español">
+                        <span class="flag">🇪🇸</span>
+                    </button>
+                    <button class="language-btn" data-lang="en" title="English">
+                        <span class="flag">🇺🇸</span>
+                    </button>
+                    <button class="language-btn" data-lang="zh" title="中文">
+                        <span class="flag">🇨🇳</span>
+                    </button>
+                </div>
+                
+                <div class="theme-selector">
+                    <button class="theme-btn active" data-theme="dark" title="Modo Oscuro">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="theme-btn" data-theme="light" title="Modo Claro">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
+                
+                <div class="social-header">
+                    <a href="https://facebook.com/fcdescansa" target="_blank" class="social-icon facebook" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com/fcdescansa" target="_blank" class="social-icon instagram" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://tiktok.com/@fcdescansa" target="_blank" class="social-icon tiktok" title="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="https://youtube.com/@fcdescansa" target="_blank" class="social-icon youtube" title="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
             </div>
             <div class="hamburger">
                 <span></span>
@@ -384,7 +407,7 @@
                 
                 <!-- Starting XI -->
                 <div class="starting-xi">
-                    <h3>11 Titular</h3>
+                    <h3 data-translate="starting-xi">11 Titular</h3>
                 <div class="formation-container">
                     <div class="field">
                         <div class="field-background">
@@ -395,13 +418,13 @@
                         </div>
                     </div>
                     <div class="formation-text">
-                        <span>Formation : 5-3-2</span>
+                        <span data-translate="formation">Formación : 5-3-2</span>
                     </div>
                 </div>
                 
                 <div class="substitutes-section">
                     <div class="substitutes-header">
-                        <span>SUBSTITUTES</span>
+                        <span data-translate="substitutes">SUPLENTES</span>
                     </div>
                     <div class="substitutes-grid" id="substitutesGrid">
                         <!-- Substitutes will be added here by JavaScript -->
@@ -410,10 +433,10 @@
                 
                 <div class="manager-section">
                     <div class="manager-header">
-                        <span>MANAGER</span>
+                        <span data-translate="manager">DIRECTOR TÉCNICO</span>
                     </div>
                     <div class="manager-info">
-                        <span>Coach Name</span>
+                        <span data-translate="coach-name">Nombre del Entrenador</span>
                     </div>
                 </div>
                 </div>
