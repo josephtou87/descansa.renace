@@ -62,7 +62,9 @@ function initializeCarousel() {
     const thumbnails = document.querySelectorAll('.thumbnail');
     const prevBtn = document.querySelector('.carousel-prev');
     const nextBtn = document.querySelector('.carousel-next');
+    const carouselContainer = document.querySelector('.carousel-container');
     let currentSlide = 0;
+    let autoPlayInterval;
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -83,6 +85,23 @@ function initializeCarousel() {
         showSlide(currentSlide);
     }
 
+    function startAutoPlay() {
+        autoPlayInterval = setInterval(nextSlide, 5000);
+    }
+
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+
+    // Start auto-play
+    startAutoPlay();
+
+    // Pause on hover
+    if (carouselContainer) {
+        carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+        carouselContainer.addEventListener('mouseleave', startAutoPlay);
+    }
+
     // Event listeners
     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
@@ -94,8 +113,19 @@ function initializeCarousel() {
         });
     });
 
-    // Auto-play carousel
-    setInterval(nextSlide, 5000);
+    // Click on slide to open modal
+    slides.forEach((slide, index) => {
+        slide.addEventListener('click', () => {
+            const img = slide.querySelector('.main-image');
+            const title = slide.querySelector('.carousel-overlay h3');
+            const description = slide.querySelector('.carousel-overlay p');
+            
+            if (img) {
+                openImageModal(img.src, title?.textContent || '', description?.textContent || '');
+            }
+        });
+    });
+
 
     // Video carousel
     const videoSlides = document.querySelectorAll('.video-slide');
@@ -724,6 +754,53 @@ function updateThemeToggleText(lang) {
                 themeText.textContent = translations[lang]['light-theme'];
             }
         }
+    }
+}
+
+// Image Modal Functions
+function openImageModal(imageSrc, title, description) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    if (modal && modalImage) {
+        modalImage.src = imageSrc;
+        modalImage.alt = title;
+        
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalDescription) modalDescription.textContent = description;
+        
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        
+        // Close modal when clicking on close button
+        const closeBtn = document.querySelector('.modal-close');
+        if (closeBtn) {
+            closeBtn.onclick = () => closeImageModal();
+        }
+        
+        // Close modal when clicking outside the image
+        modal.onclick = (e) => {
+            if (e.target === modal) {
+                closeImageModal();
+            }
+        };
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+    }
+}
+
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
 }
 
