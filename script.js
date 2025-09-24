@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCountdown();
     setInterval(updateCountdown, 1000);
     startInnovativeEffect();
+    initializeCarousel();
+    playChampionsAnthem();
 });
 
 // Innovative text effect for the subtitle
@@ -49,6 +51,88 @@ function startInnovativeEffect() {
     
     // Start the effect after a short delay
     setTimeout(showWords, 800);
+}
+
+// Initialize carousel functionality
+function initializeCarousel() {
+    // Photo carousel
+    const slides = document.querySelectorAll('.carousel-slide');
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+        thumbnails.forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Event listeners
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    
+    thumbnails.forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+
+    // Auto-play carousel
+    setInterval(nextSlide, 5000);
+
+    // Video carousel
+    const videoSlides = document.querySelectorAll('.video-slide');
+    const videoPrevBtn = document.querySelector('.video-prev');
+    const videoNextBtn = document.querySelector('.video-next');
+    let currentVideoSlide = 0;
+
+    function showVideoSlide(index) {
+        videoSlides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextVideoSlide() {
+        currentVideoSlide = (currentVideoSlide + 1) % videoSlides.length;
+        showVideoSlide(currentVideoSlide);
+    }
+
+    function prevVideoSlide() {
+        currentVideoSlide = (currentVideoSlide - 1 + videoSlides.length) % videoSlides.length;
+        showVideoSlide(currentVideoSlide);
+    }
+
+    if (videoNextBtn) videoNextBtn.addEventListener('click', nextVideoSlide);
+    if (videoPrevBtn) videoPrevBtn.addEventListener('click', prevVideoSlide);
+}
+
+// Play Champions League anthem
+function playChampionsAnthem() {
+    const audio = document.getElementById('champions-anthem');
+    if (audio) {
+        // Play after a short delay
+        setTimeout(() => {
+            audio.volume = 0.3; // Set volume to 30%
+            audio.play().catch(e => {
+                console.log('Audio autoplay was prevented:', e);
+            });
+        }, 1000);
+    }
 }
 
 // Initialize application
