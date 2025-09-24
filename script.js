@@ -271,24 +271,29 @@ function calculateOverallRating(stats) {
 function initializeFieldFormation() {
     const field = document.getElementById('playersField');
     
-    // Formation 5-3-2 as shown in the image - Correct positions
+    if (!field) {
+        console.error('Field element not found');
+        return;
+    }
+    
+    // Formation 5-3-2 - Correct positions using the full field
     const formation = {
-        goalkeeper: { position: '50% 90%' },
+        goalkeeper: { position: '50% 85%' }, // Centered in goal area
         defenders: [
-            { position: '10% 75%' }, // LB
-            { position: '25% 75%' }, // CB
-            { position: '50% 75%' }, // CB
-            { position: '75% 75%' }, // CB
-            { position: '90% 75%' }  // RB
+            { position: '15% 75%' }, // LB - Left back
+            { position: '32% 75%' }, // CB - Left center back
+            { position: '50% 75%' }, // CB - Center back
+            { position: '68% 75%' }, // CB - Right center back
+            { position: '85% 75%' }  // RB - Right back
         ],
         midfielders: [
-            { position: '20% 50%' }, // LM
-            { position: '50% 50%' }, // CM
-            { position: '80% 50%' }  // RM
+            { position: '25% 50%' }, // LM - Left midfielder
+            { position: '50% 50%' }, // CM - Center midfielder
+            { position: '75% 50%' }  // RM - Right midfielder
         ],
         forwards: [
-            { position: '35% 20%' }, // ST
-            { position: '65% 20%' }  // ST (Captain)
+            { position: '35% 20%' }, // ST - Left striker
+            { position: '65% 20%' }  // ST - Right striker (Captain)
         ]
     };
     
@@ -429,30 +434,32 @@ function initializeFieldFormation() {
     
     // Clear field
     field.innerHTML = '';
+    console.log('Field cleared, adding players...');
     
     // Add goalkeeper
     const gk = players[0];
-    const gkElement = createFieldPlayer(gk, formation.goalkeeper.position, true);
+    const gkElement = createFieldPlayer(gk, formation.goalkeeper.position);
     field.appendChild(gkElement);
+    console.log('Goalkeeper added:', gk.name);
     
     // Add defenders (5)
     formation.defenders.forEach((pos, index) => {
         const player = players[index + 1];
-        const playerElement = createFieldPlayer(player, pos.position, true);
+        const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
     // Add midfielders (3)
     formation.midfielders.forEach((pos, index) => {
         const player = players[index + 6];
-        const playerElement = createFieldPlayer(player, pos.position, true);
+        const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
     // Add forwards (2)
     formation.forwards.forEach((pos, index) => {
         const player = players[index + 9];
-        const playerElement = createFieldPlayer(player, pos.position, true);
+        const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
@@ -466,6 +473,11 @@ function initializeFieldFormation() {
 // Initialize substitutes section
 function initializeSubstitutes() {
     const substitutesGrid = document.getElementById('substitutesGrid');
+    
+    if (!substitutesGrid) {
+        console.error('Substitutes grid not found');
+        return;
+    }
     
     // Sample substitutes data
     const substitutes = [
@@ -481,12 +493,14 @@ function initializeSubstitutes() {
     
     // Clear substitutes grid
     substitutesGrid.innerHTML = '';
+    console.log('Substitutes grid cleared, adding substitutes...');
     
     // Add substitutes
     substitutes.forEach(substitute => {
         const substituteElement = createSubstitutePlayer(substitute);
         substitutesGrid.appendChild(substituteElement);
     });
+    console.log('Substitutes added:', substitutes.length);
 }
 
 // Create substitute player element
@@ -523,18 +537,23 @@ function createSubstitutePlayer(player) {
 
 // Language and Theme Functions
 function initializeLanguageSelector() {
-    const languageBtns = document.querySelectorAll('.language-btn');
+    const languageDropdown = document.getElementById('languageDropdown');
+    const languageOptions = document.querySelectorAll('.language-option');
     
-    languageBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
-            languageBtns.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            btn.classList.add('active');
-            
-            // Get selected language
-            const lang = btn.getAttribute('data-lang');
+    languageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const lang = option.getAttribute('data-lang');
             currentLanguage = lang;
+            
+            // Update dropdown button
+            const flag = option.querySelector('.flag').textContent;
+            const langText = lang.toUpperCase();
+            languageDropdown.querySelector('.flag').textContent = flag;
+            languageDropdown.querySelector('.language-text').textContent = langText;
+            
+            // Update active option
+            languageOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
             
             // Save preference
             localStorage.setItem('language', lang);
@@ -546,25 +565,28 @@ function initializeLanguageSelector() {
 }
 
 function initializeThemeSelector() {
-    const themeBtns = document.querySelectorAll('.theme-btn');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    const themeText = themeToggle.querySelector('.theme-text');
     
-    themeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Remove active class from all buttons
-            themeBtns.forEach(b => b.classList.remove('active'));
-            // Add active class to clicked button
-            btn.classList.add('active');
-            
-            // Get selected theme
-            const theme = btn.getAttribute('data-theme');
-            currentTheme = theme;
-            
-            // Save preference
-            localStorage.setItem('theme', theme);
-            
-            // Apply theme
-            applyTheme(theme);
-        });
+    themeToggle.addEventListener('click', () => {
+        // Toggle theme
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        // Update button
+        if (currentTheme === 'dark') {
+            themeIcon.className = 'fas fa-moon theme-icon';
+            themeText.textContent = 'Oscuro';
+        } else {
+            themeIcon.className = 'fas fa-sun theme-icon';
+            themeText.textContent = 'Claro';
+        }
+        
+        // Save preference
+        localStorage.setItem('theme', currentTheme);
+        
+        // Apply theme
+        applyTheme(currentTheme);
     });
 }
 
@@ -577,9 +599,33 @@ function applySavedPreferences() {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     currentTheme = savedTheme;
     
-    // Update UI
-    document.querySelector(`[data-lang="${savedLang}"]`).classList.add('active');
-    document.querySelector(`[data-theme="${savedTheme}"]`).classList.add('active');
+    // Update language dropdown
+    const languageDropdown = document.getElementById('languageDropdown');
+    const languageOptions = document.querySelectorAll('.language-option');
+    const activeOption = document.querySelector(`[data-lang="${savedLang}"]`);
+    
+    if (activeOption) {
+        const flag = activeOption.querySelector('.flag').textContent;
+        const langText = savedLang.toUpperCase();
+        languageDropdown.querySelector('.flag').textContent = flag;
+        languageDropdown.querySelector('.language-text').textContent = langText;
+        
+        languageOptions.forEach(opt => opt.classList.remove('active'));
+        activeOption.classList.add('active');
+    }
+    
+    // Update theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    const themeText = themeToggle.querySelector('.theme-text');
+    
+    if (savedTheme === 'dark') {
+        themeIcon.className = 'fas fa-moon theme-icon';
+        themeText.textContent = 'Oscuro';
+    } else {
+        themeIcon.className = 'fas fa-sun theme-icon';
+        themeText.textContent = 'Claro';
+    }
     
     // Apply translations and theme
     translatePage(savedLang);
@@ -628,7 +674,7 @@ function updateFIFACardsLanguage(lang) {
 }
 
 // Create field player element
-function createFieldPlayer(player, position, isStartingXI = false) {
+function createFieldPlayer(player, position) {
     const [x, y] = position.split(' ');
     
     const playerDiv = document.createElement('div');
