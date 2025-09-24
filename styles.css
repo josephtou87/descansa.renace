@@ -1778,6 +1778,42 @@ main {
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
+.fifa-season-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.season-stat {
+    text-align: center;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.season-stat-label {
+    font-size: 0.7rem;
+    color: #00d4ff;
+    font-weight: 600;
+    font-family: 'Rajdhani', 'Exo 2', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+}
+
+.season-stat-value {
+    font-size: 1.2rem;
+    color: white;
+    font-weight: 900;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
 .fifa-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1831,13 +1867,19 @@ main {
 }
 
 /* Field Formation Styles */
+.formation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem 0;
+}
+
 .field {
     position: relative;
     width: 100%;
-    max-width: 800px;
-    margin: 2rem auto;
+    max-width: 600px;
     background: linear-gradient(135deg, #228B22 0%, #32CD32 100%);
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
     aspect-ratio: 3/2;
@@ -1862,47 +1904,262 @@ main {
 
 .field-player {
     position: absolute;
-    width: 60px;
+    width: 80px;
+    height: 100px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translate(-50%, -50%);
+}
+
+.field-player:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    z-index: 10;
+}
+
+.field-player:hover .player-photo {
+    transform: scale(1.3);
+    border-radius: 50%;
+    border: 3px solid #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+}
+
+.player-jersey {
+    position: relative;
+    width: 50px;
     height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.jersey-white {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    border: 2px solid #333;
+}
+
+.jersey-black {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    border: 2px solid #666;
+}
+
+.player-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+}
+
+.jersey-number {
+    position: absolute;
+    top: -5px;
+    right: -5px;
     background: linear-gradient(45deg, #00d4ff, #667eea);
+    color: white;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.captain-badge {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background: linear-gradient(45deg, #ffd700, #ffed4e);
+    color: #000;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+}
+
+.player-name-box {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 0.3rem 0.8rem;
+    margin-top: 0.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-name {
+    font-size: 0.8rem;
+    color: white;
+    text-align: center;
+    font-family: 'Rajdhani', 'Exo 2', sans-serif;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.formation-text {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 25px;
+    margin-top: 1rem;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 212, 255, 0.3);
+}
+
+/* Substitutes Section */
+.substitutes-section {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    border-radius: 20px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+}
+
+.substitutes-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.substitutes-header span {
+    background: linear-gradient(45deg, #00d4ff, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+.substitutes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.substitute-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    border: 3px solid white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    padding: 1rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.field-player:hover {
-    transform: scale(1.2);
-    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.6);
+.substitute-player:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+    box-shadow: 0 10px 25px rgba(0, 212, 255, 0.2);
 }
 
-.field-player-number {
-    color: white;
-    font-weight: 900;
-    font-family: 'Orbitron', 'Exo 2', sans-serif;
-    font-size: 1.2rem;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-}
-
-.field-player-name {
-    position: absolute;
-    bottom: -25px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    font-family: 'Rajdhani', 'Exo 2', sans-serif;
-    text-align: center;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-    white-space: nowrap;
-    max-width: 80px;
+.substitute-jersey {
+    position: relative;
+    width: 40px;
+    height: 50px;
+    border-radius: 6px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 0.5rem;
+}
+
+.substitute-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.substitute-number {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    background: linear-gradient(45deg, #00d4ff, #667eea);
+    color: white;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+}
+
+.substitute-name {
+    font-size: 0.7rem;
+    color: white;
+    text-align: center;
+    font-family: 'Rajdhani', 'Exo 2', sans-serif;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Manager Section */
+.manager-section {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-radius: 20px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    text-align: center;
+}
+
+.manager-header {
+    margin-bottom: 1rem;
+}
+
+.manager-header span {
+    background: linear-gradient(45deg, #00d4ff, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Orbitron', 'Exo 2', sans-serif;
+    font-weight: 900;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.manager-info {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.manager-info span {
+    color: white;
+    font-family: 'Rajdhani', 'Exo 2', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Player Grid Styles */

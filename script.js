@@ -165,9 +165,16 @@ function showFIFACard(player) {
     // Calculate overall rating based on stats
     const overall = calculateOverallRating(player.stats);
     
+    // Get season stats
+    const gamesPlayed = player.gamesPlayed || 0;
+    const goals = player.goals || 0;
+    const assists = player.assists || 0;
+    const yellowCards = player.yellowCards || 0;
+    const redCards = player.redCards || 0;
+    
     card.innerHTML = `
         <div class="fifa-card-header">
-            <div class="fifa-player-name">${player.name}</div>
+            <div class="fifa-player-name">${player.fullName || player.name}</div>
             <div class="fifa-overall-rating">${overall}</div>
         </div>
         <div class="fifa-player-info">
@@ -176,6 +183,31 @@ function showFIFACard(player) {
                 <div class="fifa-jersey-number">#${player.jerseyNumber}</div>
             </div>
             <img src="${player.photo || 'assets/images/players/default.jpg'}" alt="${player.name}" class="fifa-player-photo">
+            
+            <!-- Season Stats -->
+            <div class="fifa-season-stats">
+                <div class="season-stat">
+                    <div class="season-stat-label">Games</div>
+                    <div class="season-stat-value">${gamesPlayed}</div>
+                </div>
+                <div class="season-stat">
+                    <div class="season-stat-label">Goals</div>
+                    <div class="season-stat-value">${goals}</div>
+                </div>
+                <div class="season-stat">
+                    <div class="season-stat-label">Assists</div>
+                    <div class="season-stat-value">${assists}</div>
+                </div>
+                <div class="season-stat">
+                    <div class="season-stat-label">Yellow</div>
+                    <div class="season-stat-value">${yellowCards}</div>
+                </div>
+                <div class="season-stat">
+                    <div class="season-stat-label">Red</div>
+                    <div class="season-stat-value">${redCards}</div>
+                </div>
+            </div>
+            
             <div class="fifa-stats">
                 <div class="fifa-stat">
                     <div class="fifa-stat-label">PAC</div>
@@ -239,40 +271,160 @@ function calculateOverallRating(stats) {
 function initializeFieldFormation() {
     const field = document.getElementById('playersField');
     
-    // Sample starting XI formation (4-4-2)
+    // Formation 5-3-2 as shown in the image
     const formation = {
-        goalkeeper: { position: '50% 90%' },
+        goalkeeper: { position: '50% 85%' },
         defenders: [
-            { position: '20% 70%' }, // LB
-            { position: '40% 70%' }, // CB
-            { position: '60% 70%' }, // CB
-            { position: '80% 70%' }  // RB
+            { position: '15% 70%' }, // LB
+            { position: '35% 70%' }, // CB
+            { position: '50% 70%' }, // CB
+            { position: '65% 70%' }, // CB
+            { position: '85% 70%' }  // RB
         ],
         midfielders: [
-            { position: '20% 50%' }, // LM
-            { position: '40% 50%' }, // CM
-            { position: '60% 50%' }, // CM
-            { position: '80% 50%' }  // RM
+            { position: '25% 45%' }, // LM
+            { position: '50% 45%' }, // CM
+            { position: '75% 45%' }  // RM
         ],
         forwards: [
-            { position: '35% 25%' }, // ST
-            { position: '65% 25%' }  // ST
+            { position: '35% 20%' }, // ST
+            { position: '65% 20%' }  // ST (Captain)
         ]
     };
     
-    // Sample players data
+    // Real players data with photos and stats
     const players = [
-        { name: 'Juan', jerseyNumber: 1, position: 'POR', stats: { pace: 60, shooting: 40, passing: 70, dribbling: 50, defense: 85, physical: 80 } },
-        { name: 'Carlos', jerseyNumber: 2, position: 'DEF', stats: { pace: 70, shooting: 50, passing: 75, dribbling: 60, defense: 85, physical: 80 } },
-        { name: 'Miguel', jerseyNumber: 3, position: 'DEF', stats: { pace: 75, shooting: 55, passing: 80, dribbling: 65, defense: 88, physical: 82 } },
-        { name: 'Luis', jerseyNumber: 4, position: 'DEF', stats: { pace: 72, shooting: 52, passing: 78, dribbling: 62, defense: 87, physical: 81 } },
-        { name: 'Pedro', jerseyNumber: 5, position: 'DEF', stats: { pace: 68, shooting: 48, passing: 73, dribbling: 58, defense: 86, physical: 79 } },
-        { name: 'Antonio', jerseyNumber: 6, position: 'MED', stats: { pace: 75, shooting: 70, passing: 85, dribbling: 80, defense: 75, physical: 78 } },
-        { name: 'Diego', jerseyNumber: 7, position: 'MED', stats: { pace: 80, shooting: 75, passing: 88, dribbling: 85, defense: 70, physical: 76 } },
-        { name: 'Roberto', jerseyNumber: 8, position: 'MED', stats: { pace: 78, shooting: 72, passing: 87, dribbling: 82, defense: 72, physical: 77 } },
-        { name: 'Fernando', jerseyNumber: 9, position: 'MED', stats: { pace: 82, shooting: 68, passing: 83, dribbling: 88, defense: 65, physical: 74 } },
-        { name: 'Alejandro', jerseyNumber: 10, position: 'DEL', stats: { pace: 85, shooting: 90, passing: 80, dribbling: 90, defense: 40, physical: 75 } },
-        { name: 'Sergio', jerseyNumber: 11, position: 'DEL', stats: { pace: 88, shooting: 88, passing: 75, dribbling: 85, defense: 35, physical: 78 } }
+        { 
+            name: 'Gudy', 
+            fullName: 'Jesus Ocampo Gudy',
+            jerseyNumber: 1, 
+            position: 'POR', 
+            photo: 'assets/images/players/gudy.png',
+            stats: { pace: 60, shooting: 40, passing: 70, dribbling: 50, defense: 85, physical: 80 },
+            gamesPlayed: 15,
+            goals: 0,
+            assists: 0,
+            yellowCards: 2,
+            redCards: 0
+        },
+        { 
+            name: 'Carlos', 
+            fullName: 'Carlos Rodriguez',
+            jerseyNumber: 2, 
+            position: 'DEF', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 70, shooting: 50, passing: 75, dribbling: 60, defense: 85, physical: 80 },
+            gamesPlayed: 12,
+            goals: 1,
+            assists: 3,
+            yellowCards: 4,
+            redCards: 0
+        },
+        { 
+            name: 'Miguel', 
+            fullName: 'Miguel Torres',
+            jerseyNumber: 3, 
+            position: 'DEF', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 75, shooting: 55, passing: 80, dribbling: 65, defense: 88, physical: 82 },
+            gamesPlayed: 14,
+            goals: 0,
+            assists: 2,
+            yellowCards: 3,
+            redCards: 0
+        },
+        { 
+            name: 'Luis', 
+            fullName: 'Luis Martinez',
+            jerseyNumber: 4, 
+            position: 'DEF', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 72, shooting: 52, passing: 78, dribbling: 62, defense: 87, physical: 81 },
+            gamesPlayed: 13,
+            goals: 1,
+            assists: 1,
+            yellowCards: 2,
+            redCards: 0
+        },
+        { 
+            name: 'Pedro', 
+            fullName: 'Pedro Silva',
+            jerseyNumber: 5, 
+            position: 'DEF', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 68, shooting: 48, passing: 73, dribbling: 58, defense: 86, physical: 79 },
+            gamesPlayed: 11,
+            goals: 0,
+            assists: 4,
+            yellowCards: 1,
+            redCards: 0
+        },
+        { 
+            name: 'Antonio', 
+            fullName: 'Antonio Lopez',
+            jerseyNumber: 6, 
+            position: 'MED', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 75, shooting: 70, passing: 85, dribbling: 80, defense: 75, physical: 78 },
+            gamesPlayed: 15,
+            goals: 3,
+            assists: 6,
+            yellowCards: 3,
+            redCards: 0
+        },
+        { 
+            name: 'Diego', 
+            fullName: 'Diego Fernandez',
+            jerseyNumber: 7, 
+            position: 'MED', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 80, shooting: 75, passing: 88, dribbling: 85, defense: 70, physical: 76 },
+            gamesPlayed: 14,
+            goals: 5,
+            assists: 8,
+            yellowCards: 2,
+            redCards: 0
+        },
+        { 
+            name: 'Roberto', 
+            fullName: 'Roberto Garcia',
+            jerseyNumber: 8, 
+            position: 'MED', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 78, shooting: 72, passing: 87, dribbling: 82, defense: 72, physical: 77 },
+            gamesPlayed: 12,
+            goals: 2,
+            assists: 5,
+            yellowCards: 4,
+            redCards: 1
+        },
+        { 
+            name: 'Joseph', 
+            fullName: 'Joseph Angel Santos',
+            jerseyNumber: 9, 
+            position: 'DEL', 
+            photo: 'assets/images/players/joseph.png',
+            stats: { pace: 85, shooting: 90, passing: 80, dribbling: 90, defense: 40, physical: 75 },
+            gamesPlayed: 15,
+            goals: 12,
+            assists: 4,
+            yellowCards: 1,
+            redCards: 0,
+            isCaptain: true
+        },
+        { 
+            name: 'Alejandro', 
+            fullName: 'Alejandro Ruiz',
+            jerseyNumber: 10, 
+            position: 'DEL', 
+            photo: 'assets/images/players/default.jpg',
+            stats: { pace: 88, shooting: 88, passing: 75, dribbling: 85, defense: 35, physical: 78 },
+            gamesPlayed: 13,
+            goals: 8,
+            assists: 3,
+            yellowCards: 2,
+            redCards: 0
+        }
     ];
     
     // Clear field
@@ -280,33 +432,97 @@ function initializeFieldFormation() {
     
     // Add goalkeeper
     const gk = players[0];
-    const gkElement = createFieldPlayer(gk, formation.goalkeeper.position);
+    const gkElement = createFieldPlayer(gk, formation.goalkeeper.position, true);
     field.appendChild(gkElement);
     
-    // Add defenders
+    // Add defenders (5)
     formation.defenders.forEach((pos, index) => {
         const player = players[index + 1];
-        const playerElement = createFieldPlayer(player, pos.position);
+        const playerElement = createFieldPlayer(player, pos.position, true);
         field.appendChild(playerElement);
     });
     
-    // Add midfielders
+    // Add midfielders (3)
     formation.midfielders.forEach((pos, index) => {
-        const player = players[index + 5];
-        const playerElement = createFieldPlayer(player, pos.position);
+        const player = players[index + 6];
+        const playerElement = createFieldPlayer(player, pos.position, true);
         field.appendChild(playerElement);
     });
     
-    // Add forwards
+    // Add forwards (2)
     formation.forwards.forEach((pos, index) => {
         const player = players[index + 9];
-        const playerElement = createFieldPlayer(player, pos.position);
+        const playerElement = createFieldPlayer(player, pos.position, true);
         field.appendChild(playerElement);
+    });
+    
+    // Store players data globally for squad display
+    window.teamPlayers = players;
+    
+    // Initialize substitutes
+    initializeSubstitutes();
+}
+
+// Initialize substitutes section
+function initializeSubstitutes() {
+    const substitutesGrid = document.getElementById('substitutesGrid');
+    
+    // Sample substitutes data
+    const substitutes = [
+        { name: 'Marco', jerseyNumber: 12, position: 'POR', photo: 'assets/images/players/default.jpg', gamesPlayed: 3, goals: 0, assists: 0, yellowCards: 0, redCards: 0 },
+        { name: 'Andres', jerseyNumber: 13, position: 'DEF', photo: 'assets/images/players/default.jpg', gamesPlayed: 8, goals: 0, assists: 1, yellowCards: 2, redCards: 0 },
+        { name: 'Eduardo', jerseyNumber: 14, position: 'DEF', photo: 'assets/images/players/default.jpg', gamesPlayed: 6, goals: 1, assists: 0, yellowCards: 1, redCards: 0 },
+        { name: 'Francisco', jerseyNumber: 15, position: 'MED', photo: 'assets/images/players/default.jpg', gamesPlayed: 7, goals: 2, assists: 3, yellowCards: 1, redCards: 0 },
+        { name: 'Ricardo', jerseyNumber: 16, position: 'MED', photo: 'assets/images/players/default.jpg', gamesPlayed: 5, goals: 1, assists: 2, yellowCards: 0, redCards: 0 },
+        { name: 'Oscar', jerseyNumber: 17, position: 'DEL', photo: 'assets/images/players/default.jpg', gamesPlayed: 9, goals: 4, assists: 1, yellowCards: 2, redCards: 0 },
+        { name: 'Rafael', jerseyNumber: 18, position: 'DEL', photo: 'assets/images/players/default.jpg', gamesPlayed: 4, goals: 2, assists: 0, yellowCards: 1, redCards: 0 },
+        { name: 'Sebastian', jerseyNumber: 19, position: 'MED', photo: 'assets/images/players/default.jpg', gamesPlayed: 3, goals: 0, assists: 1, yellowCards: 0, redCards: 0 }
+    ];
+    
+    // Clear substitutes grid
+    substitutesGrid.innerHTML = '';
+    
+    // Add substitutes
+    substitutes.forEach(substitute => {
+        const substituteElement = createSubstitutePlayer(substitute);
+        substitutesGrid.appendChild(substituteElement);
     });
 }
 
+// Create substitute player element
+function createSubstitutePlayer(player) {
+    const substituteDiv = document.createElement('div');
+    substituteDiv.className = 'substitute-player';
+    
+    substituteDiv.innerHTML = `
+        <div class="substitute-jersey">
+            <img src="${player.photo}" alt="${player.name}" class="substitute-photo" onerror="this.src='assets/images/players/default.jpg'">
+            <div class="substitute-number">${player.jerseyNumber}</div>
+        </div>
+        <div class="substitute-name">${player.name}</div>
+    `;
+    
+    // Add click event to show FIFA card
+    substituteDiv.addEventListener('click', () => {
+        // Create a basic stats object for substitutes
+        const stats = {
+            pace: 70 + Math.floor(Math.random() * 20),
+            shooting: 60 + Math.floor(Math.random() * 25),
+            passing: 65 + Math.floor(Math.random() * 25),
+            dribbling: 65 + Math.floor(Math.random() * 25),
+            defense: 55 + Math.floor(Math.random() * 30),
+            physical: 70 + Math.floor(Math.random() * 20)
+        };
+        
+        const playerWithStats = { ...player, stats };
+        showFIFACard(playerWithStats);
+    });
+    
+    return substituteDiv;
+}
+
 // Create field player element
-function createFieldPlayer(player, position) {
+function createFieldPlayer(player, position, isStartingXI = false) {
     const [x, y] = position.split(' ');
     
     const playerDiv = document.createElement('div');
@@ -314,9 +530,18 @@ function createFieldPlayer(player, position) {
     playerDiv.style.left = x;
     playerDiv.style.top = y;
     
+    // Determine jersey color based on position
+    const jerseyClass = player.position === 'POR' ? 'jersey-white' : 'jersey-black';
+    
     playerDiv.innerHTML = `
-        <div class="field-player-number">${player.jerseyNumber}</div>
-        <div class="field-player-name">${player.name}</div>
+        <div class="player-jersey ${jerseyClass}">
+            <img src="${player.photo}" alt="${player.name}" class="player-photo" onerror="this.src='assets/images/players/default.jpg'">
+            <div class="jersey-number">${player.jerseyNumber}</div>
+            ${player.isCaptain ? '<div class="captain-badge">C</div>' : ''}
+        </div>
+        <div class="player-name-box">
+            <div class="player-name">${player.name}</div>
+        </div>
     `;
     
     // Add click event to show FIFA card
