@@ -22,24 +22,24 @@ function startTypewriterEffect() {
     
     const text = textElement.textContent;
     textElement.textContent = '';
-    textElement.style.borderRight = '2px solid #dc2626';
+    textElement.style.borderRight = '3px solid #dc2626';
     
     let i = 0;
     const typeWriter = () => {
         if (i < text.length) {
             textElement.textContent += text.charAt(i);
             i++;
-            setTimeout(typeWriter, 150);
+            setTimeout(typeWriter, 200);
         } else {
-            // Keep the cursor blinking
+            // Keep the cursor blinking for a while, then remove it
             setTimeout(() => {
                 textElement.style.borderRight = 'none';
-            }, 1000);
+            }, 2000);
         }
     };
     
     // Start the effect after a short delay
-    setTimeout(typeWriter, 1000);
+    setTimeout(typeWriter, 500);
 }
 
 // Initialize application

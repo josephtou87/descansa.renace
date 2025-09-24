@@ -60,21 +60,24 @@ body {
 }
 
 .team-name {
-    color: #dc2626;
+    color: #000000;
     font-size: 2rem;
     font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    text-shadow: 2px 2px 4px rgba(255,255,255,0.3);
     font-family: 'Arial Black', sans-serif;
-    animation: glow 2s ease-in-out infinite alternate;
+    animation: moveText 3s ease-in-out infinite alternate;
     letter-spacing: 1px;
 }
 
-@keyframes glow {
-    from {
-        text-shadow: 0 0 5px #dc2626, 0 0 10px #dc2626, 0 0 15px #dc2626;
+@keyframes moveText {
+    0% {
+        transform: translateX(0px);
     }
-    to {
-        text-shadow: 0 0 10px #dc2626, 0 0 20px #dc2626, 0 0 30px #dc2626;
+    50% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(-5px);
     }
 }
 
@@ -230,7 +233,7 @@ main {
     background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
     color: white;
     text-align: center;
-    padding: 2rem 2rem 0 2rem;
+    padding: 3rem 2rem 2rem 2rem;
     margin-bottom: 2rem;
     border-radius: 15px;
     position: relative;
@@ -242,32 +245,20 @@ main {
     z-index: 2;
 }
 
-.hero-logo {
-    margin-bottom: 1rem;
-}
-
-.hero-logo-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 6px solid white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease;
-}
-
-.hero-logo-img:hover {
-    transform: scale(1.1);
-}
 
 .hero-title {
     font-size: 4rem;
     font-weight: 900;
     margin-bottom: 1rem;
     text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
-    font-family: 'Arial Black', sans-serif;
-    animation: typewriter 3s steps(40) 1s 1 normal both, blinkTextCursor 500ms steps(40) infinite normal;
-    letter-spacing: 2px;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+    letter-spacing: 3px;
     color: white;
+    overflow: hidden;
+    border-right: 3px solid #dc2626;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typewriter 4s steps(40) 1s 1 normal both, blink 1s infinite;
 }
 
 @keyframes typewriter {
@@ -279,28 +270,12 @@ main {
     }
 }
 
-@keyframes blinkTextCursor {
-    from {
-        border-right-color: #dc2626;
-    }
-    to {
-        border-right-color: transparent;
-    }
-}
-
-.hero-title::after {
-    content: '|';
-    color: #dc2626;
-    animation: blink 1s infinite;
-    font-weight: 100;
-}
-
 @keyframes blink {
     0%, 50% {
-        opacity: 1;
+        border-color: #dc2626;
     }
     51%, 100% {
-        opacity: 0;
+        border-color: transparent;
     }
 }
 
@@ -315,17 +290,17 @@ main {
 
 .hero-team-photo {
     position: relative;
-    max-width: 700px;
+    max-width: 500px;
     margin: 0 auto;
-    border-radius: 20px;
+    border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-    border: 4px solid white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    border: 3px solid white;
 }
 
 .hero-team-img {
     width: 100%;
-    height: 350px;
+    height: 250px;
     object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
@@ -1313,13 +1288,9 @@ main {
         font-size: 2.8rem;
     }
 
-    .hero-logo-img {
-        width: 120px;
-        height: 120px;
-    }
 
     .hero-team-img {
-        height: 250px;
+        height: 200px;
     }
 
     .hero-team-overlay {
