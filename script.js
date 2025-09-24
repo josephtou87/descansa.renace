@@ -891,6 +891,24 @@ const translations = {
         // Latest News
         'latest-news-title': 'Últimas Noticias',
         'read-more': 'Leer Más',
+        'birthday-title': '🎉⚽ ¡Feliz cumpleaños, crack! ⚽🎉',
+        'birthday-message': 'Hoy celebramos la vida de uno de los pilares más fuertes de Descansa FC, nuestro muro en la defensa. Gracias por tu entrega, tu pasión y por dejarlo todo en la cancha en cada partido. 💪🔥',
+        'birthday-wishes': 'Que este nuevo año te traiga muchas alegrías, éxitos y momentos de triunfo dentro y fuera del campo. 🏆✨',
+        'birthday-ending': '¡A seguir defendiendo nuestros colores como el mejor! 🖤🤍💛',
+        'birthday-hashtags': '#FelizCumple #DescansaFC #MuroInquebrantable',
+        
+        // Transfer News
+        'transfer-title': 'Nueva Contratación',
+        'transfer-message': 'FC DESCANSA anuncia la llegada de un nuevo lateral por derecha para reforzar la defensa que será un muro impasable y le dará confianza al equipo.',
+        'transfer-date': '8 de Enero, 2024',
+        
+        // Goalkeeper News
+        'goalkeeper-title': '🧤⚽ ¡Bienvenido a la familia Descansa FC! ⚽🧤',
+        'goalkeeper-intro': 'Hoy tenemos el honor de presentar a nuestro nuevo guardián del arco: Gudy 🔥',
+        'goalkeeper-description': 'Un portero con reflejos felinos, seguridad bajo los tres palos y la garra que caracteriza a nuestro equipo. 💪🖤🤍💛',
+        'goalkeeper-protection': 'Con él, el arco de Descansa FC estará más protegido que nunca. 🛡️✨',
+        'goalkeeper-support': '¡Aplausos y mucho apoyo para Gudy en esta nueva etapa con nosotros! 👏👏',
+        'goalkeeper-hashtags': '#BienvenidoGudy #DescansaFC #MuroSeguro',
         
         // Player stats
         'games': 'Partidos',
@@ -948,6 +966,24 @@ const translations = {
         // Latest News
         'latest-news-title': 'Latest News',
         'read-more': 'Read More',
+        'birthday-title': '🎉⚽ Happy Birthday, Star! ⚽🎉',
+        'birthday-message': 'Today we celebrate the life of one of the strongest pillars of Descansa FC, our wall in defense. Thank you for your dedication, your passion and for leaving everything on the field in every match. 💪🔥',
+        'birthday-wishes': 'May this new year bring you many joys, successes and moments of triumph both on and off the field. 🏆✨',
+        'birthday-ending': 'Keep defending our colors as the best! 🖤🤍💛',
+        'birthday-hashtags': '#HappyBirthday #DescansaFC #UnbreakableWall',
+        
+        // Transfer News
+        'transfer-title': 'New Signing',
+        'transfer-message': 'FC DESCANSA announces the arrival of a new right-back to strengthen the defense that will be an impassable wall and give confidence to the team.',
+        'transfer-date': 'January 8, 2024',
+        
+        // Goalkeeper News
+        'goalkeeper-title': '🧤⚽ Welcome to the Descansa FC family! ⚽🧤',
+        'goalkeeper-intro': 'Today we have the honor of presenting our new goalkeeper: Gudy 🔥',
+        'goalkeeper-description': 'A goalkeeper with feline reflexes, security under the three posts and the claw that characterizes our team. 💪🖤🤍💛',
+        'goalkeeper-protection': 'With him, the Descansa FC goal will be more protected than ever. 🛡️✨',
+        'goalkeeper-support': 'Applause and much support for Gudy in this new stage with us! 👏👏',
+        'goalkeeper-hashtags': '#WelcomeGudy #DescansaFC #SafeWall',
         
         // Player stats
         'games': 'Games',
@@ -1005,6 +1041,24 @@ const translations = {
         // Latest News
         'latest-news-title': '最新消息',
         'read-more': '阅读更多',
+        'birthday-title': '🎉⚽ 生日快乐，明星！ ⚽🎉',
+        'birthday-message': '今天我们庆祝Descansa FC最强支柱之一的生命，我们防守的城墙。感谢你的奉献、激情，以及在每场比赛中全力以赴。💪🔥',
+        'birthday-wishes': '愿这新的一年为你带来许多欢乐、成功以及场上场下的胜利时刻。🏆✨',
+        'birthday-ending': '继续以最佳状态捍卫我们的颜色！🖤🤍💛',
+        'birthday-hashtags': '#生日快乐 #DescansaFC #坚不可摧的城墙',
+        
+        // Transfer News
+        'transfer-title': '新签约',
+        'transfer-message': 'FC DESCANSA宣布新右后卫的到来，他将加强防守，成为一道不可逾越的城墙，为球队带来信心。',
+        'transfer-date': '2024年1月8日',
+        
+        // Goalkeeper News
+        'goalkeeper-title': '🧤⚽ 欢迎加入Descansa FC大家庭！ ⚽🧤',
+        'goalkeeper-intro': '今天我们很荣幸地介绍我们的新守门员：Gudy 🔥',
+        'goalkeeper-description': '一位拥有猫科动物般反射、三根立柱下安全以及我们球队特色的守门员。💪🖤🤍💛',
+        'goalkeeper-protection': '有了他，Descansa FC的球门将比以往任何时候都更加安全。🛡️✨',
+        'goalkeeper-support': '为Gudy在我们这里的新阶段鼓掌和大力支持！👏👏',
+        'goalkeeper-hashtags': '#欢迎Gudy #DescansaFC #安全城墙',
         
         // Player stats
         'games': '比赛',
