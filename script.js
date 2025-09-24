@@ -276,24 +276,24 @@ function initializeFieldFormation() {
         return;
     }
     
-    // Formation 4-3-3 - Like in the image with better spacing
+    // Formation 4-3-3 - Better spaced positions
     const formation = {
-        goalkeeper: { position: '50% 88%' }, // Centered in goal area
+        goalkeeper: { position: '50% 90%' }, // Centered in goal area
         defenders: [
-            { position: '15% 78%' }, // LB - Left back
-            { position: '35% 78%' }, // CB - Left center back
-            { position: '65% 78%' }, // CB - Right center back
-            { position: '85% 78%' }  // RB - Right back
+            { position: '10% 80%' }, // LB - Left back
+            { position: '30% 80%' }, // CB - Left center back
+            { position: '70% 80%' }, // CB - Right center back
+            { position: '90% 80%' }  // RB - Right back
         ],
         midfielders: [
-            { position: '20% 55%' }, // LM - Left midfielder
-            { position: '50% 55%' }, // CM - Center midfielder
-            { position: '80% 55%' }  // RM - Right midfielder
+            { position: '15% 60%' }, // LM - Left midfielder
+            { position: '50% 60%' }, // CM - Center midfielder
+            { position: '85% 60%' }  // RM - Right midfielder
         ],
         forwards: [
-            { position: '15% 25%' }, // LW - Left winger
-            { position: '50% 20%' }, // ST - Center striker (Captain)
-            { position: '85% 25%' }  // RW - Right winger
+            { position: '10% 30%' }, // LW - Left winger
+            { position: '50% 25%' }, // ST - Center striker (Captain)
+            { position: '90% 30%' }  // RW - Right winger
         ]
     };
     
@@ -746,6 +746,51 @@ function initializeMobileMenu() {
     }
 }
 
+// Camera Functions
+function initializeCamera() {
+    const takePhotoBtn = document.getElementById('takePhotoBtn');
+    const uploadPhotoBtn = document.getElementById('uploadPhotoBtn');
+    const cameraInput = document.getElementById('cameraInput');
+    const photoInput = document.getElementById('photo');
+    const cameraPreview = document.getElementById('cameraPreview');
+    
+    if (takePhotoBtn && cameraInput) {
+        takePhotoBtn.addEventListener('click', () => {
+            cameraInput.click();
+        });
+    }
+    
+    if (uploadPhotoBtn && photoInput) {
+        uploadPhotoBtn.addEventListener('click', () => {
+            photoInput.click();
+        });
+    }
+    
+    if (cameraInput) {
+        cameraInput.addEventListener('change', (e) => {
+            handleImagePreview(e, cameraPreview);
+        });
+    }
+    
+    if (photoInput) {
+        photoInput.addEventListener('change', (e) => {
+            handleImagePreview(e, cameraPreview);
+        });
+    }
+}
+
+function handleImagePreview(event, previewElement) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewElement.src = e.target.result;
+            previewElement.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
 function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     
@@ -997,6 +1042,9 @@ function initializeApp() {
     
     // Initialize mobile menu
     initializeMobileMenu();
+    
+    // Initialize camera functionality
+    initializeCamera();
     
     // Apply saved preferences
     applySavedPreferences();

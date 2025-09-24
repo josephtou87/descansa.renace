@@ -37,6 +37,40 @@
                 <li><a href="#media" class="nav-link" data-translate="media">Multimedia</a></li>
                 <li><a href="#squad" class="nav-link" data-translate="squad">Plantilla</a></li>
                 <li><a href="#login" class="nav-link" id="loginLink" data-translate="login">Iniciar Sesión</a></li>
+                
+                <!-- Mobile Controls -->
+                <li class="mobile-controls">
+                    <div class="header-controls">
+                        <div class="language-selector">
+                            <button class="language-dropdown-btn" id="languageDropdownMobile">
+                                <span class="flag">🇪🇸</span>
+                                <span class="language-text">ES</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="language-dropdown" id="languageDropdownMenuMobile">
+                                <div class="language-option active" data-lang="es">
+                                    <span class="flag">🇪🇸</span>
+                                    <span class="language-name">Español</span>
+                                </div>
+                                <div class="language-option" data-lang="en">
+                                    <span class="flag">🇺🇸</span>
+                                    <span class="language-name">English</span>
+                                </div>
+                                <div class="language-option" data-lang="zh">
+                                    <span class="flag">🇨🇳</span>
+                                    <span class="language-name">中文</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="theme-selector">
+                            <button class="theme-toggle-btn" id="themeToggleMobile">
+                                <i class="fas fa-moon theme-icon"></i>
+                                <span class="theme-text">Oscuro</span>
+                            </button>
+                        </div>
+                    </div>
+                </li>
                 <li class="nav-social-mobile">
                     <div class="social-mobile">
                         <a href="https://facebook.com/fcdescansa" target="_blank" class="social-icon facebook" title="Facebook">
@@ -585,8 +619,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="photo">Foto del Jugador</label>
-                                <input type="file" id="photo" accept="image/*">
-                                <button type="button" class="btn btn-secondary" id="takePhotoBtn">Tomar Foto</button>
+                                <div class="camera-container">
+                                    <img id="cameraPreview" class="camera-preview" alt="Preview">
+                                    <div class="camera-buttons">
+                                        <button type="button" class="camera-btn" id="takePhotoBtn">
+                                            <i class="fas fa-camera"></i>
+                                            Tomar Foto
+                                        </button>
+                                        <button type="button" class="camera-btn secondary" id="uploadPhotoBtn">
+                                            <i class="fas fa-upload"></i>
+                                            Subir Foto
+                                        </button>
+                                    </div>
+                                </div>
+                                <input type="file" id="photo" accept="image/*" style="display: none;">
+                                <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
                             </div>
                             <button type="submit" class="btn btn-primary">Registrarse</button>
                         </form>
