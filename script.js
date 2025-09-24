@@ -12,7 +12,35 @@ document.addEventListener('DOMContentLoaded', function() {
     loadData();
     updateCountdown();
     setInterval(updateCountdown, 1000);
+    startTypewriterEffect();
 });
+
+// Typewriter effect for the title
+function startTypewriterEffect() {
+    const textElement = document.getElementById('typewriter-text');
+    if (!textElement) return;
+    
+    const text = textElement.textContent;
+    textElement.textContent = '';
+    textElement.style.borderRight = '2px solid #dc2626';
+    
+    let i = 0;
+    const typeWriter = () => {
+        if (i < text.length) {
+            textElement.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeWriter, 150);
+        } else {
+            // Keep the cursor blinking
+            setTimeout(() => {
+                textElement.style.borderRight = 'none';
+            }, 1000);
+        }
+    };
+    
+    // Start the effect after a short delay
+    setTimeout(typeWriter, 1000);
+}
 
 // Initialize application
 function initializeApp() {
