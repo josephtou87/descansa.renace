@@ -42,6 +42,7 @@ function initializeApp() {
     
     // Update UI
     updateMatchInfo();
+    updateFCLogo();
     loadSquad();
     loadStartingXI();
 }
@@ -538,6 +539,15 @@ function updateTeamLogo(opponentName) {
     // Update logo source
     logoElement.src = logoPath;
     logoElement.alt = opponentName;
+}
+
+// Update FC DESCANSA logo in matches
+function updateFCLogo() {
+    const fcLogoElements = document.querySelectorAll('.team img[alt="FC DESCANSA"]');
+    fcLogoElements.forEach(logo => {
+        logo.src = 'assets/images/logo.png';
+        logo.alt = 'FC DESCANSA';
+    });
 }
 
 // Load squad
