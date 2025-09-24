@@ -27,7 +27,7 @@ body {
     left: 0;
     width: 100%;
     z-index: 1000;
-    min-height: 80px;
+    min-height: 90px;
 }
 
 .navbar {
@@ -46,16 +46,23 @@ body {
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 3px solid white;
+    border: 4px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
 }
 
 .team-name {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .nav-menu {
@@ -154,8 +161,8 @@ body {
 
 /* Main Content */
 main {
-    margin-top: 80px;
-    min-height: calc(100vh - 80px);
+    margin-top: 90px;
+    min-height: calc(100vh - 90px);
     position: relative;
     z-index: 1;
 }
@@ -198,7 +205,7 @@ main {
 .section {
     display: none;
     padding: 2rem 0;
-    min-height: calc(100vh - 160px);
+    min-height: calc(100vh - 180px);
 }
 
 .section.active {
@@ -210,64 +217,83 @@ main {
     background: linear-gradient(135deg, #1e3a8a 0%, #dc2626 100%);
     color: white;
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
     margin-bottom: 2rem;
-    border-radius: 10px;
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
 }
 
-.hero-title {
-    font-size: 3rem;
-    font-weight: 700;
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-logo {
     margin-bottom: 1rem;
 }
 
+.hero-logo-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
+}
+
+.hero-logo-img:hover {
+    transform: scale(1.1);
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+}
+
 .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     opacity: 0.9;
+    margin-bottom: 2rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Team Photo Section */
-.team-photo-section {
-    margin-bottom: 3rem;
-}
-
-.team-photo-container {
+.hero-team-photo {
     position: relative;
+    max-width: 600px;
+    margin: 0 auto;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
 }
 
-.team-photo {
+.hero-team-img {
     width: 100%;
-    height: 400px;
+    height: 300px;
     object-fit: cover;
     display: block;
 }
 
-.team-photo-overlay {
+.hero-team-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(30, 58, 138, 0.9));
-    color: white;
-    padding: 2rem;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 1.5rem;
     text-align: center;
 }
 
-.team-photo-overlay h3 {
-    font-size: 2.5rem;
+.dream-team {
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    letter-spacing: 2px;
 }
 
-.team-photo-overlay p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
 
 /* Next Match */
 .next-match {
@@ -1176,9 +1202,9 @@ main {
     .nav-menu {
         position: fixed;
         left: -100%;
-        top: 80px;
+        top: 90px;
         flex-direction: column;
-        background-color: #1e40af;
+        background-color: #1e3a8a;
         width: 100%;
         text-align: center;
         transition: 0.3s;
@@ -1211,7 +1237,24 @@ main {
     }
 
     .hero-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
+    }
+
+    .hero-logo-img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .hero-team-img {
+        height: 200px;
+    }
+
+    .hero-team-overlay {
+        padding: 1rem;
+    }
+
+    .dream-team {
+        font-size: 1.2rem;
     }
 
     .match-teams {
@@ -1298,17 +1341,6 @@ main {
         padding: 0.4rem 0.8rem;
     }
 
-    .team-photo {
-        height: 250px;
-    }
-
-    .team-photo-overlay h3 {
-        font-size: 1.8rem;
-    }
-
-    .team-photo-overlay p {
-        font-size: 1rem;
-    }
 }
 
 /* Utility Classes */
