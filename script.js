@@ -12,34 +12,43 @@ document.addEventListener('DOMContentLoaded', function() {
     loadData();
     updateCountdown();
     setInterval(updateCountdown, 1000);
-    startTypewriterEffect();
+    startInnovativeEffect();
 });
 
-// Typewriter effect for the title
-function startTypewriterEffect() {
-    const textElement = document.getElementById('typewriter-text');
+// Innovative text effect for the subtitle
+function startInnovativeEffect() {
+    const textElement = document.getElementById('innovative-text');
     if (!textElement) return;
     
     const text = textElement.textContent;
     textElement.textContent = '';
-    textElement.style.borderRight = '3px solid #dc2626';
+    textElement.style.opacity = '0';
     
-    let i = 0;
-    const typeWriter = () => {
-        if (i < text.length) {
-            textElement.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeWriter, 200);
-        } else {
-            // Keep the cursor blinking for a while, then remove it
+    // Add word-by-word animation
+    const words = text.split(' ');
+    let wordIndex = 0;
+    
+    const showWords = () => {
+        if (wordIndex < words.length) {
+            textElement.textContent += (wordIndex > 0 ? ' ' : '') + words[wordIndex];
+            wordIndex++;
+            
+            // Add a slight bounce effect
+            textElement.style.transform = 'scale(1.1)';
             setTimeout(() => {
-                textElement.style.borderRight = 'none';
-            }, 2000);
+                textElement.style.transform = 'scale(1)';
+            }, 150);
+            
+            setTimeout(showWords, 300);
+        } else {
+            // Final reveal with glow effect
+            textElement.style.opacity = '1';
+            textElement.style.transform = 'scale(1)';
         }
     };
     
     // Start the effect after a short delay
-    setTimeout(typeWriter, 500);
+    setTimeout(showWords, 800);
 }
 
 // Initialize application

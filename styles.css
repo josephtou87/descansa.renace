@@ -20,14 +20,28 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 200% 200%;
+    animation: headerGradient 6s ease infinite;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
     min-height: 100px;
+}
+
+@keyframes headerGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .navbar {
@@ -230,7 +244,9 @@ main {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+    background-size: 400% 400%;
+    animation: gradientBackground 8s ease infinite;
     color: white;
     text-align: center;
     padding: 4rem 2rem 3rem 2rem;
@@ -238,6 +254,18 @@ main {
     border-radius: 20px;
     position: relative;
     overflow: hidden;
+}
+
+@keyframes gradientBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .hero-content {
@@ -284,12 +312,56 @@ main {
 }
 
 .hero-subtitle {
-    font-size: 1.4rem;
-    opacity: 0.95;
-    margin-bottom: 0.5rem;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    font-weight: 500;
-    font-style: italic;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s ease-in-out infinite, glowText 2s ease-in-out infinite alternate;
+    text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.hero-subtitle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+    background-size: 300% 300%;
+    filter: blur(20px);
+    opacity: 0.3;
+    z-index: -1;
+    animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes glowText {
+    0% {
+        text-shadow: 0 0 20px rgba(255, 107, 107, 0.5), 0 0 40px rgba(78, 205, 196, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 30px rgba(255, 107, 107, 0.8), 0 0 60px rgba(78, 205, 196, 0.6);
+    }
 }
 
 .hero-team-photo {
@@ -366,16 +438,22 @@ main {
 .next-match h2 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #dc2626;
+    background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     font-size: 2rem;
+    font-weight: 800;
 }
 
 .match-card {
-    background: white;
+    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240, 147, 251, 0.1) 100%);
     border-radius: 15px;
     padding: 2rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
     text-align: center;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .match-teams {
@@ -1056,13 +1134,29 @@ main {
 }
 
 .btn-primary {
-    background: #1e3a8a;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 200% 200%;
+    animation: buttonGradient 4s ease infinite;
     color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
 .btn-primary:hover {
-    background: #dc2626;
+    background: linear-gradient(135deg, #764ba2 0%, #f093fb 50%, #667eea 100%);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+@keyframes buttonGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 .btn-secondary {
