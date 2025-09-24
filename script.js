@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
     startInnovativeEffect();
     initializeCarousel();
     playChampionsAnthem();
+    initializeFIFACards();
+    initializeFieldFormation();
 });
 
 // Innovative text effect for the subtitle
@@ -133,6 +135,196 @@ function playChampionsAnthem() {
             });
         }, 1000);
     }
+}
+
+// Initialize FIFA-style player cards
+function initializeFIFACards() {
+    const modal = document.getElementById('playerCardModal');
+    const closeBtn = document.querySelector('.fifa-close');
+    
+    // Close modal functionality
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Show FIFA player card
+function showFIFACard(player) {
+    const modal = document.getElementById('playerCardModal');
+    const card = document.getElementById('fifaPlayerCard');
+    
+    // Calculate overall rating based on stats
+    const overall = calculateOverallRating(player.stats);
+    
+    card.innerHTML = `
+        <div class="fifa-card-header">
+            <div class="fifa-player-name">${player.name}</div>
+            <div class="fifa-overall-rating">${overall}</div>
+        </div>
+        <div class="fifa-player-info">
+            <div class="fifa-player-details">
+                <div class="fifa-position">${player.position}</div>
+                <div class="fifa-jersey-number">#${player.jerseyNumber}</div>
+            </div>
+            <img src="${player.photo || 'assets/images/players/default.jpg'}" alt="${player.name}" class="fifa-player-photo">
+            <div class="fifa-stats">
+                <div class="fifa-stat">
+                    <div class="fifa-stat-label">PAC</div>
+                    <div class="fifa-stat-value">${player.stats.pace || 75}</div>
+                </div>
+                <div class="fifa-stat">
+                    <div class="fifa-stat-label">SHO</div>
+                    <div class="fifa-stat-value">${player.stats.shooting || 70}</div>
+                </div>
+                <div class="fifa-stat">
+                    <div class="fifa-stat-label">PAS</div>
+                    <div class="fifa-stat-value">${player.stats.passing || 75}</div>
+                </div>
+                <div class="fifa-stat">
+                    <div class="fifa-stat-label">DRI</div>
+                    <div class="fifa-stat-value">${player.stats.dribbling || 70}</div>
+                </div>
+                <div class="fifa-stat">
+                    <div class="fifa-stat-label">DEF</div>
+                    <div class="fifa-stat-value">${player.stats.defense || 60}</div>
+                </div>
+                <div class="fifa-stat">
+                    <div class="fifa-stat-label">PHY</div>
+                    <div class="fifa-stat-value">${player.stats.physical || 75}</div>
+                </div>
+            </div>
+        </div>
+        <div class="fifa-card-footer">
+            <img src="assets/images/logo.png" alt="FC DESCANSA" class="fifa-team-logo">
+        </div>
+    `;
+    
+    modal.style.display = 'block';
+}
+
+// Calculate overall rating
+function calculateOverallRating(stats) {
+    const weights = {
+        pace: 0.15,
+        shooting: 0.20,
+        passing: 0.20,
+        dribbling: 0.15,
+        defense: 0.15,
+        physical: 0.15
+    };
+    
+    let total = 0;
+    let count = 0;
+    
+    for (const [stat, weight] of Object.entries(weights)) {
+        if (stats[stat]) {
+            total += stats[stat] * weight;
+            count += weight;
+        }
+    }
+    
+    return Math.round(total / count) || 75;
+}
+
+// Initialize field formation
+function initializeFieldFormation() {
+    const field = document.getElementById('playersField');
+    
+    // Sample starting XI formation (4-4-2)
+    const formation = {
+        goalkeeper: { position: '50% 90%' },
+        defenders: [
+            { position: '20% 70%' }, // LB
+            { position: '40% 70%' }, // CB
+            { position: '60% 70%' }, // CB
+            { position: '80% 70%' }  // RB
+        ],
+        midfielders: [
+            { position: '20% 50%' }, // LM
+            { position: '40% 50%' }, // CM
+            { position: '60% 50%' }, // CM
+            { position: '80% 50%' }  // RM
+        ],
+        forwards: [
+            { position: '35% 25%' }, // ST
+            { position: '65% 25%' }  // ST
+        ]
+    };
+    
+    // Sample players data
+    const players = [
+        { name: 'Juan', jerseyNumber: 1, position: 'POR', stats: { pace: 60, shooting: 40, passing: 70, dribbling: 50, defense: 85, physical: 80 } },
+        { name: 'Carlos', jerseyNumber: 2, position: 'DEF', stats: { pace: 70, shooting: 50, passing: 75, dribbling: 60, defense: 85, physical: 80 } },
+        { name: 'Miguel', jerseyNumber: 3, position: 'DEF', stats: { pace: 75, shooting: 55, passing: 80, dribbling: 65, defense: 88, physical: 82 } },
+        { name: 'Luis', jerseyNumber: 4, position: 'DEF', stats: { pace: 72, shooting: 52, passing: 78, dribbling: 62, defense: 87, physical: 81 } },
+        { name: 'Pedro', jerseyNumber: 5, position: 'DEF', stats: { pace: 68, shooting: 48, passing: 73, dribbling: 58, defense: 86, physical: 79 } },
+        { name: 'Antonio', jerseyNumber: 6, position: 'MED', stats: { pace: 75, shooting: 70, passing: 85, dribbling: 80, defense: 75, physical: 78 } },
+        { name: 'Diego', jerseyNumber: 7, position: 'MED', stats: { pace: 80, shooting: 75, passing: 88, dribbling: 85, defense: 70, physical: 76 } },
+        { name: 'Roberto', jerseyNumber: 8, position: 'MED', stats: { pace: 78, shooting: 72, passing: 87, dribbling: 82, defense: 72, physical: 77 } },
+        { name: 'Fernando', jerseyNumber: 9, position: 'MED', stats: { pace: 82, shooting: 68, passing: 83, dribbling: 88, defense: 65, physical: 74 } },
+        { name: 'Alejandro', jerseyNumber: 10, position: 'DEL', stats: { pace: 85, shooting: 90, passing: 80, dribbling: 90, defense: 40, physical: 75 } },
+        { name: 'Sergio', jerseyNumber: 11, position: 'DEL', stats: { pace: 88, shooting: 88, passing: 75, dribbling: 85, defense: 35, physical: 78 } }
+    ];
+    
+    // Clear field
+    field.innerHTML = '';
+    
+    // Add goalkeeper
+    const gk = players[0];
+    const gkElement = createFieldPlayer(gk, formation.goalkeeper.position);
+    field.appendChild(gkElement);
+    
+    // Add defenders
+    formation.defenders.forEach((pos, index) => {
+        const player = players[index + 1];
+        const playerElement = createFieldPlayer(player, pos.position);
+        field.appendChild(playerElement);
+    });
+    
+    // Add midfielders
+    formation.midfielders.forEach((pos, index) => {
+        const player = players[index + 5];
+        const playerElement = createFieldPlayer(player, pos.position);
+        field.appendChild(playerElement);
+    });
+    
+    // Add forwards
+    formation.forwards.forEach((pos, index) => {
+        const player = players[index + 9];
+        const playerElement = createFieldPlayer(player, pos.position);
+        field.appendChild(playerElement);
+    });
+}
+
+// Create field player element
+function createFieldPlayer(player, position) {
+    const [x, y] = position.split(' ');
+    
+    const playerDiv = document.createElement('div');
+    playerDiv.className = 'field-player';
+    playerDiv.style.left = x;
+    playerDiv.style.top = y;
+    
+    playerDiv.innerHTML = `
+        <div class="field-player-number">${player.jerseyNumber}</div>
+        <div class="field-player-name">${player.name}</div>
+    `;
+    
+    // Add click event to show FIFA card
+    playerDiv.addEventListener('click', () => {
+        showFIFACard(player);
+    });
+    
+    return playerDiv;
 }
 
 // Initialize application
