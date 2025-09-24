@@ -276,24 +276,24 @@ function initializeFieldFormation() {
         return;
     }
     
-    // Formation 5-3-2 - Correct positions using the full field
+    // Formation 4-3-3 - Like in the image with better spacing
     const formation = {
-        goalkeeper: { position: '50% 85%' }, // Centered in goal area
+        goalkeeper: { position: '50% 88%' }, // Centered in goal area
         defenders: [
-            { position: '15% 75%' }, // LB - Left back
-            { position: '32% 75%' }, // CB - Left center back
-            { position: '50% 75%' }, // CB - Center back
-            { position: '68% 75%' }, // CB - Right center back
-            { position: '85% 75%' }  // RB - Right back
+            { position: '15% 78%' }, // LB - Left back
+            { position: '35% 78%' }, // CB - Left center back
+            { position: '65% 78%' }, // CB - Right center back
+            { position: '85% 78%' }  // RB - Right back
         ],
         midfielders: [
-            { position: '25% 50%' }, // LM - Left midfielder
-            { position: '50% 50%' }, // CM - Center midfielder
-            { position: '75% 50%' }  // RM - Right midfielder
+            { position: '20% 55%' }, // LM - Left midfielder
+            { position: '50% 55%' }, // CM - Center midfielder
+            { position: '80% 55%' }  // RM - Right midfielder
         ],
         forwards: [
-            { position: '35% 20%' }, // ST - Left striker
-            { position: '65% 20%' }  // ST - Right striker (Captain)
+            { position: '15% 25%' }, // LW - Left winger
+            { position: '50% 20%' }, // ST - Center striker (Captain)
+            { position: '85% 25%' }  // RW - Right winger
         ]
     };
     
@@ -442,23 +442,23 @@ function initializeFieldFormation() {
     field.appendChild(gkElement);
     console.log('Goalkeeper added:', gk.name);
     
-    // Add defenders (5)
+    // Add defenders (4) - Carlos, Miguel, Luis, Pedro
     formation.defenders.forEach((pos, index) => {
         const player = players[index + 1];
         const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
-    // Add midfielders (3)
+    // Add midfielders (3) - Antonio, Diego, Roberto
     formation.midfielders.forEach((pos, index) => {
-        const player = players[index + 6];
+        const player = players[index + 5];
         const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
-    // Add forwards (2)
+    // Add forwards (3) - Joseph (Captain), Alejandro, and one more
     formation.forwards.forEach((pos, index) => {
-        const player = players[index + 9];
+        const player = players[index + 8];
         const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
@@ -642,8 +642,54 @@ function translatePage(lang) {
         }
     });
     
+    // Update specific elements by ID or class
+    updateSpecificElements(lang);
+    
     // Update FIFA cards if they're open
     updateFIFACardsLanguage(lang);
+    
+    // Update theme toggle text
+    updateThemeToggleText(lang);
+}
+
+function updateSpecificElements(lang) {
+    // Update hero subtitle
+    const heroSubtitle = document.getElementById('innovative-text');
+    if (heroSubtitle && translations[lang]['hero-subtitle']) {
+        heroSubtitle.textContent = translations[lang]['hero-subtitle'];
+    }
+    
+    // Update dream team text
+    const dreamTeam = document.querySelector('.dream-team');
+    if (dreamTeam && translations[lang]['dream-team']) {
+        dreamTeam.textContent = translations[lang]['dream-team'];
+    }
+    
+    // Update next match title
+    const nextMatchTitle = document.querySelector('.next-match h2');
+    if (nextMatchTitle && translations[lang]['next-match-title']) {
+        nextMatchTitle.textContent = translations[lang]['next-match-title'];
+    }
+    
+    // Update latest news title
+    const latestNewsTitle = document.querySelector('.latest-news h2');
+    if (latestNewsTitle && translations[lang]['latest-news-title']) {
+        latestNewsTitle.textContent = translations[lang]['latest-news-title'];
+    }
+}
+
+function updateThemeToggleText(lang) {
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+        const themeText = themeToggle.querySelector('.theme-text');
+        if (themeText) {
+            if (currentTheme === 'dark') {
+                themeText.textContent = translations[lang]['dark-theme'];
+            } else {
+                themeText.textContent = translations[lang]['light-theme'];
+            }
+        }
+    }
 }
 
 function applyTheme(theme) {
@@ -714,12 +760,27 @@ const translations = {
         'squad': 'Plantilla',
         'login': 'Iniciar Sesión',
         
+        // Hero Section
+        'hero-subtitle': '¡Somos más que un equipo, somos una familia!',
+        'dream-team': 'Dream Team',
+        
         // Sections
         'substitutes': 'SUPLENTES',
         'manager': 'DIRECTOR TÉCNICO',
         'coach-name': 'Nombre del Entrenador',
         'starting-xi': '11 Titular',
-        'formation': 'Formación : 5-3-2',
+        'formation': 'Formación : 4-3-3',
+        
+        // Next Match
+        'next-match-title': 'Próximo Partido',
+        'vs': 'vs',
+        'stadium': 'Estadio',
+        'date': 'Fecha',
+        'time': 'Hora',
+        
+        // Latest News
+        'latest-news-title': 'Últimas Noticias',
+        'read-more': 'Leer Más',
         
         // Player stats
         'games': 'Partidos',
@@ -734,7 +795,11 @@ const translations = {
         'passing': 'Pase',
         'dribbling': 'Regate',
         'defense': 'Defensa',
-        'physical': 'Físico'
+        'physical': 'Físico',
+        
+        // Theme
+        'dark-theme': 'Oscuro',
+        'light-theme': 'Claro'
     },
     en: {
         // Navigation
@@ -744,12 +809,27 @@ const translations = {
         'squad': 'Squad',
         'login': 'Login',
         
+        // Hero Section
+        'hero-subtitle': 'We are more than a team, we are a family!',
+        'dream-team': 'Dream Team',
+        
         // Sections
         'substitutes': 'SUBSTITUTES',
         'manager': 'MANAGER',
         'coach-name': 'Coach Name',
         'starting-xi': 'Starting XI',
-        'formation': 'Formation : 5-3-2',
+        'formation': 'Formation : 4-3-3',
+        
+        // Next Match
+        'next-match-title': 'Next Match',
+        'vs': 'vs',
+        'stadium': 'Stadium',
+        'date': 'Date',
+        'time': 'Time',
+        
+        // Latest News
+        'latest-news-title': 'Latest News',
+        'read-more': 'Read More',
         
         // Player stats
         'games': 'Games',
@@ -764,7 +844,11 @@ const translations = {
         'passing': 'Passing',
         'dribbling': 'Dribbling',
         'defense': 'Defense',
-        'physical': 'Physical'
+        'physical': 'Physical',
+        
+        // Theme
+        'dark-theme': 'Dark',
+        'light-theme': 'Light'
     },
     zh: {
         // Navigation
@@ -774,12 +858,27 @@ const translations = {
         'squad': '阵容',
         'login': '登录',
         
+        // Hero Section
+        'hero-subtitle': '我们不仅是一支球队，我们是一个家庭！',
+        'dream-team': '梦之队',
+        
         // Sections
         'substitutes': '替补',
         'manager': '教练',
         'coach-name': '教练姓名',
         'starting-xi': '首发十一人',
-        'formation': '阵型 : 5-3-2',
+        'formation': '阵型 : 4-3-3',
+        
+        // Next Match
+        'next-match-title': '下一场比赛',
+        'vs': '对',
+        'stadium': '体育场',
+        'date': '日期',
+        'time': '时间',
+        
+        // Latest News
+        'latest-news-title': '最新消息',
+        'read-more': '阅读更多',
         
         // Player stats
         'games': '比赛',
@@ -794,7 +893,11 @@ const translations = {
         'passing': '传球',
         'dribbling': '盘带',
         'defense': '防守',
-        'physical': '身体'
+        'physical': '身体',
+        
+        // Theme
+        'dark-theme': '暗色',
+        'light-theme': '亮色'
     }
 };
 

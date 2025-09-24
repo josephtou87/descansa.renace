@@ -68,7 +68,8 @@ body {
 .header-controls {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .language-selector,
@@ -282,29 +283,32 @@ body {
 .social-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.3rem;
+    flex-wrap: wrap;
 }
 
 .social-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     color: white;
     text-decoration: none;
     transition: all 0.3s ease;
-    font-size: 1.3rem;
+    font-size: 0.9rem;
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.2);
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    flex-shrink: 0;
 }
 
 .social-icon:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transform: scale(1.15);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
 }
 
 .social-icon.facebook {
@@ -2096,8 +2100,9 @@ main {
 }
 
 .field-player:hover {
-    transform: translate(-50%, -50%) scale(1.1);
+    transform: translate(-50%, -50%) scale(1.15);
     z-index: 10;
+    filter: brightness(1.2);
 }
 
 .field-player:hover .player-photo {
