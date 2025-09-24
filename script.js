@@ -541,6 +541,7 @@ function createSubstitutePlayer(player) {
 // Language and Theme Functions
 function initializeLanguageSelector() {
     const languageDropdown = document.getElementById('languageDropdown');
+    const languageDropdownMobile = document.getElementById('languageDropdownMobile');
     const languageOptions = document.querySelectorAll('.language-option');
     
     languageOptions.forEach(option => {
@@ -548,11 +549,21 @@ function initializeLanguageSelector() {
             const lang = option.getAttribute('data-lang');
             currentLanguage = lang;
             
-            // Update dropdown button
-            const flag = option.querySelector('.flag').textContent;
-            const langText = lang.toUpperCase();
-            languageDropdown.querySelector('.flag').textContent = flag;
-            languageDropdown.querySelector('.language-text').textContent = langText;
+            // Update desktop dropdown button
+            if (languageDropdown) {
+                const flag = option.querySelector('.flag').textContent;
+                const langText = lang.toUpperCase();
+                languageDropdown.querySelector('.flag').textContent = flag;
+                languageDropdown.querySelector('.language-text').textContent = langText;
+            }
+            
+            // Update mobile dropdown button
+            if (languageDropdownMobile) {
+                const flag = option.querySelector('.flag').textContent;
+                const langText = lang.toUpperCase();
+                languageDropdownMobile.querySelector('.flag').textContent = flag;
+                languageDropdownMobile.querySelector('.language-text').textContent = langText;
+            }
             
             // Update active option
             languageOptions.forEach(opt => opt.classList.remove('active'));
@@ -569,28 +580,39 @@ function initializeLanguageSelector() {
 
 function initializeThemeSelector() {
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('.theme-icon');
-    const themeText = themeToggle.querySelector('.theme-text');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
     
-    themeToggle.addEventListener('click', () => {
-        // Toggle theme
+    function updateThemeButtons() {
+        const buttons = [themeToggle, themeToggleMobile].filter(Boolean);
+        
+        buttons.forEach(button => {
+            const themeIcon = button.querySelector('.theme-icon');
+            const themeText = button.querySelector('.theme-text');
+            
+            if (currentTheme === 'dark') {
+                themeIcon.className = 'fas fa-moon theme-icon';
+                themeText.textContent = 'Oscuro';
+            } else {
+                themeIcon.className = 'fas fa-sun theme-icon';
+                themeText.textContent = 'Claro';
+            }
+        });
+    }
+    
+    function toggleTheme() {
         currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        // Update button
-        if (currentTheme === 'dark') {
-            themeIcon.className = 'fas fa-moon theme-icon';
-            themeText.textContent = 'Oscuro';
-        } else {
-            themeIcon.className = 'fas fa-sun theme-icon';
-            themeText.textContent = 'Claro';
-        }
-        
-        // Save preference
+        updateThemeButtons();
         localStorage.setItem('theme', currentTheme);
-        
-        // Apply theme
         applyTheme(currentTheme);
-    });
+    }
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleTheme);
+    }
+    
+    if (themeToggleMobile) {
+        themeToggleMobile.addEventListener('click', toggleTheme);
+    }
 }
 
 function applySavedPreferences() {
@@ -602,33 +624,47 @@ function applySavedPreferences() {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     currentTheme = savedTheme;
     
-    // Update language dropdown
+    // Update language dropdowns (desktop and mobile)
     const languageDropdown = document.getElementById('languageDropdown');
+    const languageDropdownMobile = document.getElementById('languageDropdownMobile');
     const languageOptions = document.querySelectorAll('.language-option');
     const activeOption = document.querySelector(`[data-lang="${savedLang}"]`);
     
     if (activeOption) {
         const flag = activeOption.querySelector('.flag').textContent;
         const langText = savedLang.toUpperCase();
-        languageDropdown.querySelector('.flag').textContent = flag;
-        languageDropdown.querySelector('.language-text').textContent = langText;
+        
+        if (languageDropdown) {
+            languageDropdown.querySelector('.flag').textContent = flag;
+            languageDropdown.querySelector('.language-text').textContent = langText;
+        }
+        
+        if (languageDropdownMobile) {
+            languageDropdownMobile.querySelector('.flag').textContent = flag;
+            languageDropdownMobile.querySelector('.language-text').textContent = langText;
+        }
         
         languageOptions.forEach(opt => opt.classList.remove('active'));
         activeOption.classList.add('active');
     }
     
-    // Update theme toggle
+    // Update theme toggles (desktop and mobile)
     const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = themeToggle.querySelector('.theme-icon');
-    const themeText = themeToggle.querySelector('.theme-text');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
     
-    if (savedTheme === 'dark') {
-        themeIcon.className = 'fas fa-moon theme-icon';
-        themeText.textContent = 'Oscuro';
-    } else {
-        themeIcon.className = 'fas fa-sun theme-icon';
-        themeText.textContent = 'Claro';
-    }
+    const buttons = [themeToggle, themeToggleMobile].filter(Boolean);
+    buttons.forEach(button => {
+        const themeIcon = button.querySelector('.theme-icon');
+        const themeText = button.querySelector('.theme-text');
+        
+        if (savedTheme === 'dark') {
+            themeIcon.className = 'fas fa-moon theme-icon';
+            themeText.textContent = 'Oscuro';
+        } else {
+            themeIcon.className = 'fas fa-sun theme-icon';
+            themeText.textContent = 'Claro';
+        }
+    });
     
     // Apply translations and theme
     translatePage(savedLang);
@@ -704,8 +740,11 @@ function updateSpecificElements(lang) {
 
 function updateThemeToggleText(lang) {
     const themeToggle = document.getElementById('themeToggle');
-    if (themeToggle) {
-        const themeText = themeToggle.querySelector('.theme-text');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
+    
+    const buttons = [themeToggle, themeToggleMobile].filter(Boolean);
+    buttons.forEach(button => {
+        const themeText = button.querySelector('.theme-text');
         if (themeText) {
             if (currentTheme === 'dark') {
                 themeText.textContent = translations[lang]['dark-theme'];
@@ -713,7 +752,7 @@ function updateThemeToggleText(lang) {
                 themeText.textContent = translations[lang]['light-theme'];
             }
         }
-    }
+    });
 }
 
 // Mobile Menu Functions
