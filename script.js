@@ -442,23 +442,26 @@ function initializeFieldFormation() {
     field.appendChild(gkElement);
     console.log('Goalkeeper added:', gk.name);
     
-    // Add defenders (4) - Carlos, Miguel, Luis, Pedro
+    // Add defenders (4) - Carlos (LB), Miguel (CB), Luis (CB), Pedro (RB)
+    const defenderPlayers = [players[1], players[2], players[3], players[4]]; // Carlos, Miguel, Luis, Pedro
     formation.defenders.forEach((pos, index) => {
-        const player = players[index + 1];
+        const player = defenderPlayers[index];
         const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
-    // Add midfielders (3) - Antonio, Diego, Roberto
+    // Add midfielders (3) - Antonio (LM), Diego (CM), Roberto (RM)
+    const midfielderPlayers = [players[5], players[6], players[7]]; // Antonio, Diego, Roberto
     formation.midfielders.forEach((pos, index) => {
-        const player = players[index + 5];
+        const player = midfielderPlayers[index];
         const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
     
-    // Add forwards (3) - Joseph (Captain), Alejandro, and one more
+    // Add forwards (3) - Luis (LW), Joseph (ST - Captain), Alejandro (RW)
+    const forwardPlayers = [players[8], players[9], players[10]]; // Luis, Joseph, Alejandro
     formation.forwards.forEach((pos, index) => {
-        const player = players[index + 8];
+        const player = forwardPlayers[index];
         const playerElement = createFieldPlayer(player, pos.position);
         field.appendChild(playerElement);
     });
@@ -676,6 +679,27 @@ function updateSpecificElements(lang) {
     if (latestNewsTitle && translations[lang]['latest-news-title']) {
         latestNewsTitle.textContent = translations[lang]['latest-news-title'];
     }
+    
+    // Update footer elements
+    const followUs = document.querySelector('[data-translate="follow-us"]');
+    if (followUs && translations[lang]['follow-us']) {
+        followUs.textContent = translations[lang]['follow-us'];
+    }
+    
+    const quickLinks = document.querySelector('[data-translate="quick-links"]');
+    if (quickLinks && translations[lang]['quick-links']) {
+        quickLinks.textContent = translations[lang]['quick-links'];
+    }
+    
+    const contact = document.querySelector('[data-translate="contact"]');
+    if (contact && translations[lang]['contact']) {
+        contact.textContent = translations[lang]['contact'];
+    }
+    
+    const teamDescription = document.querySelector('[data-translate="team-description"]');
+    if (teamDescription && translations[lang]['team-description']) {
+        teamDescription.textContent = translations[lang]['team-description'];
+    }
 }
 
 function updateThemeToggleText(lang) {
@@ -689,6 +713,36 @@ function updateThemeToggleText(lang) {
                 themeText.textContent = translations[lang]['light-theme'];
             }
         }
+    }
+}
+
+// Mobile Menu Functions
+function initializeMobileMenu() {
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    if (mobileMenuBtn && navMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on nav links
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mobileMenuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
     }
 }
 
@@ -799,7 +853,15 @@ const translations = {
         
         // Theme
         'dark-theme': 'Oscuro',
-        'light-theme': 'Claro'
+        'light-theme': 'Claro',
+        
+        // Footer
+        'follow-us': 'Síguenos',
+        'quick-links': 'Enlaces Rápidos',
+        'contact': 'Contacto',
+        'team-description': 'Somos más que un equipo, somos una familia unida por la pasión del fútbol.',
+        'email': 'info@fcdescansa.com',
+        'phone': '+52 123 456 7890'
     },
     en: {
         // Navigation
@@ -848,7 +910,15 @@ const translations = {
         
         // Theme
         'dark-theme': 'Dark',
-        'light-theme': 'Light'
+        'light-theme': 'Light',
+        
+        // Footer
+        'follow-us': 'Follow Us',
+        'quick-links': 'Quick Links',
+        'contact': 'Contact',
+        'team-description': 'We are more than a team, we are a family united by the passion for football.',
+        'email': 'info@fcdescansa.com',
+        'phone': '+52 123 456 7890'
     },
     zh: {
         // Navigation
@@ -897,7 +967,15 @@ const translations = {
         
         // Theme
         'dark-theme': '暗色',
-        'light-theme': '亮色'
+        'light-theme': '亮色',
+        
+        // Footer
+        'follow-us': '关注我们',
+        'quick-links': '快速链接',
+        'contact': '联系方式',
+        'team-description': '我们不仅是一支球队，我们是一个因对足球的热情而团结的大家庭。',
+        'email': 'info@fcdescansa.com',
+        'phone': '+52 123 456 7890'
     }
 };
 
@@ -916,6 +994,9 @@ function initializeApp() {
     // Initialize language and theme
     initializeLanguageSelector();
     initializeThemeSelector();
+    
+    // Initialize mobile menu
+    initializeMobileMenu();
     
     // Apply saved preferences
     applySavedPreferences();
