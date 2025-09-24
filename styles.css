@@ -2568,12 +2568,30 @@ main {
     display: none !important; /* Completely hidden on desktop */
 }
 
-/* Ensure mobile controls are never visible on desktop */
+/* Force hide mobile controls on all desktop sizes */
 @media (min-width: 769px) {
-    .mobile-controls {
+    .mobile-controls,
+    .mobile-controls .header-controls,
+    .mobile-controls .language-selector,
+    .mobile-controls .theme-selector,
+    .mobile-controls .language-dropdown-btn,
+    .mobile-controls .theme-toggle-btn {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    /* Ensure only header controls are visible on desktop */
+    .header .header-controls {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
+
 
     .mobile-controls .header-controls {
         display: flex !important;
