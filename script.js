@@ -273,22 +273,22 @@ function initializeFieldFormation() {
     
     // Formation 5-3-2 as shown in the image
     const formation = {
-        goalkeeper: { position: '50% 85%' },
+        goalkeeper: { position: '50% 88%' },
         defenders: [
-            { position: '15% 70%' }, // LB
-            { position: '35% 70%' }, // CB
-            { position: '50% 70%' }, // CB
-            { position: '65% 70%' }, // CB
-            { position: '85% 70%' }  // RB
+            { position: '12% 75%' }, // LB
+            { position: '30% 75%' }, // CB
+            { position: '50% 75%' }, // CB
+            { position: '70% 75%' }, // CB
+            { position: '88% 75%' }  // RB
         ],
         midfielders: [
-            { position: '25% 45%' }, // LM
-            { position: '50% 45%' }, // CM
-            { position: '75% 45%' }  // RM
+            { position: '25% 50%' }, // LM
+            { position: '50% 50%' }, // CM
+            { position: '75% 50%' }  // RM
         ],
         forwards: [
-            { position: '35% 20%' }, // ST
-            { position: '65% 20%' }  // ST (Captain)
+            { position: '35% 25%' }, // ST
+            { position: '65% 25%' }  // ST (Captain)
         ]
     };
     
