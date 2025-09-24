@@ -2560,92 +2560,13 @@ main {
         left: 0;
     }
 
-/* Mobile controls styles - Hidden on desktop */
-.mobile-controls {
-    margin-top: 1rem;
-    padding: 1rem 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    display: none !important; /* Completely hidden on desktop */
-}
-
-/* Force hide mobile controls on all desktop sizes */
-@media (min-width: 769px) {
-    .mobile-controls,
-    .mobile-controls .header-controls,
-    .mobile-controls .language-selector,
-    .mobile-controls .theme-selector,
-    .mobile-controls .language-dropdown-btn,
-    .mobile-controls .theme-toggle-btn {
-        display: none !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        height: 0 !important;
-        width: 0 !important;
-        overflow: hidden !important;
-    }
-    
-    /* Ensure only header controls are visible on desktop */
-    .header .header-controls {
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-}
 
 
-    .mobile-controls .header-controls {
-        display: flex !important;
-        justify-content: center;
-        gap: 0.8rem;
-        flex-wrap: wrap;
-        margin-top: 0.5rem;
-    }
-
-    .mobile-controls .language-dropdown-btn,
-    .mobile-controls .theme-toggle-btn {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
-        min-width: 120px;
-    }
-
-    .mobile-controls .language-dropdown {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background: rgba(0, 0, 0, 0.9);
-        border-radius: 15px;
-        padding: 0.5rem;
-        min-width: 150px;
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
-        z-index: 1001;
-    }
-
-    .mobile-controls .language-selector:hover .language-dropdown {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
 
     .social-header {
         display: none;
     }
 
-    /* Ensure mobile controls are always visible when menu is open */
-    .nav-menu.active .mobile-controls {
-        display: block !important;
-        opacity: 1;
-        visibility: visible;
-    }
-
-    .nav-menu.active .mobile-controls .header-controls {
-        display: flex !important;
-    }
 
     /* Ensure mobile menu button is visible */
     .mobile-menu-btn {
@@ -2655,6 +2576,20 @@ main {
         top: 50%;
         transform: translateY(-50%);
         z-index: 1002;
+    }
+
+    /* Make header controls more accessible on mobile */
+    .header .header-controls {
+        display: flex !important;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .header .header-controls .language-dropdown-btn,
+    .header .header-controls .theme-toggle-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+        min-width: 80px;
     }
 
     /* Mobile menu link styles */

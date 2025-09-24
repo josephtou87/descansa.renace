@@ -541,7 +541,6 @@ function createSubstitutePlayer(player) {
 // Language and Theme Functions
 function initializeLanguageSelector() {
     const languageDropdown = document.getElementById('languageDropdown');
-    const languageDropdownMobile = document.getElementById('languageDropdownMobile');
     const languageOptions = document.querySelectorAll('.language-option');
     
     languageOptions.forEach(option => {
@@ -549,20 +548,12 @@ function initializeLanguageSelector() {
             const lang = option.getAttribute('data-lang');
             currentLanguage = lang;
             
-            // Update desktop dropdown button
+            // Update dropdown button
             if (languageDropdown) {
                 const flag = option.querySelector('.flag').textContent;
                 const langText = lang.toUpperCase();
                 languageDropdown.querySelector('.flag').textContent = flag;
                 languageDropdown.querySelector('.language-text').textContent = langText;
-            }
-            
-            // Update mobile dropdown button
-            if (languageDropdownMobile) {
-                const flag = option.querySelector('.flag').textContent;
-                const langText = lang.toUpperCase();
-                languageDropdownMobile.querySelector('.flag').textContent = flag;
-                languageDropdownMobile.querySelector('.language-text').textContent = langText;
             }
             
             // Update active option
@@ -580,14 +571,11 @@ function initializeLanguageSelector() {
 
 function initializeThemeSelector() {
     const themeToggle = document.getElementById('themeToggle');
-    const themeToggleMobile = document.getElementById('themeToggleMobile');
     
-    function updateThemeButtons() {
-        const buttons = [themeToggle, themeToggleMobile].filter(Boolean);
-        
-        buttons.forEach(button => {
-            const themeIcon = button.querySelector('.theme-icon');
-            const themeText = button.querySelector('.theme-text');
+    function updateThemeButton() {
+        if (themeToggle) {
+            const themeIcon = themeToggle.querySelector('.theme-icon');
+            const themeText = themeToggle.querySelector('.theme-text');
             
             if (currentTheme === 'dark') {
                 themeIcon.className = 'fas fa-moon theme-icon';
@@ -596,22 +584,18 @@ function initializeThemeSelector() {
                 themeIcon.className = 'fas fa-sun theme-icon';
                 themeText.textContent = 'Claro';
             }
-        });
+        }
     }
     
     function toggleTheme() {
         currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        updateThemeButtons();
+        updateThemeButton();
         localStorage.setItem('theme', currentTheme);
         applyTheme(currentTheme);
     }
     
     if (themeToggle) {
         themeToggle.addEventListener('click', toggleTheme);
-    }
-    
-    if (themeToggleMobile) {
-        themeToggleMobile.addEventListener('click', toggleTheme);
     }
 }
 
@@ -624,38 +608,28 @@ function applySavedPreferences() {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     currentTheme = savedTheme;
     
-    // Update language dropdowns (desktop and mobile)
+    // Update language dropdown
     const languageDropdown = document.getElementById('languageDropdown');
-    const languageDropdownMobile = document.getElementById('languageDropdownMobile');
     const languageOptions = document.querySelectorAll('.language-option');
     const activeOption = document.querySelector(`[data-lang="${savedLang}"]`);
     
-    if (activeOption) {
+    if (activeOption && languageDropdown) {
         const flag = activeOption.querySelector('.flag').textContent;
         const langText = savedLang.toUpperCase();
         
-        if (languageDropdown) {
-            languageDropdown.querySelector('.flag').textContent = flag;
-            languageDropdown.querySelector('.language-text').textContent = langText;
-        }
-        
-        if (languageDropdownMobile) {
-            languageDropdownMobile.querySelector('.flag').textContent = flag;
-            languageDropdownMobile.querySelector('.language-text').textContent = langText;
-        }
+        languageDropdown.querySelector('.flag').textContent = flag;
+        languageDropdown.querySelector('.language-text').textContent = langText;
         
         languageOptions.forEach(opt => opt.classList.remove('active'));
         activeOption.classList.add('active');
     }
     
-    // Update theme toggles (desktop and mobile)
+    // Update theme toggle
     const themeToggle = document.getElementById('themeToggle');
-    const themeToggleMobile = document.getElementById('themeToggleMobile');
     
-    const buttons = [themeToggle, themeToggleMobile].filter(Boolean);
-    buttons.forEach(button => {
-        const themeIcon = button.querySelector('.theme-icon');
-        const themeText = button.querySelector('.theme-text');
+    if (themeToggle) {
+        const themeIcon = themeToggle.querySelector('.theme-icon');
+        const themeText = themeToggle.querySelector('.theme-text');
         
         if (savedTheme === 'dark') {
             themeIcon.className = 'fas fa-moon theme-icon';
@@ -664,7 +638,7 @@ function applySavedPreferences() {
             themeIcon.className = 'fas fa-sun theme-icon';
             themeText.textContent = 'Claro';
         }
-    });
+    }
     
     // Apply translations and theme
     translatePage(savedLang);
@@ -740,11 +714,9 @@ function updateSpecificElements(lang) {
 
 function updateThemeToggleText(lang) {
     const themeToggle = document.getElementById('themeToggle');
-    const themeToggleMobile = document.getElementById('themeToggleMobile');
     
-    const buttons = [themeToggle, themeToggleMobile].filter(Boolean);
-    buttons.forEach(button => {
-        const themeText = button.querySelector('.theme-text');
+    if (themeToggle) {
+        const themeText = themeToggle.querySelector('.theme-text');
         if (themeText) {
             if (currentTheme === 'dark') {
                 themeText.textContent = translations[lang]['dark-theme'];
@@ -752,7 +724,7 @@ function updateThemeToggleText(lang) {
                 themeText.textContent = translations[lang]['light-theme'];
             }
         }
-    });
+    }
 }
 
 // Mobile Menu Functions
