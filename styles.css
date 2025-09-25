@@ -1035,10 +1035,10 @@ main {
 .match-teams {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     margin-bottom: 1rem;
     gap: 0.8rem;
-    padding: 0.8rem;
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1046,23 +1046,24 @@ main {
 
 .team-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.3rem;
     flex: 1;
     min-width: 0;
     max-width: 50%;
 }
 
 .team-logo {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    box-shadow: 0 2px 8px rgba(0, 212, 255, 0.2);
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 3px 10px rgba(0, 212, 255, 0.3);
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
@@ -1081,23 +1082,23 @@ main {
 }
 
 .team-name {
-    font-size: 0.6rem;
-    font-weight: 400;
+    font-size: 0.7rem;
+    font-weight: 500;
     color: #2c3e50;
-    flex: 1;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
-    padding: 0.15rem 0.2rem;
+    padding: 0.2rem 0.3rem;
     background: rgba(255, 255, 255, 0.25);
-    border-radius: 3px;
+    border-radius: 4px;
     backdrop-filter: blur(1px);
     transition: all 0.3s ease;
-    line-height: 1;
+    line-height: 1.1;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    max-width: 100%;
 }
 
 .team-name:hover {
@@ -3268,8 +3269,8 @@ main {
     }
 
     .team-logo {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
     }
 
     .match-score {
@@ -3283,18 +3284,18 @@ main {
     }
 
     .team-name {
-        font-size: 0.55rem;
-        padding: 0.1rem 0.15rem;
+        font-size: 0.65rem;
+        padding: 0.15rem 0.2rem;
     }
     
     .team-container {
-        gap: 0.25rem;
+        gap: 0.2rem;
         max-width: 45%;
     }
     
     .match-teams {
-        gap: 0.3rem;
-        padding: 0.4rem;
+        gap: 0.4rem;
+        padding: 0.6rem;
     }
 
     .match-time {
