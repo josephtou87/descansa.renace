@@ -2080,7 +2080,9 @@ function updateLiveMatchesUI(containerId, matches) {
             <div class="match-teams">
                 <div class="team-container">
                     <div class="team-logo">
-                        <i class="fas fa-futbol"></i>
+                        <img src="${match.homeTeamLogo || 'https://media.api-sports.io/football/teams/1.png'}" 
+                             alt="${match.homeTeam}" 
+                             onerror="this.src='https://media.api-sports.io/football/teams/1.png'">
                     </div>
                     <div class="team-name" title="${match.homeTeam}">${match.homeTeam}</div>
                 </div>
@@ -2091,7 +2093,9 @@ function updateLiveMatchesUI(containerId, matches) {
                 <div class="team-container">
                     <div class="team-name" title="${match.awayTeam}">${match.awayTeam}</div>
                     <div class="team-logo">
-                        <i class="fas fa-futbol"></i>
+                        <img src="${match.awayTeamLogo || 'https://media.api-sports.io/football/teams/1.png'}" 
+                             alt="${match.awayTeam}" 
+                             onerror="this.src='https://media.api-sports.io/football/teams/1.png'">
                     </div>
                 </div>
             </div>

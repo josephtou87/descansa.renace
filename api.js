@@ -314,6 +314,8 @@ class FootballAPI {
             id: match.fixture.id,
             homeTeam: match.teams.home.name,
             awayTeam: match.teams.away.name,
+            homeTeamLogo: match.teams.home.logo,
+            awayTeamLogo: match.teams.away.logo,
             homeScore: match.goals.home,
             awayScore: match.goals.away,
             status: match.fixture.status.short,
@@ -330,12 +332,15 @@ class FootballAPI {
             id: match.fixture.id,
             homeTeam: match.teams.home.name,
             awayTeam: match.teams.away.name,
+            homeTeamLogo: match.teams.home.logo,
+            awayTeamLogo: match.teams.away.logo,
             homeScore: match.goals.home,
             awayScore: match.goals.away,
             status: match.fixture.status.short,
             competition: match.league.name,
             date: match.fixture.date,
-            isLive: match.fixture.status.short === 'LIVE'
+            isLive: match.fixture.status.short === 'LIVE',
+            minute: match.fixture.status.elapsed
         }));
     }
 
@@ -659,6 +664,8 @@ class FootballAPI {
                 id: `${leagueKey}-${Date.now()}-${i}`,
                 homeTeam: homeTeam,
                 awayTeam: awayTeam,
+                homeTeamLogo: this.getTeamLogoUrl(homeTeam),
+                awayTeamLogo: this.getTeamLogoUrl(awayTeam),
                 homeScore: Math.floor(Math.random() * 4),
                 awayScore: Math.floor(Math.random() * 4),
                 status: 'FINISHED',
@@ -678,6 +685,8 @@ class FootballAPI {
                 id: `${leagueKey}-${Date.now()}-today-${i}`,
                 homeTeam: homeTeam,
                 awayTeam: awayTeam,
+                homeTeamLogo: this.getTeamLogoUrl(homeTeam),
+                awayTeamLogo: this.getTeamLogoUrl(awayTeam),
                 homeScore: isLive ? Math.floor(Math.random() * 3) : null,
                 awayScore: isLive ? Math.floor(Math.random() * 3) : null,
                 status: isLive ? 'LIVE' : 'SCHEDULED',
@@ -689,6 +698,88 @@ class FootballAPI {
         }
 
         return results;
+    }
+
+    // Get team logo URL for simulated matches
+    getTeamLogoUrl(teamName) {
+        const teamLogos = {
+            // La Liga
+            'Real Madrid': 'https://media.api-sports.io/football/teams/541.png',
+            'Barcelona': 'https://media.api-sports.io/football/teams/529.png',
+            'Atlético Madrid': 'https://media.api-sports.io/football/teams/530.png',
+            'Sevilla': 'https://media.api-sports.io/football/teams/536.png',
+            'Real Sociedad': 'https://media.api-sports.io/football/teams/548.png',
+            'Villarreal': 'https://media.api-sports.io/football/teams/533.png',
+            'Real Betis': 'https://media.api-sports.io/football/teams/543.png',
+            'Valencia': 'https://media.api-sports.io/football/teams/532.png',
+            'Athletic Bilbao': 'https://media.api-sports.io/football/teams/531.png',
+            'Osasuna': 'https://media.api-sports.io/football/teams/727.png',
+            
+            // Liga MX
+            'América': 'https://media.api-sports.io/football/teams/1354.png',
+            'Guadalajara': 'https://media.api-sports.io/football/teams/1355.png',
+            'Cruz Azul': 'https://media.api-sports.io/football/teams/1356.png',
+            'Tigres': 'https://media.api-sports.io/football/teams/1357.png',
+            'Monterrey': 'https://media.api-sports.io/football/teams/1358.png',
+            'Pachuca': 'https://media.api-sports.io/football/teams/1359.png',
+            'Toluca': 'https://media.api-sports.io/football/teams/1360.png',
+            'Santos Laguna': 'https://media.api-sports.io/football/teams/1361.png',
+            'Pumas UNAM': 'https://media.api-sports.io/football/teams/1362.png',
+            'Atlas': 'https://media.api-sports.io/football/teams/1363.png',
+            
+            // Serie A
+            'Juventus': 'https://media.api-sports.io/football/teams/496.png',
+            'AC Milan': 'https://media.api-sports.io/football/teams/489.png',
+            'Inter Milan': 'https://media.api-sports.io/football/teams/505.png',
+            'Napoli': 'https://media.api-sports.io/football/teams/492.png',
+            'Roma': 'https://media.api-sports.io/football/teams/497.png',
+            'Lazio': 'https://media.api-sports.io/football/teams/487.png',
+            'Atalanta': 'https://media.api-sports.io/football/teams/499.png',
+            'Fiorentina': 'https://media.api-sports.io/football/teams/502.png',
+            'Bologna': 'https://media.api-sports.io/football/teams/500.png',
+            'Torino': 'https://media.api-sports.io/football/teams/503.png',
+            
+            // Premier League
+            'Manchester City': 'https://media.api-sports.io/football/teams/50.png',
+            'Arsenal': 'https://media.api-sports.io/football/teams/42.png',
+            'Liverpool': 'https://media.api-sports.io/football/teams/40.png',
+            'Chelsea': 'https://media.api-sports.io/football/teams/49.png',
+            'Manchester United': 'https://media.api-sports.io/football/teams/33.png',
+            'Tottenham': 'https://media.api-sports.io/football/teams/47.png',
+            'Newcastle': 'https://media.api-sports.io/football/teams/34.png',
+            'Brighton': 'https://media.api-sports.io/football/teams/51.png',
+            'West Ham': 'https://media.api-sports.io/football/teams/48.png',
+            'Aston Villa': 'https://media.api-sports.io/football/teams/66.png',
+            
+            // Bundesliga
+            'Bayern Munich': 'https://media.api-sports.io/football/teams/157.png',
+            'Borussia Dortmund': 'https://media.api-sports.io/football/teams/165.png',
+            'RB Leipzig': 'https://media.api-sports.io/football/teams/721.png',
+            'Bayer Leverkusen': 'https://media.api-sports.io/football/teams/168.png',
+            'Eintracht Frankfurt': 'https://media.api-sports.io/football/teams/169.png',
+            'Union Berlin': 'https://media.api-sports.io/football/teams/182.png',
+            'Freiburg': 'https://media.api-sports.io/football/teams/160.png',
+            'Wolfsburg': 'https://media.api-sports.io/football/teams/161.png',
+            'Mainz': 'https://media.api-sports.io/football/teams/164.png',
+            'Borussia Mönchengladbach': 'https://media.api-sports.io/football/teams/163.png',
+            
+            // Copa Libertadores
+            'Flamengo': 'https://media.api-sports.io/football/teams/598.png',
+            'Palmeiras': 'https://media.api-sports.io/football/teams/595.png',
+            'River Plate': 'https://media.api-sports.io/football/teams/435.png',
+            'Boca Juniors': 'https://media.api-sports.io/football/teams/435.png',
+            'Atlético Mineiro': 'https://media.api-sports.io/football/teams/592.png',
+            'Santos': 'https://media.api-sports.io/football/teams/594.png',
+            'Grêmio': 'https://media.api-sports.io/football/teams/593.png',
+            'Internacional': 'https://media.api-sports.io/football/teams/596.png',
+            'São Paulo': 'https://media.api-sports.io/football/teams/598.png',
+            'Fluminense': 'https://media.api-sports.io/football/teams/599.png',
+            
+            // Champions League
+            'PSG': 'https://media.api-sports.io/football/teams/85.png'
+        };
+        
+        return teamLogos[teamName] || 'https://media.api-sports.io/football/teams/1.png';
     }
 }
 

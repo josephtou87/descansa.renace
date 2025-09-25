@@ -1038,6 +1038,10 @@ main {
     align-items: center;
     margin-bottom: 1rem;
     gap: 1rem;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .team-container {
@@ -1049,18 +1053,18 @@ main {
 }
 
 .team-logo {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #00d4ff, #667eea);
+    background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    border: 3px solid rgba(0, 212, 255, 0.3);
     box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
     flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
 }
 
 .team-logo img {
@@ -1068,6 +1072,11 @@ main {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.team-logo:hover img {
+    transform: scale(1.1);
 }
 
 .team-name {
@@ -1080,6 +1089,16 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
     min-width: 0;
+    padding: 0.2rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.team-name:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
 }
 
 .match-score-container {
@@ -3243,9 +3262,8 @@ main {
     }
 
     .team-logo {
-        width: 40px;
-        height: 40px;
-        font-size: 1.2rem;
+        width: 45px;
+        height: 45px;
     }
 
     .match-score {
