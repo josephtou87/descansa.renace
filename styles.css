@@ -1887,6 +1887,7 @@ main {
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border-radius: 15px;
 }
 
 .video-card:hover .video-poster {
@@ -3270,6 +3271,40 @@ main {
     transition: all 0.3s ease;
 }
 
+.fifa-field-background {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(135deg, #228B22, #32CD32);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.fifa-field-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 120"><rect width="200" height="120" fill="none" stroke="white" stroke-width="2"/><line x1="100" y1="0" x2="100" y2="120" stroke="white" stroke-width="2"/><circle cx="100" cy="60" r="20" fill="none" stroke="white" stroke-width="2"/><rect x="0" y="40" width="30" height="40" fill="none" stroke="white" stroke-width="2"/><rect x="170" y="40" width="30" height="40" fill="none" stroke="white" stroke-width="2"/></svg>');
+    opacity: 0.8;
+}
+
+.fifa-player-photo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #00d4ff;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+    z-index: 2;
+}
+
 .fifa-jersey-number {
     background: rgba(0, 212, 255, 0.2);
     color: #00d4ff;
@@ -3422,6 +3457,50 @@ main {
     width: 100%;
     height: 100%;
     z-index: 2;
+}
+
+.player-face {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid #00d4ff;
+    object-fit: cover;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+    z-index: 3;
+}
+
+.player-face:hover {
+    transform: scale(1.2);
+    border-color: #ff6b6b;
+    box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+    z-index: 10;
+}
+
+.player-name-tooltip {
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-face:hover .player-name-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-5px);
 }
 
 .field-player {
@@ -3927,6 +4006,25 @@ main {
         height: 30px;
     }
     
+    .player-face {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .fifa-field-background {
+        height: 80px;
+    }
+    
+    .fifa-player-photo {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .player-name-tooltip {
+        font-size: 0.7rem;
+        bottom: -30px;
+    }
+    
     }
 
     .hero-team-overlay {
@@ -4359,6 +4457,20 @@ main {
     .fifa-team-logo-small {
         width: 35px;
         height: 35px;
+    }
+    
+    .player-face {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .fifa-field-background {
+        height: 100px;
+    }
+    
+    .fifa-player-photo {
+        width: 60px;
+        height: 60px;
     }
     
     .match-teams {

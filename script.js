@@ -213,7 +213,10 @@ function showFIFACard(player) {
                 <img src="assets/images/logo.png" alt="FC DESCANSA" class="fifa-team-logo-small">
                 <div class="fifa-jersey-number">#${player.jerseyNumber}</div>
             </div>
-            <img src="${player.photo || 'assets/images/players/default.jpg'}" alt="${player.name}" class="fifa-player-photo">
+            <div class="fifa-field-background">
+                <div class="fifa-field-lines"></div>
+                <img src="${player.photo || 'assets/images/players/default.jpg'}" alt="${player.name}" class="fifa-player-photo">
+            </div>
             
             <!-- Season Stats -->
             <div class="fifa-season-stats">
@@ -265,9 +268,6 @@ function showFIFACard(player) {
                     <div class="fifa-stat-value">${player.stats.physical || 75}</div>
                 </div>
             </div>
-        </div>
-        <div class="fifa-card-footer">
-            <img src="assets/images/logo.png" alt="FC DESCANSA" class="fifa-team-logo">
         </div>
     `;
     
@@ -1826,19 +1826,19 @@ function loadStartingXI() {
     
     field.innerHTML = '';
     
-    // Sample starting XI positions (in a 4-3-3 formation)
+    // Sample starting XI positions (in a 5-3-2 formation)
     const positions = [
         { x: '50%', y: '85%', role: 'GK' }, // Goalkeeper
-        { x: '15%', y: '65%', role: 'LB' }, // Left Back
-        { x: '35%', y: '65%', role: 'CB' }, // Center Back
-        { x: '65%', y: '65%', role: 'CB' }, // Center Back
-        { x: '85%', y: '65%', role: 'RB' }, // Right Back
-        { x: '25%', y: '45%', role: 'CM' }, // Central Midfielder
-        { x: '50%', y: '45%', role: 'CM' }, // Central Midfielder
-        { x: '75%', y: '45%', role: 'CM' }, // Central Midfielder
-        { x: '20%', y: '25%', role: 'LW' }, // Left Wing
-        { x: '50%', y: '25%', role: 'ST' }, // Striker
-        { x: '80%', y: '25%', role: 'RW' }  // Right Wing
+        { x: '10%', y: '70%', role: 'LB' }, // Left Back
+        { x: '30%', y: '70%', role: 'CB' }, // Center Back
+        { x: '50%', y: '70%', role: 'CB' }, // Center Back
+        { x: '70%', y: '70%', role: 'CB' }, // Center Back
+        { x: '90%', y: '70%', role: 'RB' }, // Right Back
+        { x: '25%', y: '45%', role: 'CM' }, // Center Midfielder
+        { x: '50%', y: '45%', role: 'CM' }, // Center Midfielder
+        { x: '75%', y: '45%', role: 'CM' }, // Center Midfielder
+        { x: '35%', y: '20%', role: 'ST' }, // Striker
+        { x: '65%', y: '20%', role: 'ST' }  // Striker
     ];
     
     positions.forEach((pos, index) => {
@@ -1866,10 +1866,12 @@ function loadStartingXI() {
         if (suitablePlayers[index]) {
             const player = suitablePlayers[index];
             playerElement.innerHTML = `
-                <img src="${player.photo || 'https://via.placeholder.com/60x60/1e40af/ffffff?text=' + (player.fullName.charAt(0))}" 
-                     alt="${player.fullName}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                <img src="${player.photo || 'assets/images/players/default.jpg'}" 
+                     alt="${player.fullName}" class="player-face">
+                <div class="player-name-tooltip">${player.nickname || player.fullName}</div>
             `;
             playerElement.title = player.fullName;
+            playerElement.onclick = () => showPlayerCard(player);
         } else {
             playerElement.textContent = pos.role;
         }
