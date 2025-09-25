@@ -2011,7 +2011,7 @@ async function loadLiveMatchesForTab(tabType) {
                 matches = await window.FootballAPI.getChampionsLeagueMatches();
                 break;
             case 'liga-mx':
-                matches = await window.FootballAPI.getLigaMXMatches();
+                matches = await window.FootballAPI.getRealLigaMXMatches();
                 break;
             case 'major-leagues':
                 // Get matches from major European leagues
@@ -2058,6 +2058,10 @@ function updateLiveMatchesUI(containerId, matches) {
         return;
     }
 
+    // Add data source indicator for Liga MX
+    const dataSource = containerId.includes('LigaMx') && matches.length > 0 && matches[0].id.includes('liga-mx') ? 
+        '<div class="data-source-indicator"><i class="fas fa-info-circle"></i> Datos simulados con equipos reales de Liga MX</div>' : '';
+
     const matchesHTML = matches.map(match => `
         <div class="live-match-card ${match.isLive ? 'live' : ''}">
             ${match.isLive ? '<div class="live-indicator">EN VIVO</div>' : ''}
@@ -2077,7 +2081,7 @@ function updateLiveMatchesUI(containerId, matches) {
         </div>
     `).join('');
 
-    container.innerHTML = matchesHTML;
+    container.innerHTML = dataSource + matchesHTML;
 }
 
 // Format match status
