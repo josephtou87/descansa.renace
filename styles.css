@@ -1247,8 +1247,9 @@ main {
 .stats-section h3 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #dc2626;
+    color: #00d4ff;
     font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .stats-grid {
@@ -1258,33 +1259,39 @@ main {
 }
 
 .stat-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
     transition: transform 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .stat-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
 }
 
 .stat-card i {
     font-size: 2rem;
-    color: #dc2626;
+    color: #00d4ff;
     margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .stat-card h4 {
     margin-bottom: 1rem;
-    color: #333;
+    color: #ffffff;
+    font-weight: 600;
 }
 
 .stat-number {
     font-size: 2rem;
     font-weight: bold;
-    color: #dc2626;
+    color: #00d4ff;
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
 }
 
 /* Results */
@@ -1295,28 +1302,33 @@ main {
 .results-section h3 {
     text-align: center;
     margin-bottom: 2rem;
-    color: #dc2626;
+    color: #00d4ff;
     font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .results-table {
-    background: white;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .result-row {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr 1fr;
     padding: 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
 }
 
 .result-row.header {
-    background: #dc2626;
-    color: white;
+    background: rgba(0, 212, 255, 0.2);
+    color: #ffffff;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 .result-row:last-child {
@@ -1325,7 +1337,8 @@ main {
 
 .result {
     font-weight: bold;
-    color: #059669;
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
 }
 
 /* International Results */
@@ -1431,6 +1444,219 @@ main {
 
 .media-content.active {
     display: block;
+}
+
+/* 3D Carousel Styles */
+.carousel-3d-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    perspective: 1000px;
+    margin: 2rem 0;
+}
+
+.carousel-3d-scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.carousel-3d-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: rotate 20s infinite linear;
+}
+
+@keyframes rotate {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+}
+
+.carousel-3d-card {
+    position: absolute;
+    width: 300px;
+    height: 400px;
+    left: 50%;
+    top: 50%;
+    margin-left: -150px;
+    margin-top: -200px;
+    transform-style: preserve-3d;
+    transition: all 0.6s ease;
+}
+
+.carousel-3d-card:nth-child(1) { transform: rotateY(0deg) translateZ(400px); }
+.carousel-3d-card:nth-child(2) { transform: rotateY(72deg) translateZ(400px); }
+.carousel-3d-card:nth-child(3) { transform: rotateY(144deg) translateZ(400px); }
+.carousel-3d-card:nth-child(4) { transform: rotateY(216deg) translateZ(400px); }
+.carousel-3d-card:nth-child(5) { transform: rotateY(288deg) translateZ(400px); }
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.carousel-3d-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card-back {
+    background: linear-gradient(135deg, #00d4ff 0%, #667eea 100%);
+    transform: rotateY(180deg);
+}
+
+.card-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.carousel-3d-card:hover .card-front img {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    padding: 2rem 1rem 1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.carousel-3d-card:hover .card-overlay {
+    transform: translateY(0);
+}
+
+.card-overlay h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card-overlay p {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.card-info {
+    padding: 2rem;
+    color: white;
+    text-align: center;
+}
+
+.card-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.card-info p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.card-stats span {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+/* Controls */
+.carousel-3d-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 10;
+}
+
+.carousel-3d-prev,
+.carousel-3d-next {
+    background: rgba(0, 212, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+}
+
+.carousel-3d-prev:hover,
+.carousel-3d-next:hover {
+    background: rgba(0, 212, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+}
+
+/* Indicators */
+.carousel-3d-indicators {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background: rgba(0, 212, 255, 0.7);
+    transform: scale(1.1);
 }
 
 /* Carousel Styles */
@@ -3210,6 +3436,51 @@ main {
 
     .players-grid {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+    
+    /* 3D Carousel Responsive */
+    .carousel-3d-container {
+        height: 500px;
+    }
+    
+    .carousel-3d-card {
+        width: 250px;
+        height: 350px;
+        margin-left: -125px;
+        margin-top: -175px;
+    }
+    
+    .carousel-3d-card:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+    .carousel-3d-card:nth-child(2) { transform: rotateY(72deg) translateZ(300px); }
+    .carousel-3d-card:nth-child(3) { transform: rotateY(144deg) translateZ(300px); }
+    .carousel-3d-card:nth-child(4) { transform: rotateY(216deg) translateZ(300px); }
+    .carousel-3d-card:nth-child(5) { transform: rotateY(288deg) translateZ(300px); }
+    
+    .carousel-3d-controls {
+        padding: 0 1rem;
+    }
+    
+    .carousel-3d-prev,
+    .carousel-3d-next {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .card-overlay h3 {
+        font-size: 1rem;
+    }
+    
+    .card-overlay p {
+        font-size: 0.8rem;
+    }
+    
+    .card-info h3 {
+        font-size: 1.2rem;
+    }
+    
+    .card-info p {
+        font-size: 0.9rem;
     }
 
     .auth-tabs {

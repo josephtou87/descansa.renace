@@ -1225,6 +1225,9 @@ function initializeApp() {
     
     // Initialize live matches
     initializeLiveMatches();
+    
+    // Initialize 3D carousel
+    initialize3DCarousel();
 }
 
 // Setup event listeners
@@ -2109,6 +2112,90 @@ function updateLiveMatchesUI(containerId, matches) {
     `).join('');
 
     container.innerHTML = dataSource + matchesHTML;
+}
+
+// Initialize 3D Carousel
+function initialize3DCarousel() {
+    const carousel = document.getElementById('carousel3D');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const indicators = document.querySelectorAll('.indicator');
+    const cards = document.querySelectorAll('.carousel-3d-card');
+    
+    if (!carousel) return;
+    
+    let currentIndex = 0;
+    const totalCards = cards.length;
+    let rotationAngle = 0;
+    
+    // Function to update carousel position
+    function updateCarousel() {
+        rotationAngle = -currentIndex * 72; // 360 / 5 = 72 degrees per card
+        carousel.style.transform = `rotateY(${rotationAngle}deg)`;
+        
+        // Update indicators
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+        
+        // Update cards
+        cards.forEach((card, index) => {
+            card.classList.toggle('active', index === currentIndex);
+        });
+    }
+    
+    // Next button
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalCards;
+            updateCarousel();
+        });
+    }
+    
+    // Previous button
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalCards) % totalCards;
+            updateCarousel();
+        });
+    }
+    
+    // Indicators
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel();
+        });
+    });
+    
+    // Card click events
+    cards.forEach((card, index) => {
+        card.addEventListener('click', () => {
+            currentIndex = index;
+            updateCarousel();
+        });
+    });
+    
+    // Auto-rotation (optional)
+    let autoRotate = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalCards;
+        updateCarousel();
+    }, 4000);
+    
+    // Pause auto-rotation on hover
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(autoRotate);
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+        autoRotate = setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalCards;
+            updateCarousel();
+        }, 4000);
+    });
+    
+    // Initialize
+    updateCarousel();
 }
 
 // Format match status
