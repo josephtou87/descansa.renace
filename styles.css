@@ -3261,16 +3261,13 @@ main {
     letter-spacing: 1px;
 }
 
-.fifa-assists {
-    background: linear-gradient(45deg, #ff6b6b, #ffa500);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    font-family: 'Rajdhani', 'Exo 2', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 1rem;
+.fifa-team-logo-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(0, 212, 255, 0.5);
+    transition: all 0.3s ease;
 }
 
 .fifa-jersey-number {
@@ -3925,6 +3922,11 @@ main {
         font-size: 1rem;
     }
     
+    .fifa-team-logo-small {
+        width: 30px;
+        height: 30px;
+    }
+    
     }
 
     .hero-team-overlay {
@@ -4352,6 +4354,11 @@ main {
     
     .fifa-stat-value {
         font-size: 1.2rem;
+    }
+    
+    .fifa-team-logo-small {
+        width: 35px;
+        height: 35px;
     }
     
     .match-teams {
