@@ -1038,7 +1038,7 @@ main {
     align-items: flex-start;
     margin-bottom: 1rem;
     gap: 0.8rem;
-    padding: 1rem;
+    padding: 1.2rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1048,22 +1048,22 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.5rem;
     flex: 1;
     min-width: 0;
     max-width: 50%;
 }
 
 .team-logo {
-    width: 40px;
-    height: 40px;
+    width: 55px;
+    height: 55px;
     border-radius: 50%;
     background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid rgba(0, 212, 255, 0.3);
-    box-shadow: 0 3px 10px rgba(0, 212, 255, 0.3);
+    border: 3px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
     flex-shrink: 0;
     overflow: hidden;
     position: relative;
@@ -3269,8 +3269,8 @@ main {
     }
 
     .team-logo {
-        width: 32px;
-        height: 32px;
+        width: 45px;
+        height: 45px;
     }
 
     .match-score {
@@ -3289,13 +3289,13 @@ main {
     }
     
     .team-container {
-        gap: 0.2rem;
+        gap: 0.4rem;
         max-width: 45%;
     }
     
     .match-teams {
         gap: 0.4rem;
-        padding: 0.6rem;
+        padding: 0.8rem;
     }
 
     .match-time {
