@@ -2007,21 +2007,26 @@ async function loadLiveMatchesForTab(tabType) {
             case 'all':
                 matches = await window.FootballAPI.getLiveMatches();
                 break;
-            case 'champions':
-                matches = await window.FootballAPI.getChampionsLeagueMatches();
+            case 'la-liga':
+                matches = await window.FootballAPI.getMatchesByLeagueKey('la-liga');
                 break;
             case 'liga-mx':
-                matches = await window.FootballAPI.getLigaMXMatches();
+                matches = await window.FootballAPI.getMatchesByLeagueKey('liga-mx');
                 break;
-            case 'major-leagues':
-                // Get matches from major European leagues
-                const [premierLeague, laLiga, bundesliga, serieA] = await Promise.all([
-                    window.FootballAPI.getMatchesByLeague(39), // Premier League
-                    window.FootballAPI.getMatchesByLeague(140), // La Liga
-                    window.FootballAPI.getMatchesByLeague(78), // Bundesliga
-                    window.FootballAPI.getMatchesByLeague(135) // Serie A
-                ]);
-                matches = [...premierLeague, ...laLiga, ...bundesliga, ...serieA];
+            case 'serie-a':
+                matches = await window.FootballAPI.getMatchesByLeagueKey('serie-a');
+                break;
+            case 'premier':
+                matches = await window.FootballAPI.getMatchesByLeagueKey('premier');
+                break;
+            case 'bundesliga':
+                matches = await window.FootballAPI.getMatchesByLeagueKey('bundesliga');
+                break;
+            case 'libertadores':
+                matches = await window.FootballAPI.getMatchesByLeagueKey('libertadores');
+                break;
+            case 'champions':
+                matches = await window.FootballAPI.getMatchesByLeagueKey('champions');
                 break;
         }
         
@@ -2091,16 +2096,27 @@ function updateLiveMatchesUI(containerId, matches) {
         <div class="live-match-card ${match.isLive ? 'live' : ''}">
             ${match.isLive ? '<div class="live-indicator">EN VIVO</div>' : ''}
             <div class="match-teams">
-                <div class="team-name">${match.homeTeam}</div>
-                <div class="match-score">${match.homeScore || '-'}-${match.awayScore || '-'}</div>
-                <div class="team-name">${match.awayTeam}</div>
+                <div class="team-container">
+                    <div class="team-logo">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                    <div class="team-name">${match.homeTeam}</div>
+                </div>
+                <div class="match-score-container">
+                    <div class="match-score">${match.homeScore !== null ? match.homeScore : '-'}-${match.awayScore !== null ? match.awayScore : '-'}</div>
+                    <div class="match-time">${match.minute ? `${match.minute}'` : formatMatchStatus(match.status)}</div>
+                </div>
+                <div class="team-container">
+                    <div class="team-name">${match.awayTeam}</div>
+                    <div class="team-logo">
+                        <i class="fas fa-futbol"></i>
+                    </div>
+                </div>
             </div>
             <div class="match-info">
                 <div class="match-competition">${match.competition}</div>
-                <div class="match-time">
-                    <span class="match-status ${match.status.toLowerCase()}">
-                        ${match.minute ? `${match.minute}'` : formatMatchStatus(match.status)}
-                    </span>
+                <div class="match-status ${match.status.toLowerCase()}">
+                    ${match.isLive ? 'EN VIVO' : formatMatchStatus(match.status)}
                 </div>
             </div>
         </div>
@@ -2117,7 +2133,17 @@ function formatMatchStatus(status) {
         'LIVE': 'En vivo',
         'HT': 'Descanso',
         '1H': 'Primer tiempo',
-        '2H': 'Segundo tiempo'
+        '2H': 'Segundo tiempo',
+        'FINISHED': 'Finalizado',
+        'SCHEDULED': 'Programado',
+        'POSTPONED': 'Aplazado',
+        'CANCELLED': 'Cancelado',
+        'PEN': 'Penales',
+        'ET': 'Tiempo Extra',
+        'CANC': 'Cancelado',
+        'SUSP': 'Suspendido',
+        'AWD': 'Adjudicado',
+        'WO': 'Walkover'
     };
     return statusMap[status] || status;
 }

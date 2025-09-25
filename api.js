@@ -8,9 +8,17 @@ class FootballAPI {
         this.cache = new Map();
         this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
         this.useRealData = true; // Flag to use real data instead of mock
-        this.ligaMXLeagueId = 262; // Liga MX league ID
-        this.championsLeagueId = 2; // Champions League ID
-        this.currentSeason = 2023; // Current season (Liga MX data available)
+        // League IDs for API-Football
+        this.leagueIds = {
+            'la-liga': 140,        // La Liga (España)
+            'liga-mx': 262,        // Liga MX (México)
+            'serie-a': 135,        // Serie A (Italia)
+            'premier': 39,         // Premier League (Inglaterra)
+            'bundesliga': 78,      // Bundesliga (Alemania)
+            'libertadores': 13,    // Copa Libertadores
+            'champions': 2         // Champions League
+        };
+        this.currentSeason = 2024; // Current season
     }
 
     // Set API key
@@ -143,11 +151,17 @@ class FootballAPI {
         }
     }
 
-    // Get Liga MX matches
-    async getLigaMXMatches() {
+    // Get matches by league key
+    async getMatchesByLeagueKey(leagueKey) {
         try {
-            // First try to get recent matches from current season
-            const recentMatches = await this.makeRequest(`/fixtures?league=${this.ligaMXLeagueId}&season=${this.currentSeason}&last=10`);
+            const leagueId = this.leagueIds[leagueKey];
+            if (!leagueId) {
+                console.error(`Unknown league key: ${leagueKey}`);
+                return [];
+            }
+
+            // Try to get recent matches from current season
+            const recentMatches = await this.makeRequest(`/fixtures?league=${leagueId}&season=${this.currentSeason}&last=10`);
             
             if (recentMatches.response && recentMatches.response.length > 0) {
                 return this.formatMatches(recentMatches.response);
@@ -155,18 +169,28 @@ class FootballAPI {
             
             // If no recent matches, try current date
             const today = new Date().toISOString().split('T')[0];
-            const todayMatches = await this.makeRequest(`/fixtures?league=${this.ligaMXLeagueId}&date=${today}`);
+            const todayMatches = await this.makeRequest(`/fixtures?league=${leagueId}&date=${today}`);
             
             if (todayMatches.response && todayMatches.response.length > 0) {
                 return this.formatMatches(todayMatches.response);
             }
             
             // If still no matches, return simulated data with real teams
-            return this.getRealLigaMXMatches();
+            return this.getSimulatedMatchesForLeague(leagueKey);
         } catch (error) {
-            console.error('Error fetching Liga MX matches:', error);
-            return this.getRealLigaMXMatches();
+            console.error(`Error fetching ${leagueKey} matches:`, error);
+            return this.getSimulatedMatchesForLeague(leagueKey);
         }
+    }
+
+    // Get Liga MX matches (backward compatibility)
+    async getLigaMXMatches() {
+        return this.getMatchesByLeagueKey('liga-mx');
+    }
+
+    // Get Champions League matches (backward compatibility)
+    async getChampionsLeagueMatches() {
+        return this.getMatchesByLeagueKey('champions');
     }
 
     // Get real recent matches using a free API
@@ -577,6 +601,87 @@ class FootballAPI {
                 awayScore: isLive ? Math.floor(Math.random() * 3) : null,
                 status: isLive ? 'LIVE' : 'SCHEDULED',
                 competition: 'Liga MX',
+                date: today.toISOString(),
+                isLive: isLive,
+                minute: isLive ? Math.floor(Math.random() * 90) + 1 : null
+            });
+        }
+
+        return results;
+    }
+
+    // Get simulated matches for specific league
+    getSimulatedMatchesForLeague(leagueKey) {
+        const leagueData = {
+            'la-liga': {
+                name: 'La Liga',
+                teams: ['Real Madrid', 'Barcelona', 'Atlético Madrid', 'Sevilla', 'Real Sociedad', 'Villarreal', 'Real Betis', 'Valencia', 'Athletic Bilbao', 'Osasuna']
+            },
+            'liga-mx': {
+                name: 'Liga MX',
+                teams: ['América', 'Guadalajara', 'Cruz Azul', 'Tigres', 'Monterrey', 'Pachuca', 'Toluca', 'Santos Laguna', 'Pumas UNAM', 'Atlas']
+            },
+            'serie-a': {
+                name: 'Serie A',
+                teams: ['Juventus', 'AC Milan', 'Inter Milan', 'Napoli', 'Roma', 'Lazio', 'Atalanta', 'Fiorentina', 'Bologna', 'Torino']
+            },
+            'premier': {
+                name: 'Premier League',
+                teams: ['Manchester City', 'Arsenal', 'Liverpool', 'Chelsea', 'Manchester United', 'Tottenham', 'Newcastle', 'Brighton', 'West Ham', 'Aston Villa']
+            },
+            'bundesliga': {
+                name: 'Bundesliga',
+                teams: ['Bayern Munich', 'Borussia Dortmund', 'RB Leipzig', 'Bayer Leverkusen', 'Eintracht Frankfurt', 'Union Berlin', 'Freiburg', 'Wolfsburg', 'Mainz', 'Borussia Mönchengladbach']
+            },
+            'libertadores': {
+                name: 'Copa Libertadores',
+                teams: ['Flamengo', 'Palmeiras', 'River Plate', 'Boca Juniors', 'Atlético Mineiro', 'Santos', 'Grêmio', 'Internacional', 'São Paulo', 'Fluminense']
+            },
+            'champions': {
+                name: 'Champions League',
+                teams: ['Real Madrid', 'Manchester City', 'Bayern Munich', 'PSG', 'Barcelona', 'Liverpool', 'AC Milan', 'Inter Milan', 'Juventus', 'Chelsea']
+            }
+        };
+
+        const league = leagueData[leagueKey];
+        if (!league) return [];
+
+        const results = [];
+        const today = new Date();
+        const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+
+        // Generate yesterday's matches
+        for (let i = 0; i < 4; i++) {
+            const homeTeam = league.teams[Math.floor(Math.random() * league.teams.length)];
+            const awayTeam = league.teams.filter(team => team !== homeTeam)[Math.floor(Math.random() * (league.teams.length - 1))];
+            
+            results.push({
+                id: `${leagueKey}-${Date.now()}-${i}`,
+                homeTeam: homeTeam,
+                awayTeam: awayTeam,
+                homeScore: Math.floor(Math.random() * 4),
+                awayScore: Math.floor(Math.random() * 4),
+                status: 'FINISHED',
+                competition: league.name,
+                date: yesterday.toISOString(),
+                isLive: false
+            });
+        }
+
+        // Generate today's matches
+        for (let i = 0; i < 3; i++) {
+            const homeTeam = league.teams[Math.floor(Math.random() * league.teams.length)];
+            const awayTeam = league.teams.filter(team => team !== homeTeam)[Math.floor(Math.random() * (league.teams.length - 1))];
+            const isLive = Math.random() > 0.5;
+            
+            results.push({
+                id: `${leagueKey}-${Date.now()}-today-${i}`,
+                homeTeam: homeTeam,
+                awayTeam: awayTeam,
+                homeScore: isLive ? Math.floor(Math.random() * 3) : null,
+                awayScore: isLive ? Math.floor(Math.random() * 3) : null,
+                status: isLive ? 'LIVE' : 'SCHEDULED',
+                competition: league.name,
                 date: today.toISOString(),
                 isLive: isLive,
                 minute: isLive ? Math.floor(Math.random() * 90) + 1 : null

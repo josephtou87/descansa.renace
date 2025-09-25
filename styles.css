@@ -1037,23 +1037,70 @@ main {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.team-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex: 1;
+}
+
+.team-logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(102, 126, 234, 0.2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #00d4ff;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 212, 255, 0.2);
+}
+
+.team-logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .team-name {
     font-size: 1.1rem;
     font-weight: 700;
     color: #2c3e50;
-    text-align: center;
     flex: 1;
+    text-align: left;
+}
+
+.match-score-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
 }
 
 .match-score {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 900;
     color: #00d4ff;
-    margin: 0 1rem;
+    margin: 0;
     font-family: 'Orbitron', 'Exo 2', sans-serif;
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
+    line-height: 1;
+}
+
+.match-time {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.3rem;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 10px;
 }
 
 .match-info {
@@ -3161,11 +3208,16 @@ main {
     /* Live Results Responsive */
     .live-results-tabs {
         gap: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .live-tab-button {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.7rem;
+        min-width: auto;
+        flex: 1;
+        max-width: 120px;
     }
 
     .live-matches-container {
