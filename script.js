@@ -210,6 +210,7 @@ function showFIFACard(player) {
         <div class="fifa-player-info">
             <div class="fifa-player-details">
                 <div class="fifa-position">${player.position}</div>
+                <div class="fifa-assists">${assists} A</div>
                 <div class="fifa-jersey-number">#${player.jerseyNumber}</div>
             </div>
             <img src="${player.photo || 'assets/images/players/default.jpg'}" alt="${player.name}" class="fifa-player-photo">

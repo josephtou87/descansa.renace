@@ -3207,12 +3207,14 @@ main {
 
 .fifa-player-name {
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 900;
     font-family: 'Orbitron', 'Exo 2', sans-serif;
     text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
     z-index: 2;
     position: relative;
+    text-align: center;
+    padding: 0 0.5rem;
 }
 
 .fifa-overall-rating {
@@ -3257,6 +3259,18 @@ main {
     font-family: 'Rajdhani', 'Exo 2', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+
+.fifa-assists {
+    background: linear-gradient(45deg, #ff6b6b, #ffa500);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-family: 'Rajdhani', 'Exo 2', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1rem;
 }
 
 .fifa-jersey-number {
