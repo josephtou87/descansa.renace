@@ -2007,26 +2007,8 @@ async function loadLiveMatchesForTab(tabType) {
             case 'all':
                 matches = await window.FootballAPI.getLiveMatches();
                 break;
-            case 'la-liga':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('la-liga');
-                break;
-            case 'liga-mx':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('liga-mx');
-                break;
-            case 'serie-a':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('serie-a');
-                break;
-            case 'premier':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('premier');
-                break;
-            case 'bundesliga':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('bundesliga');
-                break;
-            case 'libertadores':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('libertadores');
-                break;
-            case 'champions':
-                matches = await window.FootballAPI.getMatchesByLeagueKey('champions');
+            default:
+                matches = await window.FootballAPI.getLiveMatches();
                 break;
         }
         
@@ -2100,14 +2082,14 @@ function updateLiveMatchesUI(containerId, matches) {
                     <div class="team-logo">
                         <i class="fas fa-futbol"></i>
                     </div>
-                    <div class="team-name">${match.homeTeam}</div>
+                    <div class="team-name" title="${match.homeTeam}">${match.homeTeam}</div>
                 </div>
                 <div class="match-score-container">
                     <div class="match-score">${match.homeScore !== null ? match.homeScore : '-'}-${match.awayScore !== null ? match.awayScore : '-'}</div>
                     <div class="match-time">${match.minute ? `${match.minute}'` : formatMatchStatus(match.status)}</div>
                 </div>
                 <div class="team-container">
-                    <div class="team-name">${match.awayTeam}</div>
+                    <div class="team-name" title="${match.awayTeam}">${match.awayTeam}</div>
                     <div class="team-logo">
                         <i class="fas fa-futbol"></i>
                     </div>
