@@ -3,7 +3,7 @@
 
 class FootballAPI {
     constructor() {
-        this.baseURL = 'https://api.football-data.org/v4';
+        this.baseURL = 'https://api-football-v1.p.rapidapi.com/v3';
         this.apiKey = 'YOUR_API_KEY_HERE'; // Replace with actual API key
         this.cache = new Map();
         this.cacheTimeout = 5 * 60 * 1000; // 5 minutes
@@ -26,7 +26,8 @@ class FootballAPI {
         try {
             const response = await fetch(`${this.baseURL}${endpoint}`, {
                 headers: {
-                    'X-Auth-Token': this.apiKey,
+                    'X-RapidAPI-Key': this.apiKey,
+                    'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
                     'Content-Type': 'application/json',
                     ...options.headers
                 },
@@ -56,8 +57,8 @@ class FootballAPI {
     // Get live matches
     async getLiveMatches() {
         try {
-            const data = await this.makeRequest('/matches?status=LIVE');
-            return this.formatLiveMatches(data.matches);
+            const data = await this.makeRequest('/fixtures?live=all');
+            return this.formatLiveMatches(data.response);
         } catch (error) {
             console.error('Error fetching live matches:', error);
             return this.getMockLiveMatches();
@@ -67,8 +68,8 @@ class FootballAPI {
     // Get matches by date
     async getMatchesByDate(date) {
         try {
-            const data = await this.makeRequest(`/matches?date=${date}`);
-            return this.formatMatches(data.matches);
+            const data = await this.makeRequest(`/fixtures?date=${date}`);
+            return this.formatMatches(data.response);
         } catch (error) {
             console.error('Error fetching matches by date:', error);
             return this.getMockMatchesByDate(date);
@@ -78,31 +79,41 @@ class FootballAPI {
     // Get Champions League matches
     async getChampionsLeagueMatches() {
         try {
-            const data = await this.makeRequest('/competitions/CL/matches');
-            return this.formatMatches(data.matches);
+            const data = await this.makeRequest('/fixtures?league=2&season=2024');
+            return this.formatMatches(data.response);
         } catch (error) {
             console.error('Error fetching Champions League matches:', error);
             return this.getMockChampionsLeagueMatches();
         }
     }
 
-    // Get Liga MX matches (if available)
+    // Get Liga MX matches
     async getLigaMXMatches() {
         try {
-            // Liga MX might not be available in all APIs, using Mexican league as fallback
-            const data = await this.makeRequest('/competitions/MEX/matches');
-            return this.formatMatches(data.matches);
+            const data = await this.makeRequest('/fixtures?league=262&season=2024');
+            return this.formatMatches(data.response);
         } catch (error) {
             console.error('Error fetching Liga MX matches:', error);
             return this.getMockLigaMXMatches();
         }
     }
 
+    // Get matches by league ID
+    async getMatchesByLeague(leagueId) {
+        try {
+            const data = await this.makeRequest(`/fixtures?league=${leagueId}&season=2024`);
+            return this.formatMatches(data.response);
+        } catch (error) {
+            console.error(`Error fetching matches for league ${leagueId}:`, error);
+            return this.getMockMatchesByLeague(leagueId);
+        }
+    }
+
     // Get team information
     async getTeamInfo(teamId) {
         try {
-            const data = await this.makeRequest(`/teams/${teamId}`);
-            return this.formatTeamInfo(data);
+            const data = await this.makeRequest(`/teams?id=${teamId}`);
+            return this.formatTeamInfo(data.response[0]);
         } catch (error) {
             console.error('Error fetching team info:', error);
             return null;
@@ -112,15 +123,15 @@ class FootballAPI {
     // Format live matches
     formatLiveMatches(matches) {
         return matches.map(match => ({
-            id: match.id,
-            homeTeam: match.homeTeam.name,
-            awayTeam: match.awayTeam.name,
-            homeScore: match.score.fullTime.home,
-            awayScore: match.score.fullTime.away,
-            status: match.status,
-            minute: match.minute,
-            competition: match.competition.name,
-            date: match.utcDate,
+            id: match.fixture.id,
+            homeTeam: match.teams.home.name,
+            awayTeam: match.teams.away.name,
+            homeScore: match.goals.home,
+            awayScore: match.goals.away,
+            status: match.fixture.status.short,
+            minute: match.fixture.status.elapsed,
+            competition: match.league.name,
+            date: match.fixture.date,
             isLive: true
         }));
     }
@@ -128,39 +139,39 @@ class FootballAPI {
     // Format regular matches
     formatMatches(matches) {
         return matches.map(match => ({
-            id: match.id,
-            homeTeam: match.homeTeam.name,
-            awayTeam: match.awayTeam.name,
-            homeScore: match.score.fullTime.home,
-            awayScore: match.score.fullTime.away,
-            status: match.status,
-            competition: match.competition.name,
-            date: match.utcDate,
-            isLive: match.status === 'LIVE'
+            id: match.fixture.id,
+            homeTeam: match.teams.home.name,
+            awayTeam: match.teams.away.name,
+            homeScore: match.goals.home,
+            awayScore: match.goals.away,
+            status: match.fixture.status.short,
+            competition: match.league.name,
+            date: match.fixture.date,
+            isLive: match.fixture.status.short === 'LIVE'
         }));
     }
 
     // Format team info
     formatTeamInfo(team) {
         return {
-            id: team.id,
-            name: team.name,
-            shortName: team.shortName,
-            crest: team.crest,
-            founded: team.founded,
+            id: team.team.id,
+            name: team.team.name,
+            shortName: team.team.name,
+            crest: team.team.logo,
+            founded: team.team.founded,
             venue: team.venue,
-            website: team.website,
-            coach: team.coach
+            website: team.team.website,
+            coach: team.team.name
         };
     }
 
     // Mock data methods
     getMockData(endpoint) {
-        if (endpoint.includes('status=LIVE')) {
+        if (endpoint.includes('live=all')) {
             return this.getMockLiveMatches();
-        } else if (endpoint.includes('CL')) {
+        } else if (endpoint.includes('league=2')) {
             return this.getMockChampionsLeagueMatches();
-        } else if (endpoint.includes('MEX')) {
+        } else if (endpoint.includes('league=262')) {
             return this.getMockLigaMXMatches();
         } else {
             return this.getMockMatches();
@@ -169,18 +180,27 @@ class FootballAPI {
 
     getMockLiveMatches() {
         return {
-            matches: [
+            response: [
                 {
-                    id: 1,
-                    homeTeam: 'Manchester City',
-                    awayTeam: 'Real Madrid',
-                    homeScore: 2,
-                    awayScore: 1,
-                    status: 'LIVE',
-                    minute: 67,
-                    competition: 'Champions League',
-                    date: new Date().toISOString(),
-                    isLive: true
+                    fixture: {
+                        id: 1,
+                        date: new Date().toISOString(),
+                        status: {
+                            short: 'LIVE',
+                            elapsed: 67
+                        }
+                    },
+                    teams: {
+                        home: { name: 'Manchester City' },
+                        away: { name: 'Real Madrid' }
+                    },
+                    goals: {
+                        home: 2,
+                        away: 1
+                    },
+                    league: {
+                        name: 'Champions League'
+                    }
                 }
             ]
         };
@@ -188,28 +208,46 @@ class FootballAPI {
 
     getMockChampionsLeagueMatches() {
         return {
-            matches: [
+            response: [
                 {
-                    id: 1,
-                    homeTeam: 'Barcelona',
-                    awayTeam: 'PSG',
-                    homeScore: 3,
-                    awayScore: 0,
-                    status: 'FINISHED',
-                    competition: 'Champions League',
-                    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-                    isLive: false
+                    fixture: {
+                        id: 1,
+                        date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: {
+                            short: 'FT'
+                        }
+                    },
+                    teams: {
+                        home: { name: 'Barcelona' },
+                        away: { name: 'PSG' }
+                    },
+                    goals: {
+                        home: 3,
+                        away: 0
+                    },
+                    league: {
+                        name: 'Champions League'
+                    }
                 },
                 {
-                    id: 2,
-                    homeTeam: 'Bayern Munich',
-                    awayTeam: 'Arsenal',
-                    homeScore: null,
-                    awayScore: null,
-                    status: 'SCHEDULED',
-                    competition: 'Champions League',
-                    date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
-                    isLive: false
+                    fixture: {
+                        id: 2,
+                        date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: {
+                            short: 'NS'
+                        }
+                    },
+                    teams: {
+                        home: { name: 'Bayern Munich' },
+                        away: { name: 'Arsenal' }
+                    },
+                    goals: {
+                        home: null,
+                        away: null
+                    },
+                    league: {
+                        name: 'Champions League'
+                    }
                 }
             ]
         };
@@ -217,28 +255,46 @@ class FootballAPI {
 
     getMockLigaMXMatches() {
         return {
-            matches: [
+            response: [
                 {
-                    id: 1,
-                    homeTeam: 'América',
-                    awayTeam: 'Chivas',
-                    homeScore: 1,
-                    awayScore: 0,
-                    status: 'FINISHED',
-                    competition: 'Liga MX',
-                    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-                    isLive: false
+                    fixture: {
+                        id: 1,
+                        date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: {
+                            short: 'FT'
+                        }
+                    },
+                    teams: {
+                        home: { name: 'América' },
+                        away: { name: 'Chivas' }
+                    },
+                    goals: {
+                        home: 1,
+                        away: 0
+                    },
+                    league: {
+                        name: 'Liga MX'
+                    }
                 },
                 {
-                    id: 2,
-                    homeTeam: 'Cruz Azul',
-                    awayTeam: 'Tigres',
-                    homeScore: 2,
-                    awayScore: 1,
-                    status: 'FINISHED',
-                    competition: 'Liga MX',
-                    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-                    isLive: false
+                    fixture: {
+                        id: 2,
+                        date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+                        status: {
+                            short: 'FT'
+                        }
+                    },
+                    teams: {
+                        home: { name: 'Cruz Azul' },
+                        away: { name: 'Tigres' }
+                    },
+                    goals: {
+                        home: 2,
+                        away: 1
+                    },
+                    league: {
+                        name: 'Liga MX'
+                    }
                 }
             ]
         };
@@ -246,17 +302,26 @@ class FootballAPI {
 
     getMockMatchesByDate(date) {
         return {
-            matches: [
+            response: [
                 {
-                    id: 1,
-                    homeTeam: 'Real Madrid',
-                    awayTeam: 'Barcelona',
-                    homeScore: 2,
-                    awayScore: 2,
-                    status: 'FINISHED',
-                    competition: 'La Liga',
-                    date: date,
-                    isLive: false
+                    fixture: {
+                        id: 1,
+                        date: date,
+                        status: {
+                            short: 'FT'
+                        }
+                    },
+                    teams: {
+                        home: { name: 'Real Madrid' },
+                        away: { name: 'Barcelona' }
+                    },
+                    goals: {
+                        home: 2,
+                        away: 2
+                    },
+                    league: {
+                        name: 'La Liga'
+                    }
                 }
             ]
         };
@@ -264,7 +329,43 @@ class FootballAPI {
 
     getMockMatches() {
         return {
-            matches: []
+            response: []
+        };
+    }
+
+    getMockMatchesByLeague(leagueId) {
+        const leagueNames = {
+            39: 'Premier League',
+            140: 'La Liga',
+            78: 'Bundesliga',
+            135: 'Serie A',
+            2: 'Champions League',
+            262: 'Liga MX'
+        };
+
+        return {
+            response: [
+                {
+                    fixture: {
+                        id: Date.now(),
+                        date: new Date().toISOString(),
+                        status: {
+                            short: 'FT'
+                        }
+                    },
+                    teams: {
+                        home: { name: 'Team A' },
+                        away: { name: 'Team B' }
+                    },
+                    goals: {
+                        home: 2,
+                        away: 1
+                    },
+                    league: {
+                        name: leagueNames[leagueId] || 'League'
+                    }
+                }
+            ]
         };
     }
 }
@@ -509,8 +610,8 @@ async function loadInternationalResults() {
             window.FootballAPI.getLigaMXMatches()
         ]);
 
-        updateInternationalResultsUI('champions', championsLeague.matches);
-        updateInternationalResultsUI('liga-mx', ligaMX.matches);
+        updateInternationalResultsUI('champions', championsLeague);
+        updateInternationalResultsUI('liga-mx', ligaMX);
     } catch (error) {
         console.error('Error loading international results:', error);
     }

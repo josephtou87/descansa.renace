@@ -968,6 +968,9 @@ const translations = {
         // Latest News
         'latest-news-title': 'Últimas Noticias',
         'read-more': 'Leer Más',
+        
+        // Live Results
+        'live-results-title': 'Resultados en Vivo',
         'birthday-title': '🎉⚽ ¡Feliz cumpleaños, crack! ⚽🎉',
         'birthday-message': 'Hoy celebramos la vida de uno de los pilares más fuertes de Descansa FC, nuestro muro en la defensa. Gracias por tu entrega, tu pasión y por dejarlo todo en la cancha en cada partido. 💪🔥',
         'birthday-wishes': 'Que este nuevo año te traiga muchas alegrías, éxitos y momentos de triunfo dentro y fuera del campo. 🏆✨',
@@ -1043,6 +1046,9 @@ const translations = {
         // Latest News
         'latest-news-title': 'Latest News',
         'read-more': 'Read More',
+        
+        // Live Results
+        'live-results-title': 'Live Results',
         'birthday-title': '🎉⚽ Happy Birthday, Star! ⚽🎉',
         'birthday-message': 'Today we celebrate the life of one of the strongest pillars of Descansa FC, our wall in defense. Thank you for your dedication, your passion and for leaving everything on the field in every match. 💪🔥',
         'birthday-wishes': 'May this new year bring you many joys, successes and moments of triumph both on and off the field. 🏆✨',
@@ -1118,6 +1124,9 @@ const translations = {
         // Latest News
         'latest-news-title': '最新消息',
         'read-more': '阅读更多',
+        
+        // Live Results
+        'live-results-title': '实时比分',
         'birthday-title': '🎉⚽ 生日快乐，明星！ ⚽🎉',
         'birthday-message': '今天我们庆祝Descansa FC最强支柱之一的生命，我们防守的城墙。感谢你的奉献、激情，以及在每场比赛中全力以赴。💪🔥',
         'birthday-wishes': '愿这新的一年为你带来许多欢乐、成功以及场上场下的胜利时刻。🏆✨',
@@ -1213,6 +1222,9 @@ function initializeApp() {
     updateFCLogo();
     loadSquad();
     loadStartingXI();
+    
+    // Initialize live matches
+    initializeLiveMatches();
 }
 
 // Setup event listeners
@@ -1253,10 +1265,10 @@ function setupEventListeners() {
         tab.addEventListener('click', handleMediaTab);
     });
     
-    // International results tabs
-    const resultTabs = document.querySelectorAll('.tab-button');
-    resultTabs.forEach(tab => {
-        tab.addEventListener('click', handleResultTab);
+    // Live results tabs
+    const liveTabs = document.querySelectorAll('.live-tab-button');
+    liveTabs.forEach(tab => {
+        tab.addEventListener('click', handleLiveTab);
     });
     
     // Photo capture
@@ -1378,21 +1390,24 @@ function handleMediaTab(e) {
     document.getElementById(mediaType).classList.add('active');
 }
 
-// Result tab handling
-function handleResultTab(e) {
-    const tabType = e.target.getAttribute('data-tab');
+// Live tab handling
+function handleLiveTab(e) {
+    const tabType = e.target.getAttribute('data-live-tab');
     
     // Update tab buttons
-    document.querySelectorAll('.tab-button').forEach(tab => {
+    document.querySelectorAll('.live-tab-button').forEach(tab => {
         tab.classList.remove('active');
     });
     e.target.classList.add('active');
     
     // Update content
-    document.querySelectorAll('.tab-content').forEach(content => {
+    document.querySelectorAll('.live-tab-content').forEach(content => {
         content.classList.remove('active');
     });
-    document.getElementById(tabType).classList.add('active');
+    document.getElementById(`live-${tabType}`).classList.add('active');
+    
+    // Load matches for the selected tab
+    loadLiveMatchesForTab(tabType);
 }
 
 // Login handling
@@ -1983,10 +1998,124 @@ function initializeSampleData() {
     savePlayers();
 }
 
-// Load international results (mock data)
-function loadInternationalResults() {
-    // This would normally fetch from an API
-    // For now, we'll use the static data from HTML
+// Load live matches for specific tab
+async function loadLiveMatchesForTab(tabType) {
+    try {
+        let matches = [];
+        
+        switch(tabType) {
+            case 'all':
+                matches = await window.FootballAPI.getLiveMatches();
+                break;
+            case 'champions':
+                matches = await window.FootballAPI.getChampionsLeagueMatches();
+                break;
+            case 'liga-mx':
+                matches = await window.FootballAPI.getLigaMXMatches();
+                break;
+            case 'major-leagues':
+                // Get matches from major European leagues
+                const [premierLeague, laLiga, bundesliga, serieA] = await Promise.all([
+                    window.FootballAPI.getMatchesByLeague(39), // Premier League
+                    window.FootballAPI.getMatchesByLeague(140), // La Liga
+                    window.FootballAPI.getMatchesByLeague(78), // Bundesliga
+                    window.FootballAPI.getMatchesByLeague(135) // Serie A
+                ]);
+                matches = [...premierLeague, ...laLiga, ...bundesliga, ...serieA];
+                break;
+        }
+        
+        updateLiveMatchesUI(`liveMatches${tabType.charAt(0).toUpperCase() + tabType.slice(1)}`, matches);
+    } catch (error) {
+        console.error('Error loading live matches for tab:', error);
+        updateLiveMatchesUI(`liveMatches${tabType.charAt(0).toUpperCase() + tabType.slice(1)}`, []);
+    }
+}
+
+// Get matches by league ID
+async function getMatchesByLeague(leagueId) {
+    try {
+        const data = await window.FootballAPI.makeRequest(`/fixtures?league=${leagueId}&season=2024`);
+        return window.FootballAPI.formatMatches(data.response);
+    } catch (error) {
+        console.error(`Error fetching matches for league ${leagueId}:`, error);
+        return [];
+    }
+}
+
+// Update live matches UI
+function updateLiveMatchesUI(containerId, matches) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    if (matches.length === 0) {
+        container.innerHTML = `
+            <div class="no-matches">
+                <i class="fas fa-futbol"></i>
+                <p>No hay partidos disponibles en este momento</p>
+            </div>
+        `;
+        return;
+    }
+
+    const matchesHTML = matches.map(match => `
+        <div class="live-match-card ${match.isLive ? 'live' : ''}">
+            ${match.isLive ? '<div class="live-indicator">EN VIVO</div>' : ''}
+            <div class="match-teams">
+                <div class="team-name">${match.homeTeam}</div>
+                <div class="match-score">${match.homeScore || '-'}-${match.awayScore || '-'}</div>
+                <div class="team-name">${match.awayTeam}</div>
+            </div>
+            <div class="match-info">
+                <div class="match-competition">${match.competition}</div>
+                <div class="match-time">
+                    <span class="match-status ${match.status.toLowerCase()}">
+                        ${match.minute ? `${match.minute}'` : formatMatchStatus(match.status)}
+                    </span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+
+    container.innerHTML = matchesHTML;
+}
+
+// Format match status
+function formatMatchStatus(status) {
+    const statusMap = {
+        'FT': 'Finalizado',
+        'NS': 'Por jugar',
+        'LIVE': 'En vivo',
+        'HT': 'Descanso',
+        '1H': 'Primer tiempo',
+        '2H': 'Segundo tiempo'
+    };
+    return statusMap[status] || status;
+}
+
+// Auto-refresh live matches
+function startLiveMatchesRefresh() {
+    // Refresh every 30 seconds
+    setInterval(async () => {
+        const activeTab = document.querySelector('.live-tab-button.active');
+        if (activeTab) {
+            const tabType = activeTab.getAttribute('data-live-tab');
+            await loadLiveMatchesForTab(tabType);
+        }
+    }, 30000);
+}
+
+// Initialize live matches
+async function initializeLiveMatches() {
+    try {
+        // Load initial matches for the active tab
+        await loadLiveMatchesForTab('all');
+        
+        // Start auto-refresh
+        startLiveMatchesRefresh();
+    } catch (error) {
+        console.error('Error initializing live matches:', error);
+    }
 }
 
 // API integration for live matches
