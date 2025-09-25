@@ -37,6 +37,10 @@
                 <span class="team-name">FC DESCANSA</span>
             </div>
             
+            <div class="nav-brand-right">
+                <img src="assets/images/1.png" alt="FC DESCANSA Logo" class="logo-right">
+            </div>
+            
             <!-- Mobile Menu Button -->
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <span></span>
@@ -565,32 +569,64 @@
                 </div>
                 
                 <div class="media-content" id="videos">
-                    <div class="video-carousel">
-                        <div class="video-slide active">
-                            <div class="video-container">
-                                <video controls poster="assets/images/gallery/video1-poster.jpg">
-                                    <source src="assets/videos/resumen-partido.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-overlay">
-                                    <h3>Paradon del Portero (Gudy)</h3>
-                                    <p>Los mejores momentos</p>
+                    <div class="video-gallery">
+                        <div class="video-card" data-video="assets/videos/resumen-partido.mp4">
+                            <div class="video-thumbnail">
+                                <img src="assets/images/gallery/gudy.png" alt="Paradon del Portero" class="video-poster">
+                                <div class="video-play-button">
+                                    <i class="fas fa-play"></i>
                                 </div>
+                                <div class="video-duration">2:30</div>
+                            </div>
+                            <div class="video-info">
+                                <h3>Paradon del Portero (Gudy)</h3>
+                                <p>Los mejores momentos del arquero</p>
                             </div>
                         </div>
-                        <div class="video-slide">
-                            <div class="video-container">
-                                <video controls poster="assets/images/gallery/video2-poster.jpg">
-                                    <source src="assets/videos/entrenamientos.mp4" type="video/mp4">
-                                </video>
-                                <div class="video-overlay">
-                                    <h3>Entrenamientos</h3>
-                                    <p>Preparación del equipo</p>
+                        
+                        <div class="video-card" data-video="assets/videos/entrenamientos.mp4">
+                            <div class="video-thumbnail">
+                                <img src="assets/images/equipo.jpg" alt="Entrenamientos" class="video-poster">
+                                <div class="video-play-button">
+                                    <i class="fas fa-play"></i>
                                 </div>
+                                <div class="video-duration">3:45</div>
+                            </div>
+                            <div class="video-info">
+                                <h3>Entrenamientos</h3>
+                                <p>Preparación del equipo</p>
                             </div>
                         </div>
-                        <div class="video-controls">
-                            <button class="video-prev">‹</button>
-                            <button class="video-next">›</button>
+                        
+                        <div class="video-card" data-video="assets/videos/goles.mp4">
+                            <div class="video-thumbnail">
+                                <img src="assets/images/gallery/joseph.png" alt="Mejores Goles" class="video-poster">
+                                <div class="video-play-button">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <div class="video-duration">1:20</div>
+                            </div>
+                            <div class="video-info">
+                                <h3>Mejores Goles</h3>
+                                <p>Los goles más espectaculares</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Modal -->
+                <div class="video-modal" id="videoModal">
+                    <div class="video-modal-content">
+                        <button class="video-modal-close" id="videoModalClose">&times;</button>
+                        <div class="video-modal-player">
+                            <video id="modalVideo" controls>
+                                <source src="" type="video/mp4">
+                                Tu navegador no soporta el elemento video.
+                            </video>
+                        </div>
+                        <div class="video-modal-info">
+                            <h3 id="modalVideoTitle"></h3>
+                            <p id="modalVideoDescription"></p>
                         </div>
                     </div>
                 </div>
