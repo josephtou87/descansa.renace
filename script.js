@@ -2174,6 +2174,11 @@ function initialize3DCarousel() {
             currentIndex = index;
             updateCarousel();
         });
+        
+        // Add double-click to open modal
+        card.addEventListener('dblclick', () => {
+            openImageModal(card);
+        });
     });
     
     // Auto-rotation (optional)
@@ -2196,6 +2201,66 @@ function initialize3DCarousel() {
     
     // Initialize
     updateCarousel();
+    
+    // Initialize modal
+    initializeImageModal();
+}
+
+// Initialize Image Modal
+function initializeImageModal() {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalClose = document.getElementById('modalClose');
+    
+    if (!modal) return;
+    
+    // Close modal events
+    modalClose.addEventListener('click', closeImageModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeImageModal();
+        }
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeImageModal();
+        }
+    });
+}
+
+// Open Image Modal
+function openImageModal(card) {
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    
+    if (!modal || !card) return;
+    
+    const imageSrc = card.getAttribute('data-image');
+    const title = card.getAttribute('data-title');
+    const description = card.getAttribute('data-description');
+    
+    modalImage.src = imageSrc;
+    modalImage.alt = title;
+    modalTitle.textContent = title;
+    modalDescription.textContent = description;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+}
+
+// Close Image Modal
+function closeImageModal() {
+    const modal = document.getElementById('imageModal');
+    if (!modal) return;
+    
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restore scrolling
 }
 
 // Format match status

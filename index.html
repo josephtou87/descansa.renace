@@ -290,22 +290,24 @@
                             <span>Competencia</span>
                         </div>
                         <div class="result-row">
+                            <span>14/09/2025</span>
                             <span>Jornada 1</span>
                             <span>Dep. Morelos</span>
                             <span class="result">1-3</span>
                             <span>Liga Local</span>
                         </div>
                         <div class="result-row">
+                            <span>20/09/2025</span>
                             <span>Jornada 2</span>
                             <span>Praderas</span>
                             <span class="result">0-4</span>
                             <span>Liga Local</span>
                         </div>
                         <div class="result-row">
-                            <span>15/12/2023</span>
-                            <span>Real Madrid FC</span>
+                            <span></span>
+                            <span></span>
                             <span class="result">1-0</span>
-                            <span>Liga Local</span>
+                            <span></span>
                         </div>
                     </div>
                 </div>
@@ -332,7 +334,10 @@
                         <div class="carousel-3d-scene">
                             <div class="carousel-3d-wrapper" id="carousel3D">
                                 <!-- Card 1 -->
-                                <div class="carousel-3d-card active" data-index="0">
+                                <div class="carousel-3d-card active" data-index="0" 
+                                     data-image="assets/images/gallery/josephtou.png"
+                                     data-title="🎉⚽ ¡Feliz cumpleaños, crack! ⚽🎉"
+                                     data-description="Celebrando a nuestro muro inquebrantable en la defensa. Joseph es uno de los pilares más fuertes de Descansa FC, nuestro defensor central que siempre deja todo en la cancha.">
                                     <div class="card-inner">
                                         <div class="card-front">
                                             <img src="assets/images/gallery/josephtou.png" alt="¡Feliz Cumpleaños!">
@@ -355,7 +360,10 @@
                                 </div>
                                 
                                 <!-- Card 2 -->
-                                <div class="carousel-3d-card" data-index="1">
+                                <div class="carousel-3d-card" data-index="1"
+                                     data-image="assets/images/gallery/joseph.png"
+                                     data-title="Nueva Contratación"
+                                     data-description="FC DESCANSA anuncia la llegada de un nuevo lateral por derecha para reforzar la defensa. Este jugador será un muro impasable y le dará confianza al equipo en cada partido.">
                                     <div class="card-inner">
                                         <div class="card-front">
                                             <img src="assets/images/gallery/joseph.png" alt="Nueva Contratación">
@@ -378,7 +386,10 @@
                                 </div>
                                 
                                 <!-- Card 3 -->
-                                <div class="carousel-3d-card" data-index="2">
+                                <div class="carousel-3d-card" data-index="2"
+                                     data-image="assets/images/gallery/gudy.png"
+                                     data-title="🧤⚽ ¡Bienvenido a la familia Descansa FC! ⚽🧤"
+                                     data-description="Hoy tenemos el honor de presentar a nuestro nuevo guardián del arco: Gudy 🔥. Un portero con gran experiencia y reflejos increíbles que protegerá nuestra portería.">
                                     <div class="card-inner">
                                         <div class="card-front">
                                             <img src="assets/images/gallery/gudy.png" alt="¡Bienvenido Gudy!">
@@ -401,7 +412,10 @@
                                 </div>
                                 
                                 <!-- Card 4 -->
-                                <div class="carousel-3d-card" data-index="3">
+                                <div class="carousel-3d-card" data-index="3"
+                                     data-image="assets/images/equipo.jpg"
+                                     data-title="🏆 Equipo Completo"
+                                     data-description="La familia Descansa FC lista para la temporada. Un equipo unido por la pasión del fútbol, con 22 jugadores comprometidos y listos para dar lo mejor de sí en cada partido.">
                                     <div class="card-inner">
                                         <div class="card-front">
                                             <img src="assets/images/equipo.jpg" alt="Equipo Completo">
@@ -424,7 +438,10 @@
                                 </div>
                                 
                                 <!-- Card 5 -->
-                                <div class="carousel-3d-card" data-index="4">
+                                <div class="carousel-3d-card" data-index="4"
+                                     data-image="assets/images/gallery/josephtou.png"
+                                     data-title="⚽ Entrenamientos"
+                                     data-description="Preparación intensiva para la próxima temporada. Sesiones de entrenamiento donde el equipo trabaja duro para mejorar su rendimiento y estar listos para cada desafío.">
                                     <div class="card-inner">
                                         <div class="card-front">
                                             <img src="assets/images/gallery/josephtou.png" alt="Entrenamiento">
@@ -465,6 +482,18 @@
                             <span class="indicator" data-index="2"></span>
                             <span class="indicator" data-index="3"></span>
                             <span class="indicator" data-index="4"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Image Modal -->
+                <div class="image-modal" id="imageModal">
+                    <div class="modal-content">
+                        <button class="modal-close" id="modalClose">&times;</button>
+                        <img class="modal-image" id="modalImage" src="" alt="">
+                        <div class="modal-info">
+                            <h3 id="modalTitle"></h3>
+                            <p id="modalDescription"></p>
                         </div>
                     </div>
                 </div>
