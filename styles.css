@@ -266,12 +266,15 @@ body {
     object-fit: cover;
     border: 2px solid rgba(0, 212, 255, 0.3);
     transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
 }
 
 .logo-right:hover {
+    transform: scale(3);
+    z-index: 1001;
     border-color: #00d4ff;
-    transform: scale(1.1);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
 }
 
 .navbar {
@@ -295,12 +298,16 @@ body {
     border-radius: 50%;
     border: 3px solid white;
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
 }
 
 .logo:hover {
-    transform: scale(1.15);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    transform: scale(3);
+    z-index: 1001;
+    border-color: #00d4ff;
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
 }
 
 .team-name {
@@ -532,43 +539,6 @@ main {
     }
 }
 
-/* Main Feature Image */
-.main-feature-image {
-    margin: 2rem 0;
-    text-align: center;
-    padding: 1rem;
-}
-
-.feature-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    filter: brightness(1) contrast(1) saturate(1);
-}
-
-/* Light theme adjustments */
-body:not(.dark-theme) .feature-img {
-    filter: brightness(1.1) contrast(1.05) saturate(1.1);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-/* Dark theme adjustments */
-body.dark-theme .feature-img {
-    filter: brightness(0.9) contrast(1.1) saturate(1.2);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-}
-
-.feature-img:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-}
-
-/* Dark theme hover */
-body.dark-theme .feature-img:hover {
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
-}
 
 .hero-content {
     position: relative;
@@ -3126,9 +3096,9 @@ body.dark-theme .feature-img:hover {
 
 .fifa-modal-content {
     position: relative;
-    margin: 5% auto;
-    width: 90%;
-    max-width: 400px;
+    margin: 10% auto;
+    width: 85%;
+    max-width: 350px;
     animation: modalSlideIn 0.3s ease-out;
 }
 
@@ -3145,19 +3115,31 @@ body.dark-theme .feature-img:hover {
 
 .fifa-close {
     position: absolute;
-    top: -40px;
-    right: 0;
+    top: -50px;
+    right: -10px;
     color: #00d4ff;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     cursor: pointer;
     z-index: 2001;
     transition: all 0.3s ease;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(0, 212, 255, 0.3);
 }
 
 .fifa-close:hover {
-    color: #667eea;
+    color: #ffffff;
+    background: rgba(0, 212, 255, 0.9);
     transform: scale(1.1);
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
 }
 
 .fifa-card-container {
@@ -3167,7 +3149,7 @@ body.dark-theme .feature-img:hover {
 .fifa-card {
     position: relative;
     width: 100%;
-    height: 500px; /* Further reduced for mobile */
+    height: 420px; /* Reduced for better fit */
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     border-radius: 15px;
     overflow-y: auto;
@@ -3337,36 +3319,44 @@ body.dark-theme .feature-img:hover {
 
 .fifa-stats {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
-    margin-top: 0.3rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
 }
 
 .fifa-stat {
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(102, 126, 234, 0.1));
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    border-radius: 8px;
-    padding: 0.4rem;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(102, 126, 234, 0.15));
+    border: 1px solid rgba(0, 212, 255, 0.4);
+    border-radius: 10px;
+    padding: 0.6rem;
     text-align: center;
     backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.fifa-stat:hover {
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(102, 126, 234, 0.25));
+    border-color: rgba(0, 212, 255, 0.6);
+    transform: translateY(-2px);
 }
 
 .fifa-stat-label {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: #00d4ff;
     font-weight: 600;
     font-family: 'Rajdhani', 'Exo 2', sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.3rem;
 }
 
 .fifa-stat-value {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: white;
     font-weight: 900;
     font-family: 'Orbitron', 'Exo 2', sans-serif;
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
 }
 
 .fifa-card-footer {
@@ -3875,43 +3865,52 @@ body.dark-theme .feature-img:hover {
         object-position: center;
     }
     
-    /* Feature Image Responsive */
-    .main-feature-image {
-        margin: 1.5rem 0;
-        padding: 0.5rem;
+    /* Logo hover effects for extra small mobile */
+    .logo:hover {
+        transform: scale(1.8);
     }
     
-    .feature-img {
-        border-radius: 15px;
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    .logo-right:hover {
+        transform: scale(1.8);
     }
     
-    body:not(.dark-theme) .feature-img {
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    /* FIFA Modal Extra Small */
+    .fifa-modal-content {
+        width: 95%;
+        max-width: 300px;
+        margin: 5% auto;
     }
     
-    body.dark-theme .feature-img {
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    .fifa-card {
+        height: 350px;
     }
     
-    /* Feature Image Extra Small */
-    .main-feature-image {
-        margin: 1rem 0;
+    .fifa-close {
+        top: -40px;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        font-size: 2rem;
+    }
+    
+    .fifa-stats {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
         padding: 0.3rem;
     }
     
-    .feature-img {
-        border-radius: 12px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    .fifa-stat {
+        padding: 0.4rem;
     }
     
-    body:not(.dark-theme) .feature-img {
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    .fifa-stat-label {
+        font-size: 0.6rem;
     }
     
-    body.dark-theme .feature-img {
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    .fifa-stat-value {
+        font-size: 1rem;
     }
+    
     }
 
     .hero-team-overlay {
@@ -4239,6 +4238,15 @@ body.dark-theme .feature-img:hover {
         height: 40px;
     }
     
+    /* Logo hover effects for mobile */
+    .logo:hover {
+        transform: scale(2);
+    }
+    
+    .logo-right:hover {
+        transform: scale(2);
+    }
+    
     /* Video Gallery Responsive */
     .video-gallery {
         grid-template-columns: 1fr;
@@ -4292,6 +4300,43 @@ body.dark-theme .feature-img:hover {
     .video-modal-close {
         width: 40px;
         height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    /* FIFA Modal Responsive */
+    .fifa-modal-content {
+        width: 90%;
+        max-width: 320px;
+        margin: 8% auto;
+    }
+    
+    .fifa-card {
+        height: 380px;
+    }
+    
+    .fifa-close {
+        top: -45px;
+        right: -5px;
+        width: 45px;
+        height: 45px;
+        font-size: 2.2rem;
+    }
+    
+    .fifa-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+        padding: 0.4rem;
+    }
+    
+    .fifa-stat {
+        padding: 0.5rem;
+    }
+    
+    .fifa-stat-label {
+        font-size: 0.7rem;
+    }
+    
+    .fifa-stat-value {
         font-size: 1.2rem;
     }
     
