@@ -62,8 +62,16 @@ class FootballAPI {
                 }
             });
 
+            const data = await response.json();
+            
             if (response.ok) {
-                const data = await response.json();
+                if (data.errors && data.errors.requests) {
+                    return { 
+                        valid: false, 
+                        message: `Límite de solicitudes excedido: ${data.errors.requests}`,
+                        error: data.errors.requests
+                    };
+                }
                 return { 
                     valid: true, 
                     message: 'API key válida', 
@@ -103,6 +111,13 @@ class FootballAPI {
             }
 
             const data = await response.json();
+            
+            // Check for API errors
+            if (data.errors && data.errors.requests) {
+                console.error('API Error:', data.errors.requests);
+                console.log('Using mock data due to API limit exceeded');
+                return this.getMockData(endpoint);
+            }
             
             // Cache the response
             this.cache.set(cacheKey, {
@@ -415,7 +430,7 @@ class FootballAPI {
             response: [
                 {
                     fixture: {
-                        id: 1,
+                    id: 1,
                         date: new Date().toISOString(),
                         status: {
                             short: 'LIVE',
@@ -490,14 +505,14 @@ class FootballAPI {
                 awayTeam: 'Pumas UNAM',
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/1360.png',
                 awayTeamLogo: 'https://media.api-sports.io/football/teams/1362.png',
-                homeScore: 2,
-                awayScore: 1,
-                status: 'LIVE',
-                minute: 67,
+                    homeScore: 2,
+                    awayScore: 1,
+                    status: 'LIVE',
+                    minute: 67,
                 competition: 'Liga MX Apertura 2024',
                 date: today,
-                isLive: true
-            }
+                    isLive: true
+                }
         ];
     }
 
@@ -539,7 +554,7 @@ class FootballAPI {
                 awayTeam: 'River Plate',
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/595.png',
                 awayTeamLogo: 'https://media.api-sports.io/football/teams/435.png',
-                homeScore: 3,
+                    homeScore: 3,
                 awayScore: 1,
                 status: 'FINISHED',
                 minute: 90,
@@ -554,14 +569,14 @@ class FootballAPI {
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/1355.png',
                 awayTeamLogo: 'https://media.api-sports.io/football/teams/1365.png',
                 homeScore: 1,
-                awayScore: 0,
-                status: 'FINISHED',
+                    awayScore: 0,
+                    status: 'FINISHED',
                 minute: 90,
                 competition: 'Liga MX Apertura 2024',
                 date: today,
-                isLive: false
-            },
-            {
+                    isLive: false
+                },
+                {
                 id: 'mock-finished-5',
                 homeTeam: 'Puebla',
                 awayTeam: 'León',
@@ -617,8 +632,8 @@ class FootballAPI {
                 },
                 {
                     fixture: {
-                        id: 2,
-                        date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    id: 2,
+                    date: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
                         status: {
                             short: 'NS'
                         }
@@ -644,8 +659,8 @@ class FootballAPI {
             response: [
                 {
                     fixture: {
-                        id: 1,
-                        date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                    id: 1,
+                    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
                         status: {
                             short: 'FT'
                         }
@@ -664,8 +679,8 @@ class FootballAPI {
                 },
                 {
                     fixture: {
-                        id: 2,
-                        date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    id: 2,
+                    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
                         status: {
                             short: 'FT'
                         }
@@ -691,8 +706,8 @@ class FootballAPI {
             response: [
                 {
                     fixture: {
-                        id: 1,
-                        date: date,
+                    id: 1,
+                    date: date,
                         status: {
                             short: 'FT'
                         }

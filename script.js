@@ -2312,6 +2312,9 @@ async function initializeLiveMatches() {
         const apiStatus = await window.FootballAPI.testApiKey();
         console.log('API Status:', apiStatus);
         
+        // Update API status display
+        updateAPIStatus(apiStatus);
+        
         // Load initial matches for the active tab
         await loadLiveMatchesForTab('all');
         
@@ -2319,6 +2322,26 @@ async function initializeLiveMatches() {
         startLiveMatchesRefresh();
     } catch (error) {
         console.error('Error initializing live matches:', error);
+        updateAPIStatus({ valid: false, message: 'Error al inicializar' });
+    }
+}
+
+// Update API status display
+function updateAPIStatus(apiStatus) {
+    const statusElement = document.getElementById('apiStatusText');
+    if (!statusElement) return;
+    
+    if (apiStatus.valid) {
+        statusElement.textContent = '✅ Conectado - Datos reales';
+        statusElement.style.color = '#00ff88';
+    } else {
+        if (apiStatus.error && apiStatus.error.includes('request limit')) {
+            statusElement.textContent = '⚠️ Límite excedido - Datos simulados';
+            statusElement.style.color = '#ffc107';
+        } else {
+            statusElement.textContent = '❌ Sin conexión - Datos simulados';
+            statusElement.style.color = '#ff6b6b';
+        }
     }
 }
 
