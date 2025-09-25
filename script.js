@@ -2011,7 +2011,7 @@ async function loadLiveMatchesForTab(tabType) {
                 matches = await window.FootballAPI.getChampionsLeagueMatches();
                 break;
             case 'liga-mx':
-                matches = await window.FootballAPI.getRealLigaMXMatches();
+                matches = await window.FootballAPI.getLigaMXMatches();
                 break;
             case 'major-leagues':
                 // Get matches from major European leagues
@@ -2059,8 +2059,33 @@ function updateLiveMatchesUI(containerId, matches) {
     }
 
     // Add data source indicator for Liga MX
-    const dataSource = containerId.includes('LigaMx') && matches.length > 0 && matches[0].id.includes('liga-mx') ? 
-        '<div class="data-source-indicator"><i class="fas fa-info-circle"></i> Datos simulados con equipos reales de Liga MX</div>' : '';
+    let dataSource = '';
+    if (containerId.includes('LigaMx') && matches.length > 0 && matches[0].id.includes('liga-mx')) {
+        dataSource = '<div class="data-source-indicator"><i class="fas fa-info-circle"></i> Datos simulados con equipos reales de Liga MX</div>';
+    } else if (matches.length === 0) {
+        // Show API key instructions when no matches are found
+        const instructions = window.FootballAPI.getApiKeyInstructions();
+        dataSource = `
+            <div class="api-key-instructions">
+                <div class="instructions-header">
+                    <i class="fas fa-key"></i>
+                    <h3>¿Quieres ver resultados reales?</h3>
+                </div>
+                <div class="instructions-content">
+                    <p>${instructions.message}</p>
+                    <div class="steps">
+                        ${instructions.steps.map(step => `<div class="step">${step}</div>`).join('')}
+                    </div>
+                    <div class="benefits">
+                        ${instructions.benefits.map(benefit => `<div class="benefit">${benefit}</div>`).join('')}
+                    </div>
+                    <button class="get-api-key-btn" onclick="window.open('https://www.api-football.com/', '_blank')">
+                        <i class="fas fa-external-link-alt"></i> Obtener API Key Gratuita
+                    </button>
+                </div>
+            </div>
+        `;
+    }
 
     const matchesHTML = matches.map(match => `
         <div class="live-match-card ${match.isLive ? 'live' : ''}">
@@ -2112,6 +2137,10 @@ function startLiveMatchesRefresh() {
 // Initialize live matches
 async function initializeLiveMatches() {
     try {
+        // Test API key first
+        const apiStatus = await window.FootballAPI.testApiKey();
+        console.log('API Status:', apiStatus);
+        
         // Load initial matches for the active tab
         await loadLiveMatchesForTab('all');
         
