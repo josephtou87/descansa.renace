@@ -118,14 +118,35 @@ class FootballAPI {
         }
     }
 
-    // Get live matches
+    // Get live matches and today's finished matches
     async getLiveMatches() {
         try {
-            const data = await this.makeRequest('/fixtures?live=all');
-            return this.formatLiveMatches(data.response || []);
+            const today = new Date().toISOString().split('T')[0];
+            const allMatches = [];
+            
+            // Get live matches
+            const liveResponse = await this.makeRequest(`/fixtures?date=${today}&live=all`);
+            if (liveResponse.response && liveResponse.response.length > 0) {
+                allMatches.push(...this.formatLiveMatches(liveResponse.response));
+            }
+            
+            // Get finished matches from today
+            const finishedResponse = await this.makeRequest(`/fixtures?date=${today}&status=FT`);
+            if (finishedResponse.response && finishedResponse.response.length > 0) {
+                const finishedMatches = this.formatMatches(finishedResponse.response);
+                allMatches.push(...finishedMatches);
+            }
+            
+            // If we have real matches, return them
+            if (allMatches.length > 0) {
+                return allMatches;
+            }
+            
+            // If no real matches, return mock data with both live and finished
+            return this.getMockTodayMatches();
         } catch (error) {
             console.error('Error fetching live matches:', error);
-            return this.getMockLiveMatches();
+            return this.getMockTodayMatches();
         }
     }
 
@@ -397,6 +418,99 @@ class FootballAPI {
                 }
             ]
         };
+    }
+
+    // Mock today's matches (live + finished)
+    getMockTodayMatches() {
+        const today = new Date().toISOString();
+        return [
+            // Live matches
+            {
+                id: 'mock-live-1',
+                homeTeam: 'Real Madrid',
+                awayTeam: 'Barcelona',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/541.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/529.png',
+                homeScore: 2,
+                awayScore: 1,
+                status: 'LIVE',
+                minute: 67,
+                competition: 'La Liga',
+                date: today,
+                isLive: true
+            },
+            {
+                id: 'mock-live-2',
+                homeTeam: 'Manchester City',
+                awayTeam: 'Liverpool',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/50.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/40.png',
+                homeScore: 1,
+                awayScore: 1,
+                status: 'LIVE',
+                minute: 34,
+                competition: 'Premier League',
+                date: today,
+                isLive: true
+            },
+            // Finished matches from today
+            {
+                id: 'mock-finished-1',
+                homeTeam: 'Bayern Munich',
+                awayTeam: 'Borussia Dortmund',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/157.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/165.png',
+                homeScore: 3,
+                awayScore: 1,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'Bundesliga',
+                date: today,
+                isLive: false
+            },
+            {
+                id: 'mock-finished-2',
+                homeTeam: 'Juventus',
+                awayTeam: 'AC Milan',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/496.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/489.png',
+                homeScore: 2,
+                awayScore: 0,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'Serie A',
+                date: today,
+                isLive: false
+            },
+            {
+                id: 'mock-finished-3',
+                homeTeam: 'América',
+                awayTeam: 'Guadalajara',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/1354.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/1355.png',
+                homeScore: 1,
+                awayScore: 2,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'Liga MX',
+                date: today,
+                isLive: false
+            },
+            {
+                id: 'mock-finished-4',
+                homeTeam: 'PSG',
+                awayTeam: 'Marseille',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/85.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/516.png',
+                homeScore: 4,
+                awayScore: 2,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'Ligue 1',
+                date: today,
+                isLive: false
+            }
+        ];
     }
 
     getMockChampionsLeagueMatches() {
