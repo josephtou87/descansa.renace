@@ -2005,20 +2005,27 @@ function initializeSampleData() {
 async function loadLiveMatchesForTab(tabType) {
     try {
         let matches = [];
+        let containerId = '';
         
         switch(tabType) {
             case 'all':
                 matches = await window.FootballAPI.getLiveMatches();
+                containerId = 'liveMatchesAll';
+                break;
+            case 'finished':
+                matches = await window.FootballAPI.getFinishedMatches();
+                containerId = 'liveMatchesFinished';
                 break;
             default:
                 matches = await window.FootballAPI.getLiveMatches();
+                containerId = 'liveMatchesAll';
                 break;
         }
         
-        updateLiveMatchesUI(`liveMatches${tabType.charAt(0).toUpperCase() + tabType.slice(1)}`, matches);
+        updateLiveMatchesUI(containerId, matches);
     } catch (error) {
         console.error('Error loading live matches for tab:', error);
-        updateLiveMatchesUI(`liveMatches${tabType.charAt(0).toUpperCase() + tabType.slice(1)}`, []);
+        updateLiveMatchesUI(containerId, []);
     }
 }
 

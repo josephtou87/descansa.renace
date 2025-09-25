@@ -118,43 +118,50 @@ class FootballAPI {
         }
     }
 
-    // Get live matches and today's finished matches
+    // Get live matches only
     async getLiveMatches() {
         try {
             const today = new Date().toISOString().split('T')[0];
-            const allMatches = [];
             
             // Get live matches from current season
             const liveResponse = await this.makeRequest(`/fixtures?date=${today}&live=all&season=${this.currentSeason}`);
             if (liveResponse.response && liveResponse.response.length > 0) {
-                allMatches.push(...this.formatLiveMatches(liveResponse.response));
+                console.log(`Found ${liveResponse.response.length} live matches for today (${today})`);
+                return this.formatLiveMatches(liveResponse.response);
             }
+            
+            // If no live matches, return mock live matches
+            return this.getMockLiveMatchesOnly();
+        } catch (error) {
+            console.error('Error fetching live matches:', error);
+            return this.getMockLiveMatchesOnly();
+        }
+    }
+
+    // Get finished matches only
+    async getFinishedMatches() {
+        try {
+            const today = new Date().toISOString().split('T')[0];
             
             // Get finished matches from today and current season
             const finishedResponse = await this.makeRequest(`/fixtures?date=${today}&status=FT&season=${this.currentSeason}`);
             if (finishedResponse.response && finishedResponse.response.length > 0) {
-                const finishedMatches = this.formatMatches(finishedResponse.response);
-                allMatches.push(...finishedMatches);
+                console.log(`Found ${finishedResponse.response.length} finished matches for today (${today})`);
+                return this.formatMatches(finishedResponse.response);
             }
             
-            // If we have real matches, return them
-            if (allMatches.length > 0) {
-                console.log(`Found ${allMatches.length} real matches for today (${today})`);
-                return allMatches;
-            }
-            
-            // If no real matches today, try to get recent matches from current season
-            const recentResponse = await this.makeRequest(`/fixtures?season=${this.currentSeason}&last=10`);
+            // If no finished matches today, try to get recent finished matches from current season
+            const recentResponse = await this.makeRequest(`/fixtures?season=${this.currentSeason}&status=FT&last=10`);
             if (recentResponse.response && recentResponse.response.length > 0) {
-                console.log(`No matches today, showing recent matches from current season`);
+                console.log(`No finished matches today, showing recent finished matches from current season`);
                 return this.formatMatches(recentResponse.response);
             }
             
-            // If still no matches, return mock data with current season info
-            return this.getMockTodayMatches();
+            // If still no matches, return mock finished matches
+            return this.getMockFinishedMatchesOnly();
         } catch (error) {
-            console.error('Error fetching live matches:', error);
-            return this.getMockTodayMatches();
+            console.error('Error fetching finished matches:', error);
+            return this.getMockFinishedMatchesOnly();
         }
     }
 
@@ -431,11 +438,10 @@ class FootballAPI {
         };
     }
 
-    // Mock today's matches (live + finished) - Season 2024-2025
-    getMockTodayMatches() {
+    // Mock live matches only - Season 2024-2025
+    getMockLiveMatchesOnly() {
         const today = new Date().toISOString();
         return [
-            // Live matches - Season 2024-2025
             {
                 id: 'mock-live-1',
                 homeTeam: 'Real Madrid',
@@ -464,23 +470,29 @@ class FootballAPI {
                 date: today,
                 isLive: true
             },
-            // Finished matches from today - Season 2024-2025
             {
-                id: 'mock-finished-1',
+                id: 'mock-live-3',
                 homeTeam: 'Bayern Munich',
                 awayTeam: 'Borussia Dortmund',
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/157.png',
                 awayTeamLogo: 'https://media.api-sports.io/football/teams/165.png',
-                homeScore: 3,
-                awayScore: 1,
-                status: 'FINISHED',
-                minute: 90,
+                homeScore: 2,
+                awayScore: 2,
+                status: 'LIVE',
+                minute: 78,
                 competition: 'Bundesliga 2024-25',
                 date: today,
-                isLive: false
-            },
+                isLive: true
+            }
+        ];
+    }
+
+    // Mock finished matches only - Season 2024-2025
+    getMockFinishedMatchesOnly() {
+        const today = new Date().toISOString();
+        return [
             {
-                id: 'mock-finished-2',
+                id: 'mock-finished-1',
                 homeTeam: 'Juventus',
                 awayTeam: 'AC Milan',
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/496.png',
@@ -494,7 +506,7 @@ class FootballAPI {
                 isLive: false
             },
             {
-                id: 'mock-finished-3',
+                id: 'mock-finished-2',
                 homeTeam: 'América',
                 awayTeam: 'Guadalajara',
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/1354.png',
@@ -508,7 +520,7 @@ class FootballAPI {
                 isLive: false
             },
             {
-                id: 'mock-finished-4',
+                id: 'mock-finished-3',
                 homeTeam: 'PSG',
                 awayTeam: 'Marseille',
                 homeTeamLogo: 'https://media.api-sports.io/football/teams/85.png',
@@ -518,6 +530,48 @@ class FootballAPI {
                 status: 'FINISHED',
                 minute: 90,
                 competition: 'Ligue 1 2024-25',
+                date: today,
+                isLive: false
+            },
+            {
+                id: 'mock-finished-4',
+                homeTeam: 'Atlético Madrid',
+                awayTeam: 'Sevilla',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/530.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/536.png',
+                homeScore: 3,
+                awayScore: 1,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'La Liga 2024-25',
+                date: today,
+                isLive: false
+            },
+            {
+                id: 'mock-finished-5',
+                homeTeam: 'Arsenal',
+                awayTeam: 'Chelsea',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/42.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/49.png',
+                homeScore: 2,
+                awayScore: 1,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'Premier League 2024-25',
+                date: today,
+                isLive: false
+            },
+            {
+                id: 'mock-finished-6',
+                homeTeam: 'Inter Milan',
+                awayTeam: 'Napoli',
+                homeTeamLogo: 'https://media.api-sports.io/football/teams/505.png',
+                awayTeamLogo: 'https://media.api-sports.io/football/teams/492.png',
+                homeScore: 1,
+                awayScore: 1,
+                status: 'FINISHED',
+                minute: 90,
+                competition: 'Serie A 2024-25',
                 date: today,
                 isLive: false
             }
