@@ -18,7 +18,7 @@ class FootballAPI {
             'libertadores': 13,    // Copa Libertadores
             'champions': 2         // Champions League
         };
-        this.currentSeason = 2024; // Current season
+            this.currentSeason = 2024; // Current season (2024-2025)
     }
 
     // Set API key
@@ -124,14 +124,14 @@ class FootballAPI {
             const today = new Date().toISOString().split('T')[0];
             const allMatches = [];
             
-            // Get live matches
-            const liveResponse = await this.makeRequest(`/fixtures?date=${today}&live=all`);
+            // Get live matches from current season
+            const liveResponse = await this.makeRequest(`/fixtures?date=${today}&live=all&season=${this.currentSeason}`);
             if (liveResponse.response && liveResponse.response.length > 0) {
                 allMatches.push(...this.formatLiveMatches(liveResponse.response));
             }
             
-            // Get finished matches from today
-            const finishedResponse = await this.makeRequest(`/fixtures?date=${today}&status=FT`);
+            // Get finished matches from today and current season
+            const finishedResponse = await this.makeRequest(`/fixtures?date=${today}&status=FT&season=${this.currentSeason}`);
             if (finishedResponse.response && finishedResponse.response.length > 0) {
                 const finishedMatches = this.formatMatches(finishedResponse.response);
                 allMatches.push(...finishedMatches);
@@ -139,10 +139,18 @@ class FootballAPI {
             
             // If we have real matches, return them
             if (allMatches.length > 0) {
+                console.log(`Found ${allMatches.length} real matches for today (${today})`);
                 return allMatches;
             }
             
-            // If no real matches, return mock data with both live and finished
+            // If no real matches today, try to get recent matches from current season
+            const recentResponse = await this.makeRequest(`/fixtures?season=${this.currentSeason}&last=10`);
+            if (recentResponse.response && recentResponse.response.length > 0) {
+                console.log(`No matches today, showing recent matches from current season`);
+                return this.formatMatches(recentResponse.response);
+            }
+            
+            // If still no matches, return mock data with current season info
             return this.getMockTodayMatches();
         } catch (error) {
             console.error('Error fetching live matches:', error);
@@ -185,18 +193,21 @@ class FootballAPI {
             const recentMatches = await this.makeRequest(`/fixtures?league=${leagueId}&season=${this.currentSeason}&last=10`);
             
             if (recentMatches.response && recentMatches.response.length > 0) {
+                console.log(`Found ${recentMatches.response.length} real matches for ${leagueKey} (season ${this.currentSeason})`);
                 return this.formatMatches(recentMatches.response);
             }
             
-            // If no recent matches, try current date
+            // If no recent matches, try current date with current season
             const today = new Date().toISOString().split('T')[0];
-            const todayMatches = await this.makeRequest(`/fixtures?league=${leagueId}&date=${today}`);
+            const todayMatches = await this.makeRequest(`/fixtures?league=${leagueId}&date=${today}&season=${this.currentSeason}`);
             
             if (todayMatches.response && todayMatches.response.length > 0) {
+                console.log(`Found ${todayMatches.response.length} matches for ${leagueKey} today`);
                 return this.formatMatches(todayMatches.response);
             }
             
             // If still no matches, return simulated data with real teams
+            console.log(`No real matches found for ${leagueKey}, using simulated data`);
             return this.getSimulatedMatchesForLeague(leagueKey);
         } catch (error) {
             console.error(`Error fetching ${leagueKey} matches:`, error);
@@ -420,11 +431,11 @@ class FootballAPI {
         };
     }
 
-    // Mock today's matches (live + finished)
+    // Mock today's matches (live + finished) - Season 2024-2025
     getMockTodayMatches() {
         const today = new Date().toISOString();
         return [
-            // Live matches
+            // Live matches - Season 2024-2025
             {
                 id: 'mock-live-1',
                 homeTeam: 'Real Madrid',
@@ -435,7 +446,7 @@ class FootballAPI {
                 awayScore: 1,
                 status: 'LIVE',
                 minute: 67,
-                competition: 'La Liga',
+                competition: 'La Liga 2024-25',
                 date: today,
                 isLive: true
             },
@@ -449,11 +460,11 @@ class FootballAPI {
                 awayScore: 1,
                 status: 'LIVE',
                 minute: 34,
-                competition: 'Premier League',
+                competition: 'Premier League 2024-25',
                 date: today,
                 isLive: true
             },
-            // Finished matches from today
+            // Finished matches from today - Season 2024-2025
             {
                 id: 'mock-finished-1',
                 homeTeam: 'Bayern Munich',
@@ -464,7 +475,7 @@ class FootballAPI {
                 awayScore: 1,
                 status: 'FINISHED',
                 minute: 90,
-                competition: 'Bundesliga',
+                competition: 'Bundesliga 2024-25',
                 date: today,
                 isLive: false
             },
@@ -478,7 +489,7 @@ class FootballAPI {
                 awayScore: 0,
                 status: 'FINISHED',
                 minute: 90,
-                competition: 'Serie A',
+                competition: 'Serie A 2024-25',
                 date: today,
                 isLive: false
             },
@@ -492,7 +503,7 @@ class FootballAPI {
                 awayScore: 2,
                 status: 'FINISHED',
                 minute: 90,
-                competition: 'Liga MX',
+                competition: 'Liga MX Apertura 2024',
                 date: today,
                 isLive: false
             },
@@ -506,7 +517,7 @@ class FootballAPI {
                 awayScore: 2,
                 status: 'FINISHED',
                 minute: 90,
-                competition: 'Ligue 1',
+                competition: 'Ligue 1 2024-25',
                 date: today,
                 isLive: false
             }

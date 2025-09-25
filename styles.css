@@ -808,6 +808,26 @@ main {
     margin-top: 3rem;
 }
 
+.season-info {
+    margin: 1rem 0 2rem 0;
+    padding: 1rem;
+    background: rgba(0, 212, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+.season-info p {
+    margin: 0.5rem 0;
+    color: #00d4ff;
+    font-size: 0.9rem;
+}
+
+.api-note {
+    font-style: italic;
+    opacity: 0.8;
+    color: rgba(255, 255, 255, 0.7) !important;
+}
+
 /* Data Source Indicator */
 .data-source-indicator {
     background: rgba(255, 193, 7, 0.1);
