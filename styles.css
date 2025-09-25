@@ -507,6 +507,44 @@ main {
     }
 }
 
+/* Main Feature Image */
+.main-feature-image {
+    margin: 2rem 0;
+    text-align: center;
+    padding: 1rem;
+}
+
+.feature-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    filter: brightness(1) contrast(1) saturate(1);
+}
+
+/* Light theme adjustments */
+body:not(.dark-theme) .feature-img {
+    filter: brightness(1.1) contrast(1.05) saturate(1.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark theme adjustments */
+body.dark-theme .feature-img {
+    filter: brightness(0.9) contrast(1.1) saturate(1.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.feature-img:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+
+/* Dark theme hover */
+body.dark-theme .feature-img:hover {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+}
+
 .hero-content {
     position: relative;
     z-index: 2;
@@ -3618,11 +3656,49 @@ main {
             max-height: 350px;
         }
         
-        .hero-team-img {
-            height: 300px;
-            object-fit: contain;
-            object-position: center;
-        }
+    .hero-team-img {
+        height: 300px;
+        object-fit: contain;
+        object-position: center;
+    }
+    
+    /* Feature Image Responsive */
+    .main-feature-image {
+        margin: 1.5rem 0;
+        padding: 0.5rem;
+    }
+    
+    .feature-img {
+        border-radius: 15px;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    body:not(.dark-theme) .feature-img {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    body.dark-theme .feature-img {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Feature Image Extra Small */
+    .main-feature-image {
+        margin: 1rem 0;
+        padding: 0.3rem;
+    }
+    
+    .feature-img {
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    body:not(.dark-theme) .feature-img {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    body.dark-theme .feature-img {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
     }
 
     .hero-team-overlay {
